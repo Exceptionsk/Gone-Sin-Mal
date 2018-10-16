@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import {View} from "react-native";
 import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 
-export default class Home extends Component{
-  render(){
+export default class Favourite extends Component {
+  render() {
     return(
       <Container>
       <Header>
           <Body>
-            <Title>Home</Title>
+            <Title>Notifications</Title>
           </Body>
         </Header>
       <View>
-        <Text>i am Home</Text>
+        <Text>i am Notification</Text>
       </View>
       </Container>
     );

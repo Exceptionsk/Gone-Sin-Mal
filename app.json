@@ -1,6 +1,9 @@
 {
   "expo": {
     "name": "nativebase",
+    "androidStatusBar": {
+    "barStyle": "light-content",
+    },
     "description": "This project is really great.",
     "slug": "nativebase",
     "privacy": "public",
