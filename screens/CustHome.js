@@ -4,7 +4,7 @@ import Home from "../components/customer/Home";
 import Favourite from "../components/customer/Favourite";
 import GoneSin from "../components/customer/GoneSin";
 import Notification from "../components/customer/Notification";
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator,Header } from 'react-navigation';
 
 export default class CustHome extends Component{
   static navigationOptions = {
@@ -64,6 +64,6 @@ const Buttontab = createBottomTabNavigator({
     },
     tabBarOptions: {
       activeTintColor: 'red',
-      inactiveTintColor: 'grey'
+      inactiveTintColor: 'grey',
     }
   });
