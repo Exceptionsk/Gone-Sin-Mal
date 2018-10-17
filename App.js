@@ -9,12 +9,14 @@ import { TabNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import CustHome from "./screens/CustHome";
+import RestHome from "./screens/RestHome";
 import LoginScreen from "./screens/Login";
 
 
 const AppNavigator = createStackNavigator({
   Login: {screen: LoginScreen},
-  CustHome: {screen: CustHome}
+  CustHome: {screen: CustHome},
+  RestHome: {screen: RestHome}
 })
 
 export default class Start extends Component {

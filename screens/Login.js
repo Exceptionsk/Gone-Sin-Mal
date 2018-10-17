@@ -19,9 +19,17 @@ export default class Login extends Component {
               <Image source={require('../assets/splash.png')} style={{height:160, width:160}} />
             </View>
             <View style={{alignItems: 'center'}}>
-              <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center'}} onPress={() => this.props.navigation.replace('CustHome')}>
+              <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center'}} onPress={() => this.props.navigation.navigate('CustHome')}>
                 <Icon name='logo-facebook' />
                 <Text> Login with Facebook </Text>
+              </Button>
+              <Button iconLeft full success textStyle={{color:'white'}} style={{alignSelf:'center'}} onPress={() => this.props.navigation.navigate('RestHome')}>
+                <Icon name='logo-facebook' />
+                <Text> Sign Up for Restaurant </Text>
+              </Button>
+              <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center'}} onPress={() => this.props.navigation.navigate('RestHome')}>
+                <Icon name='logo-facebook' />
+                <Text> Restaurant Login </Text>
               </Button>
             </View>
           </Col>
