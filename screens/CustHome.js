@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Icon from 'react-native-vector-icons/Ionicons'
-import Home from "../components/Home";
-import Favourite from "../components/Favourite";
-import GoneSin from "../components/GoneSin";
-import Notification from "../components/Notification";
+import Home from "../components/customer/Home";
+import Favourite from "../components/customer/Favourite";
+import GoneSin from "../components/customer/GoneSin";
+import Notification from "../components/customer/Notification";
 import { createBottomTabNavigator } from 'react-navigation';
 
 export default class CustHome extends Component{

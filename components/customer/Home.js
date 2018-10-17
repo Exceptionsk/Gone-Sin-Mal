@@ -20,7 +20,7 @@ export default class Home extends Component{
       <Container>
       <Header style={{height:70}}>
         <Button transparent style={{height:70}}>
-            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../assets/usothree.jpg')} />
+            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
             <Text style = {{color: 'white'}}>BitGeeks</Text>
         </Button>
         <Button transparent>
@@ -101,15 +101,7 @@ export default class Home extends Component{
                       </Col>
                       <Col style={{ backgroundColor: 'white', height: 150, width: 70 }}>
                         <View style = {styles.imgcolthree}>
-
-                        <ToggleSwitch
-                              isOn={false}
-                              onColor='orange'
-                              offColor='grey'
-                              labelStyle={{color: 'black', fontWeight: '900'}}
-                              size='medium'
-                              onToggle={ (isOn) => console.log('changed to : ', isOn) }
-                          />
+                          <Icon name="md-heart" color={'grey'} size={24} />
                         </View>
                       </Col>
                   </Row>
