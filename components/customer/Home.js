@@ -93,7 +93,7 @@ export default class Home extends Component{
                       </Col>
                       <Col style={{ backgroundColor: 'white', height: 150 }}>
                         <View style = {styles.imgcoltwo}>
-                          <Text style={{color: 'black',paddingBottom: 10}}>Kentucky Fried Chicken (KFC)</Text>
+                          <Text style={{color: 'black',paddingBottom: 10}}>{item.name}</Text>
                           <Button style={{backgroundColor:'#49afd7'}}>
                           <Text>Get Direction</Text>
                           </Button>
