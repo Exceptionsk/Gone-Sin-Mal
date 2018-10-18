@@ -20,10 +20,19 @@ export default class Home extends Component{
     return(
       
       <Container>
+           <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+            <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
+                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
+                <Text style = {{color: 'white'}}>BitGeeks</Text>
+            </Button>
+            <Button transparent>
+                <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+            </Button>
+          </Header>
         <Grid>
               <Row style={{height: 50}}>
-                <Col style={{ backgroundColor: '#a3080c', height: 50, paddingTop: 20 }}>
-                   <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 7, paddingLeft: 8 }}>Favourite List!</H3>
+                <Col style={{ height: 50, paddingTop: 20 }}>
+                   <H3 style={{ fontWeight: "bold", paddingTop: 7, paddingLeft: 8 }}>Favourite List!</H3>
                 </Col>
               </Row>
           <Content style = {{backgroundColor:'#dfdfdf'}}>
@@ -78,22 +87,19 @@ const styles= StyleSheet.create({
   },
   imgcol:{
     padding: 20,
-    color: 'white',
   },
   imgcoltwo:{
     paddingTop: 20,
     paddingLeft: 20,
-    color: 'white',
+
   },
   imgcolthree:{
     paddingTop: 20,
-    color: 'white',
   },
   imgcolfour:{
     paddingTop: 20,
     paddingLeft:20,
     paddingRight:0,
-    color: 'white',
   },
   container:{
     flex:1,

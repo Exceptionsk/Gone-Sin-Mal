@@ -13,9 +13,7 @@ export default class Login extends Component {
         <ImageBackground source={require('../assets/wallpaper.jpg')} style={{width: '100%', height: '100%'}}>
           <Grid>
             <Row>
-            </Row>
-            <Row>
-              <Col>
+              <Col style={{height:'100%',paddingTop:200}}>
                 <View style={{alignItems: 'center'}}>
                   <Image source={require('../assets/splash.png')} style={{height:160, width:160}} />
                 </View>
@@ -28,14 +26,12 @@ export default class Login extends Component {
                     <Icon name='logo-facebook' />
                     <Text> Sign Up for Restaurant </Text>
                   </Button>
-                  <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('RestHome')}>
+                  <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('AdminHome')}>
                     <Icon name='logo-facebook' />
-                    <Text> Restaurant Login </Text>
+                    <Text> Admin Login </Text>
                   </Button>
                 </View>
               </Col>
-            </Row>
-            <Row>
             </Row>
           </Grid>
         </ImageBackground>

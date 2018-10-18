@@ -48,7 +48,7 @@ export default class Home extends Component{
             <Card style = {{height: 190,width: '100%',paddingLeft:0,marginLeft:0, marginBottom: 10,marginTop: 0}}>
                 <CardItem style = {{width: '100%'}}>
                   <Body>
-                    <View style={{backgroundColor: "white"}}>
+                    <View>
                       <ScrollView horizontal={true}>
                         <Row>
                         {
@@ -56,7 +56,7 @@ export default class Home extends Component{
                             (
                               <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                   <View style = {styles.imgcolfour}>
-                                    <Button transparent style={{height: 120 , width: '100%'}} >
+                                    <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
                                       <Thumbnail style={styles.imagetwo} square source={{uri : item.img}} />
                                     </Button>
                                     <Button transparent textStyle={{color: '#87838B'}}>
@@ -83,7 +83,7 @@ export default class Home extends Component{
               <Card style = {{height: 190,width: '100%',paddingLeft:0,marginLeft:0, marginBottom: 10,marginTop: 0}}>
                   <CardItem style = {{width: '100%'}}>
                     <Body>
-                      <View style={{backgroundColor: "white"}}>
+                      <View>
                         <ScrollView horizontal={true}>
                           <Row>
                           {
@@ -166,22 +166,18 @@ const styles= StyleSheet.create({
   },
   imgcol:{
     padding: 20,
-    color: 'white',
   },
   imgcoltwo:{
     paddingTop: 20,
     paddingLeft: 20,
-    color: 'white',
   },
   imgcolthree:{
     paddingTop: 20,
-    color: 'white',
   },
   imgcolfour:{
     paddingTop: 20,
     paddingLeft:20,
     paddingRight:0,
-    color: 'white',
   },
   container:{
     flex:1,

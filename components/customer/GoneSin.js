@@ -49,11 +49,20 @@ export default class GoneSin extends Component {
   render() {
     return(
       <Container>
+          <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+            <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
+                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
+                <Text style = {{color: 'white'}}>BitGeeks</Text>
+            </Button>
+            <Button transparent>
+                <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+            </Button>
+          </Header>
         <Grid>
           <Row style={{height: 50}}>
-            <Col style={{ backgroundColor: '#a3080c', height: 50, paddingTop: 20 }}>
-                    <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 7, paddingLeft: 8 }}>Gone Sin List!</H3>
-            </Col>
+                <Col style={{ height: 50, paddingTop: 15 }}>
+                   <H3 style={{ fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Gone Sin List!</H3>
+                </Col>
           </Row>
           <Content style={{ backgroundColor: '#484848'}}>
             {

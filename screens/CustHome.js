@@ -6,6 +6,8 @@ import GoneSin from "../components/customer/GoneSin";
 import Notification from "../components/customer/Notification";
 import { createBottomTabNavigator,Header, createStackNavigator } from 'react-navigation';
 import Userprofile from '../components/customer/Userprofile';
+import Restaurantdetail from '../components/customer/Restaurantdetail';
+import Login from "./Login";
 
 const User = createStackNavigator({
   AppHome : {
@@ -13,7 +15,11 @@ const User = createStackNavigator({
   },
   Userprofile:{
     screen:Userprofile
-  }
+  },
+  Restaurantdetail:{
+    screen:Restaurantdetail
+  },
+
 }, {
    headerMode: 'none'
 });

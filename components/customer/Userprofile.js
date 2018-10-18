@@ -4,29 +4,83 @@ import {
     StyleSheet, View, TextInput,TouchableWithoutFeedback
   } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Header, H1,H2, H4, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Text } from 'native-base';
+import { Container,Card,CardItem,Body, Header, H1,H2,H3, H4,Left, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Text } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import QRCode from 'react-native-qrcode';
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default class HelloWorld extends Component {
     state = {
-      text: 'http://facebook.github.io/react-native/',
+      text: 'Bit Geeks',
     };
    
     render() {
       return (
-        <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => this.setState({text: text})}
-            value={this.state.text}
-          />
-          <QRCode
-            value={this.state.text}
-            size={200}
-            bgColor='purple'
-            fgColor='white'/>
-        </View>
+        <Container>
+          <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+            <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
+                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
+                <Text style = {{color: 'white'}}>BitGeeks</Text>
+            </Button>
+            <Button transparent>
+                <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+            </Button>
+          </Header>
+          <Grid>
+          <Card style={{width:'99%',height:'98%'}}>
+            <CardItem header>
+            <Row>
+                <Col style={{height:230}}>
+                        <View style={styles.container}>
+                          {/* <TextInput
+                            style={styles.input}
+                            onChangeText={(text) => this.setState({text: text})}
+                            value={this.state.text}
+                          /> */}
+                          <QRCode
+                            value={this.state.text}
+                            size={200}
+                            bgColor='purple'
+                            fgColor='white'/>
+                        </View>
+                </Col>
+            </Row>
+            </CardItem>
+            <CardItem>
+                <Row>
+                  <Col style={{alignItems:'center', backgroundColor:'white'}}>
+                    <Text style={{ paddingBottom:5}}>User Location: San Chaung Township  <Button transparent><Ionicons name="ios-create" color="orange" size={30} /></Button></Text>
+                    <Text style={{paddingBottom:5}}>Avaliable Coin: 1,866</Text>
+                    <Text style={{paddingBottom:5}}>Coin Capacity: 1000</Text>
+                    <Text style={{paddingBottom:5}}>Exceeded Coin: 50 (expire in: 23:34:07)</Text>
+                  </Col>  
+                </Row>
+            </CardItem>
+            <CardItem>
+                <Row>
+                  <Col style={{alignItems: 'center',backgroundColor:'white',paddingBottom:10}}>
+                    <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.popToTop()}>
+                      <Ionicons name="ios-log-out" size={30} color="white" /> 
+                      <Text> Log Out! </Text>
+                    </Button>
+                  </Col>
+                </Row>
+            </CardItem>
+            <CardItem footer>
+            {/* <Row>
+              <Col style={{alignItems: 'center',backgroundColor:'white'}}>
+                <Thumbnail large style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
+                <H2>Bit Geeks</H2>
+                <Button primary textStyle={{color:'white'}} style={{alignSelf:'center', width: 70,height:30}} onPress={() => this.props.navigation.navigate('CustHome')}>
+                    <Text> Edit </Text>
+                </Button>
+              </Col>
+            </Row> */}
+            </CardItem>
+          </Card>
+          </Grid>
+        </Container>
       );
     };
   }
@@ -34,7 +88,6 @@ export default class HelloWorld extends Component {
   const styles = StyleSheet.create({
       container: {
           flex: 1,
-          backgroundColor: 'white',
           alignItems: 'center',
           justifyContent: 'center'
       },

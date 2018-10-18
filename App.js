@@ -11,12 +11,14 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import CustHome from "./screens/CustHome";
 import RestHome from "./screens/RestHome";
 import LoginScreen from "./screens/Login";
-import Userprofile from "./components/customer/Userprofile";
+import AdminHome from "./screens/AdminHome";
+
 
 const AppNavigator = createStackNavigator({
   Login: {screen: LoginScreen},
   CustHome: {screen: CustHome},
   RestHome: {screen: RestHome},
+  AdminHome: {screen: AdminHome},
 })
 
 export default class Start extends Component {
