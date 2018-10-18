@@ -3,6 +3,7 @@ import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "reac
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
+import {Link} from 'react-router-native';
 export default class Home extends Component{
   constructor()
   {
@@ -17,13 +18,12 @@ export default class Home extends Component{
   }
   render(){
     return(
-      
       <Container>
          <Header searchBar rounded style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-          <Button transparent>
-            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-            <Text style = {{color: 'white'}}>BitGeeks</Text>
-          </Button>
+            <Button transparent onPress={() => this.props.navigation.navigate('RestHome')}>
+              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
+              <Text style = {{color: 'white'}}>BitGeeks</Text>
+            </Button>
           <Button transparent>
               <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>  
           </Button>
