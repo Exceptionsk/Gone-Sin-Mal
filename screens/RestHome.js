@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Icon from 'react-native-vector-icons/Ionicons'
 import Home from "../components/restaurant/Home";
+// import QR from "../components/restaurant/QRScan";
+import Coins from "../components/restaurant/Coins";
 
 import { createBottomTabNavigator } from 'react-navigation';
 
@@ -33,7 +35,7 @@ const Buttontab = createBottomTabNavigator({
     }
   },
   Coins: {
-    screen: Home,
+    screen: Coins,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="logo-bitcoin" color={tintColor} size={24} />
