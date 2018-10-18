@@ -17,7 +17,6 @@ const AppNavigator = createStackNavigator({
   Login: {screen: LoginScreen},
   CustHome: {screen: CustHome},
   RestHome: {screen: RestHome},
-  Userprofile: {screen: Userprofile}
 })
 
 export default class Start extends Component {

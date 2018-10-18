@@ -4,8 +4,19 @@ import Home from "../components/customer/Home";
 import Favourite from "../components/customer/Favourite";
 import GoneSin from "../components/customer/GoneSin";
 import Notification from "../components/customer/Notification";
-import { createBottomTabNavigator,Header } from 'react-navigation';
+import { createBottomTabNavigator,Header, createStackNavigator } from 'react-navigation';
+import Userprofile from '../components/customer/Userprofile';
 
+const User = createStackNavigator({
+  AppHome : {
+    screen:Home,
+  },
+  Userprofile:{
+    screen:Userprofile
+  }
+}, {
+   headerMode: 'none'
+});
 export default class CustHome extends Component{
   static navigationOptions = {
     header:null
@@ -19,9 +30,8 @@ export default class CustHome extends Component{
 
 const Buttontab = createBottomTabNavigator({
   Home: {
-    screen: Home,
+    screen: User,
     navigationOptions: {
-      tabBarLabel: '',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-search" color={tintColor} size={24} />
       )

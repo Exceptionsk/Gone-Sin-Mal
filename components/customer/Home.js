@@ -3,7 +3,10 @@ import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "reac
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
+
+
 export default class Home extends Component{
+
   constructor()
   {
     super();
@@ -19,7 +22,7 @@ export default class Home extends Component{
     return(
       <Container>
       <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-        <Button transparent style={{height:70}}>
+        <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
             <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
             <Text style = {{color: 'white'}}>BitGeeks</Text>
         </Button>
@@ -126,7 +129,7 @@ export default class Home extends Component{
                       <Col style={{ backgroundColor: 'white', height: 150 }}>
                         <View style = {styles.imgcoltwo}>
                           <Text style={{color: 'black',paddingBottom: 10}}>{item.name}</Text>
-                          <Button style={{backgroundColor:'orange'}}>
+                          <Button style={{backgroundColor:'orange'}} >
                           <Text>Get Direction</Text>
                           </Button>
                         </View>
