@@ -56,10 +56,10 @@ export default class GoneSin extends Component {
             </Col>
           </Row>
           <Content style={{ backgroundColor: '#484848'}}>
-            { 
+            {
               this.items.map((item, key)=>
               (
-            <Row>
+            <Row key={key}>
               <Col style={{ backgroundColor: '#484848', height: 150 }}>
                       <Card style={{flex: 0, marginLeft: 7, width: 192 }}>
                             <CardItem>
@@ -81,7 +81,7 @@ export default class GoneSin extends Component {
                                 <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
                                 </Button>
                             </Left>
-                            
+
                             </CardItem>
                       </Card>
               </Col>
@@ -106,7 +106,7 @@ export default class GoneSin extends Component {
                                 <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
                                 </Button>
                             </Left>
-                            
+
                             </CardItem>
                       </Card>
               </Col>

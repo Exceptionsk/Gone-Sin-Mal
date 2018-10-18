@@ -3,15 +3,14 @@ import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "reac
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {Link} from 'react-router-native';
 export default class Home extends Component{
   constructor()
   {
     super();
     this.items = [
       {name:'KFC', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gong Cha', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Fuji', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
+      {name:'Sar Mal', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
+      {name:'Gone Sin', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'YKKO', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'Golden Pot', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
     ];
@@ -19,44 +18,75 @@ export default class Home extends Component{
   render(){
     return(
       <Container>
-         <Header searchBar rounded style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-            <Button transparent onPress={() => this.props.navigation.navigate('RestHome')}>
-              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-              <Text style = {{color: 'white'}}>BitGeeks</Text>
-            </Button>
-          <Button transparent>
-              <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>  
-          </Button>
-          {/* 49afd7 */}
-        </Header>
-        <Header searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
-        <Item  style = {{marginLeft: 30 , backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
-          <Icon name="ios-search" />
-          <Input placeholder="Search" />
-        </Item>
-        <Button transparent>
-          <Text style = {{color: 'orange'}}>Search</Text>
+      <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+        <Button transparent style={{height:70}}>
+            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
+            <Text style = {{color: 'white'}}>BitGeeks</Text>
         </Button>
+        <Button transparent>
+            <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+        </Button>
+      </Header>
+      <Header searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
+          <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
+            <Icon name="ios-search" />
+            <Input placeholder="Search" />
+          </Item>
         </Header>
         <Grid>
           <Content style = {{backgroundColor:'#dfdfdf'}}>
             <Row>
               <Col style={{ backgroundColor: 'white', height: 40 }}>
-                <H3 style={{ color: 'black',fontWeight: "bold", paddingLeft: 10, paddingTop: 10 }}>
+                <H2 style={{ color: 'black',fontWeight: "bold", paddingLeft: 10, paddingTop: 10 }}>
                   Recommendation
-                </H3>
+                </H2>
               </Col>
             </Row>
-            <Card style = {{height: 190, width: '100%',paddingLeft:0,marginLeft:0., marginBottom: 10,marginTop: 0}}>
-              <CardItem style = {{width: '100%',paddingTop:0, paddingLeft:0, paddingRight:0}}>
-                <Body>
-                  <View style={{backgroundColor: "white"}}>
-                    <ScrollView horizontal={true}>
-                      <Row>
+            <Card style = {{height: 190,width: '100%',paddingLeft:0,marginLeft:0, marginBottom: 10,marginTop: 0}}>
+                <CardItem style = {{width: '100%'}}>
+                  <Body>
+                    <View style={{backgroundColor: "white"}}>
+                      <ScrollView horizontal={true}>
+                        <Row>
+                        {
+                          this.items.map((item, key)=>
+                            (
+                              <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
+                                  <View style = {styles.imgcolfour}>
+                                    <Button transparent style={{height: 120 , width: '100%'}} >
+                                      <Thumbnail style={styles.imagetwo} square source={{uri : item.img}} />
+                                    </Button>
+                                    <Button transparent textStyle={{color: '#87838B'}}>
+                                      <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.name}</Text>
+                                    </Button>
+                                  </View>
+                              </Col>
+                            )
+                          )
+                        }
+                        </Row>
+                      </ScrollView>
+                    </View>
+                  </Body>
+                </CardItem>
+              </Card>
+              <Row>
+                <Col style={{ backgroundColor: 'white', height: 40 }}>
+                  <H2 style={{ color: 'black',fontWeight: "bold", paddingLeft: 10, paddingTop: 10 }}>
+                    New Restaurants
+                  </H2>
+                </Col>
+              </Row>
+              <Card style = {{height: 190,width: '100%',paddingLeft:0,marginLeft:0, marginBottom: 10,marginTop: 0}}>
+                  <CardItem style = {{width: '100%'}}>
+                    <Body>
+                      <View style={{backgroundColor: "white"}}>
+                        <ScrollView horizontal={true}>
+                          <Row>
                           {
                             this.items.map((item, key)=>
                               (
-                                <Col style={{ backgroundColor: 'white', height: 120, width: 140,marginRight:0 }} key={key}>
+                                <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>
                                       <Button transparent style={{height: 120 , width: '100%'}} >
                                         <Thumbnail style={styles.imagetwo} square source={{uri : item.img}} />
@@ -69,47 +99,12 @@ export default class Home extends Component{
                               )
                             )
                           }
-                      </Row>
-                    </ScrollView>
-                  </View>
-                </Body>
-              </CardItem>
-            </Card>
-            <Row>
-              <Col style={{ backgroundColor: 'white', height: 40 }}>
-                <H3 style={{ color: 'black',fontWeight: "bold", paddingLeft: 10, paddingTop: 10 }}>
-                  New Restaurants
-                </H3>
-              </Col>
-            </Row>
-            <Card style = {{height: 190, width: '100%',paddingLeft:0,marginLeft:0., marginBottom: 10,marginTop: 0}}>
-              <CardItem style = {{width: '100%',paddingTop:0, paddingLeft:0, paddingRight:0}}>
-                <Body>
-                  <View style={{backgroundColor: "white"}}>
-                    <ScrollView horizontal={true}>
-                      <Row>
-                          {
-                            this.items.map((item, key)=>
-                              (
-                                <Col style={{ backgroundColor: 'white', height: 120, width: 140,marginRight:0 }} key={key}>
-                                    <View style = {styles.imgcolfour}>
-                                      <Button transparent style={{height: 120 , width: '100%'}} >
-                                        <Thumbnail style={styles.imagetwo} square source={{uri : item.img}} />
-                                      </Button>
-                                      <Button transparent textStyle={{color: '#87838B'}}>
-                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.name}</Text>
-                                      </Button>
-                                    </View>
-                                </Col>
-                              )
-                            )
-                          }
-                      </Row>
-                    </ScrollView>
-                  </View>
-                </Body>
-              </CardItem>
-            </Card>
+                          </Row>
+                        </ScrollView>
+                      </View>
+                    </Body>
+                  </CardItem>
+                </Card>
               <Row>
                   <Col style={{ backgroundColor: 'white', height: 40 }}>
                     <H3 style={{ color: 'black',fontWeight: "bold", paddingLeft: 10, paddingTop: 10 }}>

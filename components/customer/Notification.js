@@ -10,34 +10,34 @@ export default class Notification extends Component {
     super();
     this.items = [
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.', 
+      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
     ];
   }
   render() {
     return(
-    <Container> 
+    <Container>
         <Grid>
         <Row style={{height: 50}}>
           <Col style={{ backgroundColor: '#a3080c', height: 50, paddingTop: 20 }}>
@@ -48,7 +48,7 @@ export default class Notification extends Component {
             {
                 this.items.map((item, key)=>
                   (
-                <Row>
+                <Row key={key}>
                   <Col style={{ backgroundColor: '#dfdfdf', height: 105, width: '100%'}}>
                     <Card style={{flex: 0, marginLeft: 0, width: '100%' }}>
                             <CardItem>
