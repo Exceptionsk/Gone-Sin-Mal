@@ -7,7 +7,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 const cards = [
   {
     name: 'Kitchen View',
-    image: 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
+    image: 'https://myanimelist.cdn-dena.com/images/anime/8/41125.jpg',
   },
   {
     name: 'Something View 1',
@@ -15,7 +15,7 @@ const cards = [
   },
   {
     name: 'Something View 2',
-    image: 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
   },
 ];
 

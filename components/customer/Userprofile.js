@@ -14,7 +14,7 @@ export default class HelloWorld extends Component {
     state = {
       text: 'Bit Geeks',
     };
-   
+
     render() {
       return (
         <Container>
@@ -27,17 +27,13 @@ export default class HelloWorld extends Component {
                 <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
             </Button>
           </Header>
+          <Content>
           <Grid>
           <Card style={{width:'99%',height:'98%'}}>
             <CardItem header>
             <Row>
                 <Col style={{height:230}}>
                         <View style={styles.container}>
-                          {/* <TextInput
-                            style={styles.input}
-                            onChangeText={(text) => this.setState({text: text})}
-                            value={this.state.text}
-                          /> */}
                           <QRCode
                             value={this.state.text}
                             size={200}
@@ -50,48 +46,43 @@ export default class HelloWorld extends Component {
             <CardItem>
                 <Row>
                   <Col style={{alignItems:'center', backgroundColor:'white'}}>
-                    <Text style={{ paddingBottom:5}}>User Location: San Chaung Township  <Button transparent><Ionicons name="ios-create" color="orange" size={30} /></Button></Text>
+                  <Button transparent>
+                    <Text style={{ paddingBottom:5}}>User Location: San Chaung Township  </Text>
+                      <Icon name='ios-create' />
+                  </Button>
                     <Text style={{paddingBottom:5}}>Avaliable Coin: 1,866</Text>
                     <Text style={{paddingBottom:5}}>Coin Capacity: 1000</Text>
                     <Text style={{paddingBottom:5}}>Exceeded Coin: 50 (expire in: 23:34:07)</Text>
-                  </Col>  
+                  </Col>
                 </Row>
             </CardItem>
             <CardItem>
                 <Row>
                   <Col style={{alignItems: 'center',backgroundColor:'white',paddingBottom:10}}>
                     <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.popToTop()}>
-                      <Ionicons name="ios-log-out" size={30} color="white" /> 
+                      <Ionicons name="ios-log-out" size={30} color="white" />
                       <Text> Log Out! </Text>
                     </Button>
                   </Col>
                 </Row>
             </CardItem>
             <CardItem footer>
-            {/* <Row>
-              <Col style={{alignItems: 'center',backgroundColor:'white'}}>
-                <Thumbnail large style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-                <H2>Bit Geeks</H2>
-                <Button primary textStyle={{color:'white'}} style={{alignSelf:'center', width: 70,height:30}} onPress={() => this.props.navigation.navigate('CustHome')}>
-                    <Text> Edit </Text>
-                </Button>
-              </Col>
-            </Row> */}
             </CardItem>
           </Card>
           </Grid>
+        </Content>
         </Container>
       );
     };
   }
-   
+
   const styles = StyleSheet.create({
       container: {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center'
       },
-   
+
       input: {
           height: 40,
           borderColor: 'gray',
@@ -101,8 +92,7 @@ export default class HelloWorld extends Component {
           padding: 5,
       }
   });
-   
-  AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-   
-  module.exports = HelloWorld;
 
+  AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
+
+  module.exports = HelloWorld;
