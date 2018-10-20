@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
 import User from './Userprofile';
 
@@ -39,6 +39,13 @@ export default class Home extends Component{
           transparent={false}
           onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
           visible={this.state.modalVisible}>
+          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+          <Right>
+            <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                <Icon name="close"/>
+            </Button>
+            </Right>
+          </Header>
           <User/>
         </Modal>
       </Header>
