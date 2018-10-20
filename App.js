@@ -8,18 +8,19 @@ import {NativeRouter, Switch, Route} from "react-router-native";
 import { TabNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 
+import NavigationService from './NavigationService';
+
 import CustHome from "./screens/CustHome";
 import RestHome from "./screens/RestHome";
 import LoginScreen from "./screens/Login";
 import AdminHome from "./screens/AdminHome";
 
-
-const AppNavigator = createStackNavigator({
+const TopLevelNavigator = createStackNavigator({
   Login: {screen: LoginScreen},
   CustHome: {screen: CustHome},
   RestHome: {screen: RestHome},
   AdminHome: {screen: AdminHome},
-})
+});
 
 export default class Start extends Component {
   state = {
@@ -42,7 +43,12 @@ async componentWillMount() {
       return <AppLoading />;
     }
     return (
-        <AppNavigator/>
+        // <AppNavigator/>
+        <TopLevelNavigator
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
     );
   }
 }

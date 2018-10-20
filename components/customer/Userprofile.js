@@ -8,6 +8,7 @@ import { Container,Card,CardItem,Body, Header, H1,H2,H3, H4,Left, Item, Input, I
 import {Actions} from 'react-native-router-flux';
 import QRCode from 'react-native-qrcode';
 import { Ionicons } from '@expo/vector-icons';
+import NavigationService from '../../NavigationService'
 
   export default class HelloWorld extends Component {
     state = {
@@ -49,7 +50,7 @@ import { Ionicons } from '@expo/vector-icons';
             <CardItem>
                 <Row>
                   <Col style={{alignItems: 'center',backgroundColor:'white',paddingBottom:10}}>
-                    <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('LoginScreen')}>
+                    <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={()=>{NavigationService.navigate('Login')}}>
                       <Ionicons name="ios-log-out" size={30} color="white" />
                       <Text> Log Out! </Text>
                     </Button>
