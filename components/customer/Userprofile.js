@@ -9,8 +9,7 @@ import {Actions} from 'react-native-router-flux';
 import QRCode from 'react-native-qrcode';
 import { Ionicons } from '@expo/vector-icons';
 
-
-export default class HelloWorld extends Component {
+  export default class HelloWorld extends Component {
     state = {
       text: 'Bit Geeks',
     };
@@ -59,7 +58,7 @@ export default class HelloWorld extends Component {
             <CardItem>
                 <Row>
                   <Col style={{alignItems: 'center',backgroundColor:'white',paddingBottom:10}}>
-                    <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.popToTop()}>
+                    <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('LoginScreen')}>
                       <Ionicons name="ios-log-out" size={30} color="white" />
                       <Text> Log Out! </Text>
                     </Button>

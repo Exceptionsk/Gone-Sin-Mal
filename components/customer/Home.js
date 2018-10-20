@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
-
+import User from './Userprofile';
 
 export default class Home extends Component{
-
+  state = {
+    modalVisible: false,
+  };
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
   constructor()
   {
     super();
@@ -22,13 +27,20 @@ export default class Home extends Component{
     return(
       <Container>
       <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-        <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
+        <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
             <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
             <Text style = {{color: 'white'}}>BitGeeks</Text>
         </Button>
         <Button transparent>
             <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
         </Button>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+          visible={this.state.modalVisible}>
+          <User/>
+        </Modal>
       </Header>
       <Header searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
           <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
