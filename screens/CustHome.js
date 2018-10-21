@@ -4,25 +4,25 @@ import Home from "../components/customer/Home";
 import Favourite from "../components/customer/Favourite";
 import GoneSin from "../components/customer/GoneSin";
 import Notification from "../components/customer/Notification";
-import { createBottomTabNavigator,Header, createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator,Header, createStackNavigator,View } from 'react-navigation';
 import Userprofile from '../components/customer/Userprofile';
 import Restaurantdetail from '../components/customer/Restaurantdetail';
 import Login from "./Login";
 
-// const User = createStackNavigator({
-//   AppHome : {
-//     screen:Home,
-//   },
-//   Userprofile:{
-//     screen:Userprofile
-//   },
-//   Restaurantdetail:{
-//     screen:Restaurantdetail
-//   },
-//
-// }, {
-//    headerMode: 'none'
-// });
+const User = createStackNavigator({
+  AppHome : {
+    screen:Home,
+  },
+  Userprofile:{
+    screen:Userprofile
+  },
+  Restaurantdetail:{
+    screen:Restaurantdetail
+  },
+
+}, {
+   headerMode: 'none'
+});
 export default class CustHome extends Component{
   static navigationOptions = {
     header:null
@@ -36,7 +36,7 @@ export default class CustHome extends Component{
 
 const Buttontab = createBottomTabNavigator({
   Home: {
-    screen: Home,
+    screen: User,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-search" color={tintColor} size={24} />
