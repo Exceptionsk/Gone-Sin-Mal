@@ -8,6 +8,8 @@ import User from './Userprofile';
 export default class Home extends Component{
   state = {
     modalVisible: false,
+    Anime:[{img_url:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}],
+    value:'bleach'
   };
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -22,7 +24,46 @@ export default class Home extends Component{
       {name:'YKKO', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'Golden Pot', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
     ];
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange(e) {
+       this.setState({
+         value: e.nativeEvent.text
+       });
+     }
+
+  handleSearch(){
+    return fetch('https://api.jikan.moe/v3/search/anime?q='+ this.state.value + '&limit=10&genre=12&genre_exclude=0')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({
+         Anime: responseJson.results,
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  // componentDidMount(){
+  //   // return fetch('https://api.jikan.moe/v3/search/anime?q=bleach')
+  //   // .then((response) => response.json())
+  //   // .then((responseJson) => {
+  //   //   this.setState({
+  //   //      Anime: responseJson.results,
+  //   //    }, function(){
+  //   //
+  //   //    });
+  //   // })
+  //   // .catch((error) => {
+  //   //   console.error(error);
+  //   // });
+  // }
+
   render(){
     return(
       <Container>
@@ -49,7 +90,7 @@ export default class Home extends Component{
           <User/>
         </Modal>
       </Header>
-      <Header searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
+      <Header onSubmitEditing={this.handleSearch} onChange={this.handleChange} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
           <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
             <Icon name="ios-search" />
             <Input placeholder="Search" />
@@ -71,15 +112,15 @@ export default class Home extends Component{
                       <ScrollView horizontal={true}>
                         <Row>
                         {
-                          this.items.map((item, key)=>
+                          this.state.Anime.map((item, key)=>
                             (
                               <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                   <View style = {styles.imgcolfour}>
                                     <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
-                                      <Thumbnail style={styles.imagetwo} square source={{uri : item.img}} />
+                                      <Thumbnail style={styles.imagetwo} square source={{uri : item.image_url}} />
                                     </Button>
                                     <Button transparent textStyle={{color: '#87838B'}}>
-                                      <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.name}</Text>
+                                      <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.title}</Text>
                                     </Button>
                                   </View>
                               </Col>
@@ -106,15 +147,15 @@ export default class Home extends Component{
                         <ScrollView horizontal={true}>
                           <Row>
                           {
-                            this.items.map((item, key)=>
+                            this.state.Anime.map((item, key)=>
                               (
                                 <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>
                                       <Button transparent style={{height: 120 , width: '100%'}} >
-                                        <Thumbnail style={styles.imagetwo} square source={{uri : item.img}} />
+                                        <Thumbnail style={styles.imagetwo} square source={{uri : item.image_url}} />
                                       </Button>
                                       <Button transparent textStyle={{color: '#87838B'}}>
-                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.name}</Text>
+                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.title}</Text>
                                       </Button>
                                     </View>
                                 </Col>
@@ -135,19 +176,19 @@ export default class Home extends Component{
                   </Col>
               </Row>
               {
-                this.items.map((item, key)=>
+              this.state.Anime.map((item, key)=>
                   (
                     <Row key={key}>
                       <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
                         <View style = {styles.imgcol}>
                           <Button transparent style={{height: '100%', width: '100%'}}>
-                            <Thumbnail style={styles.image} square large source={{uri : item.img}} />
+                            <Thumbnail style={styles.image} square large source={{uri : item.image_url}} />
                           </Button>
                         </View>
                       </Col>
                       <Col style={{ backgroundColor: 'white', height: 150 }}>
                         <View style = {styles.imgcoltwo}>
-                          <Text style={{color: 'black',paddingBottom: 10}}>{item.name}</Text>
+                          <Text style={{color: 'black',paddingBottom: 10}}>{item.title}</Text>
                           <Button style={{backgroundColor:'orange'}} >
                           <Text>Get Direction</Text>
                           </Button>
