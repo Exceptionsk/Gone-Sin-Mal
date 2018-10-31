@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "nativebase",
+    "name": "Gone Sin Mal",
     "androidStatusBar": {
     "barStyle": "light-content",
     },
     "description": "This project is really great.",
-    "slug": "nativebase",
+    "slug": "gone-sin-mal",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
@@ -26,6 +26,9 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+     "package": "com.bitgeeks.gonesinmal"
+   }
   }
 }

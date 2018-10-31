@@ -15,9 +15,9 @@ export default class Login extends Component {
  }
 
   async logInFB() {
-    
+
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      "276082606569782",
+      "2071732326473547",
       {
         permissions: ["public_profile"]
       }
@@ -84,7 +84,7 @@ export default class Login extends Component {
                     <Text> Login with facebook </Text>
                   </Button>
                   <Text style={{color:'white'}}>
-                     {this.state.stars} 
+                     {this.state.stars}
                   </Text>
                   {/* {this.renderUserInfo} */}
 
