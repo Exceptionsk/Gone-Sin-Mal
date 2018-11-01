@@ -1,10 +1,35 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
-import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { Right, Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
+import User from './Userprofile';
 export default class Home extends Component{
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  };
+  async retrieveItem(key) {
+    try {
+      const retrievedItem =  await AsyncStorage.getItem(key);
+      const item = JSON.parse(retrievedItem);
+      this.setState({
+         Profile: item,
+       });
+      return item;
+
+    } catch (error) {
+      console.log(error.message);
+    }
+    return
+  };
+  state = {
+    modalVisible: false,
+    Profile:{},
+  };
+  componentDidMount(){
+    this.retrieveItem('profile')
+  }
   constructor()
   {
     super();
@@ -18,16 +43,30 @@ export default class Home extends Component{
   }
   render(){
     return(
-      
+
       <Container>
-           <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-            <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
-                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-                <Text style = {{color: 'white'}}>BitGeeks</Text>
+          <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+            <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
+                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
+                <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
             </Button>
             <Button transparent>
                 <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
             </Button>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+              visible={this.state.modalVisible}>
+              <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+              <Right>
+                <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                    <Icon name="close"/>
+                </Button>
+                </Right>
+              </Header>
+              <User/>
+            </Modal>
           </Header>
         <Grid>
               <Row style={{height: 50}}>
@@ -57,7 +96,7 @@ export default class Home extends Component{
                       </Col>
                       <Col style={{ backgroundColor: 'white', height: 150, width: 70 }}>
                         <View style = {styles.imgcolthree}>
-                          <Ionicons name="md-heart" size={30} color="red" /> 
+                          <Ionicons name="md-heart" size={30} color="red" />
                         </View>
                       </Col>
                   </Row>

@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage } from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
 import User from './Userprofile';
 
 export default class Home extends Component{
+  async retrieveItem(key) {
+    try {
+      const retrievedItem =  await AsyncStorage.getItem(key);
+      const item = JSON.parse(retrievedItem);
+      this.setState({
+         Profile: item,
+       });
+      return item;
+
+    } catch (error) {
+      console.log(error.message);
+    }
+    return
+  }
   state = {
     modalVisible: false,
     Anime:[{img_url:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}],
-    value:'bleach'
+    value:'bleach',
+    Profile:{},
   };
+  componentWillMount(){
+    this.retrieveItem('profile')
+  }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -49,28 +67,13 @@ export default class Home extends Component{
     });
   }
 
-  // componentDidMount(){
-  //   // return fetch('https://api.jikan.moe/v3/search/anime?q=bleach')
-  //   // .then((response) => response.json())
-  //   // .then((responseJson) => {
-  //   //   this.setState({
-  //   //      Anime: responseJson.results,
-  //   //    }, function(){
-  //   //
-  //   //    });
-  //   // })
-  //   // .catch((error) => {
-  //   //   console.error(error);
-  //   // });
-  // }
-
   render(){
     return(
       <Container>
       <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
         <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
-            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-            <Text style = {{color: 'white'}}>BitGeeks</Text>
+            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
+            <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
         </Button>
         <Button transparent>
             <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>

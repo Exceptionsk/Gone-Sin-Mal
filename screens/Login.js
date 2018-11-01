@@ -3,7 +3,7 @@ import {Image,ImageBackground,StyleSheet,View,Alert} from "react-native";
 import {Container, Button, Left, Right, Icon, Text} from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
-
+import { AsyncStorage } from "react-native"
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -23,20 +23,16 @@ export default class Login extends Component {
       }
     );
     if (type === 'success') {
-      // Get the user's name using Facebook's Graph API
-      // this.props.navigation.navigate('CustHome');
       const response = await fetch(
         `https://graph.facebook.com/me?access_token=${token}&fields=id,name,picture.type(large)` );
-        // const userInfo = await response.json();
-        // this.setState({userInfo});
-
         const json = await response.json()
-        const stars = json.name
-        this.setState({stars})
-      Alert.alert(
-        'Logged in!',
-        `Hi ${(await response.json()).name}!`,
-      );
+        try {
+            var jsonOfItem = await AsyncStorage.setItem('profile', JSON.stringify(json));
+            console.log(json);
+            this.props.navigation.navigate('CustHome');
+        } catch (error) {
+          console.log(error.message);
+        }
     }
     else {
       // Handle errors here.
@@ -67,7 +63,7 @@ export default class Login extends Component {
                   <Image source={require('../assets/splash.png')} style={{height:160, width:160}} />
                 </View>
                 <View style={{alignItems: 'center'}}>
-                  <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={() => this.props.navigation.navigate('CustHome')}>
+                  <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={this.logInFB.bind(this)}>
                     <Icon name='logo-facebook' />
                     <Text> Login with Facebook </Text>
                   </Button>
@@ -79,16 +75,6 @@ export default class Login extends Component {
                     <Icon name='logo-facebook' />
                     <Text> Admin Login </Text>
                   </Button>
-                  <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={this.logInFB.bind(this)}>
-                    <Icon name='logo-facebook' />
-                    <Text> Login with facebook </Text>
-                  </Button>
-                  <Text style={{color:'white'}}>
-                     {this.state.stars}
-                  </Text>
-                  {/* {this.renderUserInfo} */}
-
-                  {/* {!this.state.userInfo ? (<Button title="Connect with facebook" onPress={this.logInFB.bind(this)} />):(this._renderUserInfo())} */}
                 </View>
               </Col>
             </Row>

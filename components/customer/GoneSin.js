@@ -1,9 +1,33 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Modal, AsyncStorage } from 'react-native';
 import { Container, Badge, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-
+import User from './Userprofile';
 export default class GoneSin extends Component {
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  };
+  async retrieveItem(key) {
+    try {
+      const retrievedItem =  await AsyncStorage.getItem(key);
+      const item = JSON.parse(retrievedItem);
+      this.setState({
+         Profile: item,
+       });
+      return item;
+
+    } catch (error) {
+      console.log(error.message);
+    }
+    return
+  };
+  state = {
+    modalVisible: false,
+    Profile:{},
+  };
+  componentWillMount(){
+    this.retrieveItem('profile')
+  }
   constructor()
   {
     super();
@@ -49,15 +73,29 @@ export default class GoneSin extends Component {
   render() {
     return(
       <Container>
-          <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-            <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
-                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-                <Text style = {{color: 'white'}}>BitGeeks</Text>
-            </Button>
-            <Button transparent>
-                <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
-            </Button>
-          </Header>
+        <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+          <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
+              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
+              <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
+          </Button>
+          <Button transparent>
+              <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+          </Button>
+          <Modal
+            animationType="slide"
+            transparent={false}
+            onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+            visible={this.state.modalVisible}>
+            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+            <Right>
+              <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                  <Icon name="close"/>
+              </Button>
+              </Right>
+            </Header>
+            <User/>
+          </Modal>
+        </Header>
         <Grid>
           <Row style={{height: 50}}>
                 <Col style={{ height: 50, paddingTop: 15 }}>

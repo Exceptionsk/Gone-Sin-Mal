@@ -1,9 +1,33 @@
 import React, { Component } from 'react';
-import { Image,StyleSheet } from 'react-native';
+import { Image,StyleSheet, Modal, AsyncStorage } from 'react-native';
 import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Body, Right } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-
+import User from './Userprofile';
 export default class Login extends Component {
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  };
+  async retrieveItem(key) {
+    try {
+      const retrievedItem =  await AsyncStorage.getItem(key);
+      const item = JSON.parse(retrievedItem);
+      this.setState({
+         Profile: item,
+       });
+      return item;
+
+    } catch (error) {
+      console.log(error.message);
+    }
+    return
+  };
+  state = {
+    modalVisible: false,
+    Profile:{},
+  };
+  componentWillMount(){
+    this.retrieveItem('profile')
+  }
     static navigationOptions = {
         header:null
       }
@@ -11,13 +35,27 @@ export default class Login extends Component {
         return(
             <Container>
                 <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                    <Button transparent style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
-                        <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-                        <Text style = {{color: 'white'}}>BitGeeks</Text>
-                    </Button>
-                    <Button transparent>
-                        <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
-                    </Button>
+                  <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
+                      <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
+                      <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
+                  </Button>
+                  <Button transparent>
+                      <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+                  </Button>
+                  <Modal
+                    animationType="slide"
+                    transparent={false}
+                    onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+                    visible={this.state.modalVisible}>
+                    <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                    <Right>
+                      <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                          <Icon name="close"/>
+                      </Button>
+                      </Right>
+                    </Header>
+                    <User/>
+                  </Modal>
                 </Header>
                 <Grid>
                     <Content style={{ backgroundColor: '#dfdfdf'}}>
@@ -44,7 +82,7 @@ export default class Login extends Component {
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
                                         <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('RestHome')}>
-                                            <Ionicons name="md-map" size={30} color="white" /> 
+                                            <Ionicons name="md-map" size={30} color="white" />
                                             <Text> Get Direction </Text>
                                         </Button>
                                     </Col>
