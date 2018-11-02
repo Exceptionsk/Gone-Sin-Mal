@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View,Alert} from 'react-native';
+import { StyleSheet, Text, View,Alert,TouchableOpacity,Switch} from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import Switch from 'react-native-switch-pro'
-// import { Switch } from 'react-native-switch';
 import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Button, Icon, Body, Right } from 'native-base';
 
 export default class BarcodeScannerExample extends React.Component {
   state = {
-     hasCameraPermission: null,
+    hasCameraPermission: null,
+    isSwitchOn: false
   }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -28,13 +27,11 @@ export default class BarcodeScannerExample extends React.Component {
       <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
         <Right>
         <View>
-        <Switch
-        activeText={'On'}
-        inActiveText={'Off'}
-          onAsyncPress={(callback) => {
-            callback( true,value => this.setState(Alert.alert("Hello")))
-        }}
+        <Switch 
+          onValueChange={isSwitchOn => this.setState({isSwitchOn})}
+          value={this.state.isSwitchOn} 
         />
+        <Text>{String(this.state.isSwitchOn)}</Text>
        </View>
         </Right>
       </Header>
