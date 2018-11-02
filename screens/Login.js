@@ -33,6 +33,21 @@ export default class Login extends Component {
         } catch (error) {
           console.log(error.message);
         }
+        try {
+          fetch('http://192.168.10.143:50830/api/User', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+              user_id: "12122",
+              user_name: "sample string gg"
+            }),
+          });
+        } catch (e) {
+          console.log('failed');
+        }
     }
     else {
       // Handle errors here.
