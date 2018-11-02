@@ -34,7 +34,7 @@ export default class Coins extends Component{
           <Tab  heading={ <TabHeading><Icon name="ios-cart" /><Text>Buy Coin</Text></TabHeading>}>
             <Buy />
           </Tab>
-          <Tab heading={ <TabHeading><Icon name="logo-usd" /><Text>Refunc Coins</Text></TabHeading>}>
+          <Tab heading={ <TabHeading><Icon name="logo-usd" /><Text>Refund Coins</Text></TabHeading>}>
             <Refund />
           </Tab>
         </Tabs>
