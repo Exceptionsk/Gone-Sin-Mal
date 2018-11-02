@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Icon from 'react-native-vector-icons/Ionicons'
 import Home from "../components/restaurant/Home";
-// import QR from "../components/restaurant/QRScan";
+import QR from "../components/restaurant/QRScan";
 import Coins from "../components/restaurant/Coins";
 
 import { createBottomTabNavigator } from 'react-navigation';
@@ -27,7 +27,7 @@ const Buttontab = createBottomTabNavigator({
     }
   },
   QR: {
-    screen: Home,
+    screen: QR,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-qr-scanner" color={tintColor} size={24} />

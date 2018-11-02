@@ -1,47 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { BarCodeScanner, Permissions } from 'expo';
 
-import {
-  AppRegistry,
-  StyleSheet,
-  NavigatorIOS,
-  Dimensions
-} from 'react-native';
-
-import QRCodeScanner from 'react-native-qrcode-scanner';
-
-class ScanScreen extends Component {
-  onSuccess(e) {
-    Linking.openURL(e.data).catch(err => console.error('An error occured', err))
+export default class BarcodeScannerExample extends React.Component {
+  state = {
+    hasCameraPermission: null,
   }
+
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({hasCameraPermission: status === 'granted'});
+    }
 
   render() {
+    const { hasCameraPermission } = this.state;
+
+    if (hasCameraPermission === null) {
+      return <Text>Requesting for camera permission</Text>;
+    }
+    if (hasCameraPermission === false) {
+      return <Text>No access to camera</Text>;
+    }
     return (
-      <NavigatorIOS
-        initialRoute={{
-          component: QRCodeScanner,
-          title: 'Scan Code',
-          passProps: {
-            onRead: this.onSuccess.bind(this),
-            cameraStyle: styles.cameraContainer,
-            topViewStyle: styles.zeroContainer,
-            bottomViewStyle: styles.zeroContainer,
-          }
-        }}
-        style={{flex: 1}}
-      />
-    )
+      <View style={{ flex: 1 }}>
+        <BarCodeScanner
+          onBarCodeScanned={this.handleBarCodeScanned}
+          style={StyleSheet.absoluteFill}
+        />
+      </View>
+    );
+  }
+
+  handleBarCodeScanned = ({ type, data }) => {
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   }
 }
-
-const styles = StyleSheet.create({
-  zeroContainer: {
-    height: 0,
-    flex: 0,
-  },
-
-  cameraContainer: {
-    height: Dimensions.get('window').height,
-  },
-});
-
-AppRegistry.registerComponent('fullScreen', () => ScanScreen);
