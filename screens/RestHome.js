@@ -10,6 +10,7 @@ export default class CustHome extends Component{
   static navigationOptions = {
     header:null
   }
+
   render(){
     return(
       <Buttontab/>

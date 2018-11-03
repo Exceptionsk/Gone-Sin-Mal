@@ -14,12 +14,15 @@ import CustHome from "./screens/CustHome";
 import RestHome from "./screens/RestHome";
 import LoginScreen from "./screens/Login";
 import AdminHome from "./screens/AdminHome";
+import Register from "./screens/Register";
+
 
 const TopLevelNavigator = createStackNavigator({
   Login: {screen: LoginScreen},
   CustHome: {screen: CustHome},
   RestHome: {screen: RestHome},
   AdminHome: {screen: AdminHome},
+  Register: {screen: Register},
 });
 
 export default class Start extends Component {

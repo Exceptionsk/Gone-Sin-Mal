@@ -90,6 +90,10 @@ export default class Login extends Component {
                     <Icon name='logo-facebook' />
                     <Text> Admin Login </Text>
                   </Button>
+                  <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('Register')}>
+                    <Icon name='logo-facebook' />
+                    <Text> Register </Text>
+                  </Button>
                 </View>
               </Col>
             </Row>
