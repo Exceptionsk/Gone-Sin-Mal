@@ -34,15 +34,16 @@ export default class Login extends Component {
           console.log(error.message);
         }
         try {
-          fetch('http://192.168.10.143:50830/api/User', {
+          fetch('http://192.168.10.143:2940/api/User', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
             body:JSON.stringify({
-              user_id: "12122",
-              user_name: "sample string gg"
+              User_id : json.id,
+              User_Name : json.name,
+              User_Type :"normal",
             }),
           });
         } catch (e) {
