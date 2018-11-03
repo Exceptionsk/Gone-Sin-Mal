@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Left, Right, Header, Icon, DeckSwiper, Thumbnail, Content, Button, Card, CardItem, Body, Text } from 'native-base';
+import { Container, Left, Right, Header, Icon, DeckSwiper, Thumbnail,Button, Content, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
+import { ImagePicker,Permissions } from 'expo';
 
 const cards = [
   {
@@ -20,7 +21,9 @@ const cards = [
 ];
 
 export default class Home extends Component{
-
+  state = {
+    image: null,
+  };
   constructor()
   {
     super();
@@ -33,13 +36,18 @@ export default class Home extends Component{
     ];
   }
   render(){
+    let { image } = this.state;
     return(
       <Container>
       <Header style = {{height: 80,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
       <Left>
-        <Button transparent full success style={{height:70}} onPress={() => this.props.navigation.navigate('Userprofile')}>
-            <Thumbnail style = {{borderColor: 'white', borderWidth: 2}}  source={require('../../assets/usothree.jpg')} />
-        </Button>
+      <Button transparent full success style={{height:70}} onPress={this._pickImage}>
+        {image &&
+              <Thumbnail style = {{borderColor: 'white', borderWidth: 2}} source={{ uri: image }} />}
+        <Text style={{paddingLeft:10,color:'white'}}>
+          Upload Logo
+        </Text>
+      </Button>
       </Left>
       <Body>
         <Text style = {{color: 'white'}}>  KFC something....</Text>
@@ -109,13 +117,32 @@ export default class Home extends Component{
           </View>
           </Col>
           </Row>
+          <Row>
+            <Col>
+
+            </Col>
+          </Row>
         </Grid>
         </ScrollView>
       </Content>
       </Container>
     );
   }
+  _pickImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+  
+    console.log(result);
+  
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
 }
+
 const styles= StyleSheet.create({
   image:{
     height: '100%',
