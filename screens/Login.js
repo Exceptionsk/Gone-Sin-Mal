@@ -29,12 +29,11 @@ export default class Login extends Component {
         try {
             var jsonOfItem = await AsyncStorage.setItem('profile', JSON.stringify(json));
             console.log(json);
-            this.props.navigation.navigate('CustHome');
         } catch (error) {
           console.log(error.message);
         }
         try {
-          fetch('http://192.168.10.143:2940/api/User', {
+          fetch('http://192.168.8.104:2940/api/User', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -43,9 +42,18 @@ export default class Login extends Component {
             body:JSON.stringify({
               User_id : json.id,
               User_Name : json.name,
-              User_Type :"normal",
             }),
-          });
+          }).then((response) => response.json())
+            .then((responsejson)=>{
+              if(responsejson.User_Type=="normal"){
+                this.props.navigation.navigate('CustHome')
+              }else if (responsejson.User_Type=="admin") {
+                this.props.navigation.navigate('AdminHome')
+              }else if (responsejson.User_Type=="owner"){
+                this.props.navigation.navigate('RestHome')
+              };
+              this.props.navigation.navigate('CustHome')
+            });
         } catch (e) {
           console.log('failed');
         }
