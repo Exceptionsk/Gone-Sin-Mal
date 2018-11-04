@@ -22,12 +22,27 @@ export default class Home extends Component{
   }
   state = {
     modalVisible: false,
-    Anime:[{img_url:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}],
+    // Anime:[{img_url:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}],
+    Restaurant:[],
     value:'bleach',
     Profile:{},
   };
+  componentDidMount(){
+
+  }
   componentWillMount(){
-    this.retrieveItem('profile')
+    this.retrieveItem('profile');
+    // fetch('https://api.jikan.moe/v3/search/anime?q=bleach&limit=10&genre=12&genre_exclude=0')
+    // .then((response) => response.json())
+    // .then((responseJson) => {
+    //   console.log(responseJson);
+    //   this.setState({
+    //      Restaurant: responseJson.result,
+    //    });
+    // })
+    // .catch((error) => {
+    //   console.error(error);
+    // });
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -53,11 +68,12 @@ export default class Home extends Component{
      }
 
   handleSearch(){
-    return fetch('https://api.jikan.moe/v3/search/anime?q='+ this.state.value + '&limit=10&genre=12&genre_exclude=0')
+    return fetch('http://192.168.8.104:2940/api/restaurant')
     .then((response) => response.json())
     .then((responseJson) => {
+      console.log(responseJson);
       this.setState({
-         Anime: responseJson.results,
+         Restaurant: responseJson,
        }, function(){
 
        });
@@ -115,15 +131,15 @@ export default class Home extends Component{
                       <ScrollView horizontal={true}>
                         <Row>
                         {
-                          this.state.Anime.map((item, key)=>
+                          this.state.Restaurant.map((item, key)=>
                             (
                               <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                   <View style = {styles.imgcolfour}>
                                     <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
-                                      <Thumbnail style={styles.imagetwo} square source={{uri : item.image_url}} />
+                                      <Thumbnail style={styles.imagetwo} square source={{uri : 'http://192.168.8.104:2940/api/resturant/profile_pic/' + item.Rest_id}} />
                                     </Button>
                                     <Button transparent textStyle={{color: '#87838B'}}>
-                                      <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.title}</Text>
+                                      <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
                                     </Button>
                                   </View>
                               </Col>
@@ -150,15 +166,15 @@ export default class Home extends Component{
                         <ScrollView horizontal={true}>
                           <Row>
                           {
-                            this.state.Anime.map((item, key)=>
+                            this.state.Restaurant.map((item, key)=>
                               (
                                 <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>
                                       <Button transparent style={{height: 120 , width: '100%'}} >
-                                        <Thumbnail style={styles.imagetwo} square source={{uri : item.image_url}} />
+                                        <Thumbnail style={styles.imagetwo} square source={{uri : 'http://192.168.8.104:2940/api/resturant/profile_pic/' + item.Rest_id}} />
                                       </Button>
                                       <Button transparent textStyle={{color: '#87838B'}}>
-                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.title}</Text>
+                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
                                       </Button>
                                     </View>
                                 </Col>
@@ -179,19 +195,19 @@ export default class Home extends Component{
                   </Col>
               </Row>
               {
-              this.state.Anime.map((item, key)=>
+              this.state.Restaurant.map((item, key)=>
                   (
                     <Row key={key}>
                       <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
                         <View style = {styles.imgcol}>
                           <Button transparent style={{height: '100%', width: '100%'}}>
-                            <Thumbnail style={styles.image} square large source={{uri : item.image_url}} />
+                            <Thumbnail style={styles.image} square large source={{uri : 'http://192.168.8.104:2940/api/resturant/profile_pic/' + item.Rest_id}} />
                           </Button>
                         </View>
                       </Col>
                       <Col style={{ backgroundColor: 'white', height: 150 }}>
                         <View style = {styles.imgcoltwo}>
-                          <Text style={{color: 'black',paddingBottom: 10}}>{item.title}</Text>
+                          <Text style={{color: 'black',paddingBottom: 10}}>{item.Rest_Name}</Text>
                           <Button style={{backgroundColor:'orange'}} >
                           <Text>Get Direction</Text>
                           </Button>

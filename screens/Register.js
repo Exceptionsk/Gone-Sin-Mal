@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
+import { ImagePicker,Permissions } from 'expo';
 import { Container,Textarea, Left, Right, Form, Label, Input, Header, H1,H2,H3, H4,Title, Item, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 export default class Register extends Component{
   static navigationOptions = {
@@ -17,8 +18,29 @@ export default class Register extends Component{
     township:'',
     lat:'4',
     long:'5',
+    profilepic:'',
   }
-  signup(){
+  _pickImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ profilepic: result.uri });
+    }
+  };
+  async signup(){
+    var item = "";
+    try {
+      const retrievedItem =  await AsyncStorage.getItem('profile');
+      item = JSON.parse(retrievedItem);
+    } catch (error) {
+      console.log(error.message);
+    }
     try {
       fetch('http://192.168.8.104:2940/api/Restaurant', {
         method: 'POST',
@@ -27,6 +49,7 @@ export default class Register extends Component{
           'Content-Type': 'application/json'
         },
         body:JSON.stringify({
+          User_id : item.id,
           Rest_Name : this.state.name,
           Rest_Password : this.state.password1,
           Rest_email : this.state.email,
@@ -38,6 +61,20 @@ export default class Register extends Component{
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
+
+          const data = new FormData();
+          data.append('name', this.state.name); // you can append anyone.
+          data.append('photo', {
+            uri: this.state.profilepic,
+            type: 'image/jpeg', // or photo.type
+            name: this.state.name,
+          });
+          fetch('http://192.168.8.104:2940/api/resturant/profile_pic/'+ responsejson.Rest_id, {
+            method: 'post',
+            body: data
+          }).then(res => {
+            console.log(res)
+          });
           // if(responsejson.User_Type=="normal"){
           //   this.props.navigation.navigate('CustHome')
           // }else if (responsejson.User_Type=="admin") {
@@ -71,7 +108,9 @@ export default class Register extends Component{
           <Form>
             <Row>
               <Col style={{width:100}}>
-                <Image style={{ height: 100, width:100, flex: 1 }} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
+                <Button onPress={this._pickImage} transparent style={{width:100, height:100}}>
+                  <Image style={{ height: 100, width:100, flex: 1 }} source={{uri : this.state.profilepic}} />
+                </Button>
               </Col>
               <Col>
                 <Item  >
