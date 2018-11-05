@@ -33,7 +33,7 @@ export default class Login extends Component {
           console.log(error.message);
         }
         try {
-          fetch('http://192.168.8.104:2940/api/User', {
+          fetch(global.HostURL + '/api/User', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

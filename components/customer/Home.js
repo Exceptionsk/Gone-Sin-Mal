@@ -32,17 +32,6 @@ export default class Home extends Component{
   }
   componentWillMount(){
     this.retrieveItem('profile');
-    // fetch('https://api.jikan.moe/v3/search/anime?q=bleach&limit=10&genre=12&genre_exclude=0')
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-    //   console.log(responseJson);
-    //   this.setState({
-    //      Restaurant: responseJson.result,
-    //    });
-    // })
-    // .catch((error) => {
-    //   console.error(error);
-    // });
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -68,7 +57,7 @@ export default class Home extends Component{
      }
 
   handleSearch(){
-    return fetch('http://192.168.8.104:2940/api/restaurant')
+    return fetch(global.HostURL + '/api/restaurant')
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
@@ -136,7 +125,7 @@ export default class Home extends Component{
                               <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                   <View style = {styles.imgcolfour}>
                                     <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
-                                      <Thumbnail style={styles.imagetwo} square source={{uri : 'http://192.168.8.104:2940/api/resturant/profile_pic/' + item.Rest_id}} />
+                                      <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
                                     </Button>
                                     <Button transparent textStyle={{color: '#87838B'}}>
                                       <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
@@ -171,7 +160,7 @@ export default class Home extends Component{
                                 <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>
                                       <Button transparent style={{height: 120 , width: '100%'}} >
-                                        <Thumbnail style={styles.imagetwo} square source={{uri : 'http://192.168.8.104:2940/api/resturant/profile_pic/' + item.Rest_id}} />
+                                        <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
                                       </Button>
                                       <Button transparent textStyle={{color: '#87838B'}}>
                                         <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
@@ -201,7 +190,7 @@ export default class Home extends Component{
                       <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
                         <View style = {styles.imgcol}>
                           <Button transparent style={{height: '100%', width: '100%'}}>
-                            <Thumbnail style={styles.image} square large source={{uri : 'http://192.168.8.104:2940/api/resturant/profile_pic/' + item.Rest_id}} />
+                            <Thumbnail style={styles.image} square large source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
                           </Button>
                         </View>
                       </Col>

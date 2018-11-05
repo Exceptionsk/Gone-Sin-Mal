@@ -42,7 +42,7 @@ export default class Register extends Component{
       console.log(error.message);
     }
     try {
-      fetch('http://192.168.8.104:2940/api/Restaurant', {
+      fetch(global.HostURL + '/api/Restaurant', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -69,7 +69,7 @@ export default class Register extends Component{
             type: 'image/jpeg', // or photo.type
             name: this.state.name,
           });
-          fetch('http://192.168.8.104:2940/api/resturant/profile_pic/'+ responsejson.Rest_id, {
+          fetch(global.HostURL + '/api/resturant/profile_pic/'+ responsejson.Rest_id, {
             method: 'post',
             body: data
           }).then(res => {
