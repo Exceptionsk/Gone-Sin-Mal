@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage } from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
-import ToggleSwitch from 'toggle-switch-react-native';
 import User from './Userprofile';
 
 export default class Home extends Component{
@@ -82,8 +81,6 @@ export default class Home extends Component{
       {name:'YKKO', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
       {name:'Golden Pot', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
     ];
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
@@ -134,7 +131,7 @@ export default class Home extends Component{
           <User/>
         </Modal>
       </Header>
-      <Header onSubmitEditing={this.handleSearch} onChange={this.handleChange} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
+      <Header onSubmitEditing={this.handleSearch.bind(this)} onChange={this.handleChange.bind(this)} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
           <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
             <Icon name="ios-search" />
             <Input placeholder="Search" />
