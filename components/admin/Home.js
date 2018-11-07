@@ -1,16 +1,47 @@
 import React, { Component } from 'react';
 import {
     AppRegistry,
-    StyleSheet, TextInput,TouchableWithoutFeedback
+    StyleSheet, TextInput,TouchableWithoutFeedback,
+    Dimensions,
+    ScrollView
   } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container,Card,CardItem,Body, Header, H1,H2,H3, H4,Left, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Text } from 'native-base';
-import {Actions} from 'react-native-router-flux';
-import QRCode from 'react-native-qrcode';
 import { Ionicons } from '@expo/vector-icons';
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph
+} from 'react-native-chart-kit';
+
 
 export default class Home extends Component {
+  
   render() {
+    const data = [
+      { name: 'Normal Coin', population: 8000, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      { name: 'Special Coin', population: 1000, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      { name: 'Expired Coin', population: 1000, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    ]
+    const chartConfig = {
+      backgroundGradientFrom: '#1E2923',
+      backgroundGradientTo: '#08130D',
+      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`
+    }
+    const rcdata = {
+      labels: ['Jan', 'Feb', 'Mar', 'April', 'May', 'June','July','Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        data: [ 20, 45, 28, 80, 99, 43, 70, 57, 30, 80, 70, 80 ]
+      }]
+    }
+    const rcchartConfig = {
+      backgroundGradientFrom: '#357edd',
+      backgroundGradientTo: '#8956ff',
+      color: (opacity = 1) => `rgba(225, 225, 225, ${opacity})`
+    }
+    const screenWidth = Dimensions.get('window').width
     return (
       <Container>
           <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
@@ -20,32 +51,113 @@ export default class Home extends Component {
           </Button>
         </Header>
         <Grid>
-        <Card style={{width:'99%',height:'98%'}}>
+        <Content>
+        <Card style={{width:'99%',height:450}}>
           <CardItem header>
           <Row>
             <Col style={{height:30, alignItems:'center'}}>
-              <H2>System Status</H2>
+              <H2>Coin Status</H2>
             </Col>
           </Row>
           </CardItem>
           <CardItem>
               <Row>
                 <Col style={{backgroundColor:'white'}}>
-                  <Text style={{paddingBottom:5}}>Total Coin: 10,000</Text>
-                  <Text style={{paddingBottom:5}}>Special Coin: 1,000</Text>
-                  <Text style={{paddingBottom:5}}>Expired Coin: 1,000</Text>
+                <PieChart
+                  data={data}
+                  width={390}
+                  height={220}
+                  chartConfig={chartConfig}
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                />
                 </Col>
               </Row>
           </CardItem>
           <CardItem footer>
           <Row>
             <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
-              <Text style={{paddingBottom:5}}>Total Customers: 275</Text>
+              <Text style={{paddingBottom:5}}>Total Coin: 10,000</Text>
+              <Text style={{paddingBottom:5}}>Normal Coin: 8,000</Text>
+              <Text style={{paddingBottom:5}}>Special Coin: 1,000</Text>
+              <Text style={{paddingBottom:5}}>Expired Coin: 1,000</Text>
+              {/* <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
+              <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
             </Col>
           </Row>
           </CardItem>
         </Card>
+        <Card style={{width:'99%',height:350}}>
+          <CardItem header>
+          <Row>
+            <Col style={{height:30, alignItems:'center'}}>
+              <H2>Restaurants Status</H2>
+            </Col>
+          </Row>
+          </CardItem>
+          <CardItem> 
+              <Row style={{width:378}}>      
+                <Col style={{backgroundColor:'white'}}>
+                <ScrollView horizontal={true}>
+                <BarChart
+                  data={rcdata}
+                  width={1000}
+                  height={220}
+                  chartConfig={rcchartConfig}
+                />
+                </ScrollView>
+                </Col>
+              </Row>         
+          </CardItem>
+          <CardItem footer>
+          <Row>
+            <Col style={{backgroundColor:'white'}}>
+              <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
+              {/* <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
+            </Col>
+          </Row>
+          </CardItem>
+        </Card>
+        <Card style={{width:'99%',height:350}}>
+          <CardItem header>
+          <Row>
+            <Col style={{height:30, alignItems:'center'}}>
+              <H2>Customers Status</H2>
+            </Col>
+          </Row>
+          </CardItem>
+          <CardItem> 
+              <Row style={{width:378}}>      
+                <Col style={{backgroundColor:'white'}}>
+                <ScrollView horizontal={true}>
+                {/* <BarChart
+                  data={rcdata}
+                  width={1000}
+                  height={220}
+                  chartConfig={rcchartConfig}
+                /> */}
+                <LineChart
+                  data={rcdata}
+                  width={1000}
+                  height={220}
+                  chartConfig={rcchartConfig}
+                  bezier
+                />
+                </ScrollView>
+                </Col>
+              </Row>         
+          </CardItem>
+          <CardItem footer>
+          <Row>
+            <Col style={{backgroundColor:'white'}}>
+              <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
+              {/* <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
+            </Col>
+          </Row>
+          </CardItem>
+        </Card>
+        </Content>
         </Grid>
       </Container>
     );

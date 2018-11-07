@@ -54,7 +54,7 @@ const Buttontab = createBottomTabNavigator({
 
 }, {//router config
     initialRouteName: 'Home',
-    order: ['NNoti','PNoti','Home','Security','Admins'],
+    order: ['NNoti','PNoti','Home','Admins'],
     //navigation for complete tab navigator
     navigationOptions: {
       tabBarVisible: true
