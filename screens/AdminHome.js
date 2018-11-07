@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from 'react-navigation';
 import NNoti from "../components/admin/NNoti";
 import PNoti from "../components/admin/PNoti";
 import Home from "../components/admin/Home";
-import Security from "../components/admin/Security";
 import Admins from "../components/admin/Admins";
 
 export default class CustHome extends Component{
@@ -41,14 +40,6 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-home" color={tintColor} size={24} />
-      )
-    }
-  },
-  Security: {
-    screen: Security,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Ionicons name="ios-lock" color={tintColor} size={24} />
       )
     }
   },

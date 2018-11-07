@@ -24,7 +24,7 @@ export default class Register extends Component{
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
     });
 
     console.log(result);
@@ -42,6 +42,7 @@ export default class Register extends Component{
       console.log(error.message);
     }
     try {
+      var date = new Date();
       fetch(global.HostURL + '/api/Restaurant', {
         method: 'POST',
         headers: {
@@ -58,6 +59,7 @@ export default class Register extends Component{
           Rest_Township : this.state.township,
           Rest_lat : this.state.lat,
           Rest_long : this.state.long,
+          Rest_created_date : date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
@@ -85,7 +87,7 @@ export default class Register extends Component{
           // this.props.navigation.navigate('CustHome')
         });
     } catch (e) {
-      console.log('failed');
+      console.log(e);
     }
   }
   render(){

@@ -22,16 +22,52 @@ export default class Home extends Component{
   }
   state = {
     modalVisible: false,
-    // Anime:[{img_url:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}],
+    Recommended : [],
+    New:[],
     Restaurant:[],
     value:'bleach',
     Profile:{},
   };
-  componentDidMount(){
 
+   getNew(){
+    return fetch(global.HostURL + '/api/restaurant/new')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+      this.setState({
+         New: responseJson,
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+   getRecommended(){
+    return fetch(global.HostURL + '/api/restaurant/recommended')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+      this.setState({
+         Recommended: responseJson,
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  componentDidMount(){
+    this.getRecommended();
+    this.getNew();
   }
   componentWillMount(){
     this.retrieveItem('profile');
+
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -120,7 +156,7 @@ export default class Home extends Component{
                       <ScrollView horizontal={true}>
                         <Row>
                         {
-                          this.state.Restaurant.map((item, key)=>
+                          this.state.Recommended.map((item, key)=>
                             (
                               <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                   <View style = {styles.imgcolfour}>
@@ -155,7 +191,7 @@ export default class Home extends Component{
                         <ScrollView horizontal={true}>
                           <Row>
                           {
-                            this.state.Restaurant.map((item, key)=>
+                            this.state.New.map((item, key)=>
                               (
                                 <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>

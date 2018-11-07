@@ -45,7 +45,9 @@ export default class Login extends Component {
             }),
           }).then((response) => response.json())
             .then((responsejson)=>{
+              console.log(responsejson.User_Type);
               if(responsejson.User_Type=="normal"){
+                  console.log("cust");
                 this.props.navigation.navigate('CustHome')
               }else if (responsejson.User_Type=="admin") {
                 this.props.navigation.navigate('AdminHome')
