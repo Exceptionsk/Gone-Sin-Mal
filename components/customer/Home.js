@@ -24,7 +24,7 @@ export default class Home extends Component{
     Recommended : [],
     New:[],
     Restaurant:[],
-    value:'bleach',
+    value:'',
     Profile:{},
   };
 
@@ -94,6 +94,7 @@ export default class Home extends Component{
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
+
       this.setState({
          Restaurant: responseJson,
        }, function(){
@@ -152,22 +153,22 @@ export default class Home extends Component{
                     <View>
                       <ScrollView horizontal={true}>
                         <Row>
-                        {
-                          this.state.Recommended.map((item, key)=>
-                            (
-                              <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
-                                  <View style = {styles.imgcolfour}>
-                                    <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
-                                      <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
-                                    </Button>
-                                    <Button transparent textStyle={{color: '#87838B'}}>
-                                      <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
-                                    </Button>
-                                  </View>
-                              </Col>
+                          {
+                            this.state.Recommended.map((item, key)=>
+                              (
+                                <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
+                                    <View style = {styles.imgcolfour}>
+                                      <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
+                                        <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
+                                      </Button>
+                                      <Button transparent textStyle={{color: '#87838B'}}>
+                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
+                                      </Button>
+                                    </View>
+                                </Col>
+                              )
                             )
-                          )
-                        }
+                          }
                         </Row>
                       </ScrollView>
                     </View>
@@ -187,22 +188,22 @@ export default class Home extends Component{
                       <View>
                         <ScrollView horizontal={true}>
                           <Row>
-                          {
-                            this.state.New.map((item, key)=>
-                              (
-                                <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
-                                    <View style = {styles.imgcolfour}>
-                                      <Button transparent style={{height: 120 , width: '100%'}} >
-                                        <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
-                                      </Button>
-                                      <Button transparent textStyle={{color: '#87838B'}}>
-                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
-                                      </Button>
-                                    </View>
-                                </Col>
-                              )
-                            )
-                          }
+                               {
+                                this.state.New.map((item, key)=>
+                                  (
+                                    <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
+                                        <View style = {styles.imgcolfour}>
+                                          <Button transparent style={{height: 120 , width: '100%'}} >
+                                            <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
+                                          </Button>
+                                          <Button transparent textStyle={{color: '#87838B'}}>
+                                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
+                                          </Button>
+                                        </View>
+                                    </Col>
+                                  )
+                                )
+                              }
                           </Row>
                         </ScrollView>
                       </View>
@@ -216,35 +217,34 @@ export default class Home extends Component{
                     </H3>
                   </Col>
               </Row>
-              {
-              this.state.Restaurant.map((item, key)=>
-                  (
-                    <Row key={key}>
-                      <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
-                        <View style = {styles.imgcol}>
-                          <Button transparent style={{height: '100%', width: '100%'}}>
-                            <Thumbnail style={styles.image} square large source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
-                          </Button>
-                        </View>
-                      </Col>
-                      <Col style={{ backgroundColor: 'white', height: 150 }}>
-                        <View style = {styles.imgcoltwo}>
-                          <Text style={{color: 'black',paddingBottom: 10}}>{item.Rest_Name}</Text>
-                          <Button style={{backgroundColor:'orange'}} >
-                          <Text>Get Direction</Text>
-                          </Button>
-                        </View>
-                      </Col>
-                      <Col style={{ backgroundColor: 'white', height: 150, width: 70 }}>
-                        <View style = {styles.imgcolthree}>
-                          <Icon name="md-heart" color={'grey'} size={30} />
-                        </View>
-                      </Col>
-                  </Row>
-                  )
-                )
-              }
-
+                 {
+                    this.state.Restaurant.map((item, key)=>
+                        (
+                          <Row key={key}>
+                            <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
+                              <View style = {styles.imgcol}>
+                                <Button transparent style={{height: '100%', width: '100%'}}>
+                                  <Thumbnail style={styles.image} square large source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
+                                </Button>
+                              </View>
+                            </Col>
+                            <Col style={{ backgroundColor: 'white', height: 150 }}>
+                              <View style = {styles.imgcoltwo}>
+                                <Text style={{color: 'black',paddingBottom: 10}}>{item.Rest_Name}</Text>
+                                <Button style={{backgroundColor:'orange'}} >
+                                <Text>Get Direction</Text>
+                                </Button>
+                              </View>
+                            </Col>
+                            <Col style={{ backgroundColor: 'white', height: 150, width: 70 }}>
+                              <View style = {styles.imgcolthree}>
+                                <Icon name="md-heart" color={'grey'} size={30} />
+                              </View>
+                            </Col>
+                        </Row>
+                        )
+                      )
+                    }
           </Content>
         </Grid>
       </Container>
