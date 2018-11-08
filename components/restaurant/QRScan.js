@@ -24,25 +24,27 @@ export default class BarcodeScannerExample extends React.Component {
     }
     return (
       <Container>
-        <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+        <Header style = {{alignItems:'center',height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+            <Body style={{paddingLeft:300}}>
+            <Badge style={{ backgroundColor: 'black' }}>
+                  <Text style={{ color: 'white' }}>{String(this.state.isSwitchOn)}</Text>
+            </Badge>
+            </Body>
             <Right>
               <View style={{justifyContent: 'center'}}>
                 <Switch 
                   onValueChange={isSwitchOn => this.setState({isSwitchOn})}
                   value={this.state.isSwitchOn} 
                 />
-                <Badge style={{ backgroundColor: 'black' }}>
-                  <Text style={{ color: 'white' }}>{String(this.state.isSwitchOn)}</Text>
-                </Badge>
               </View>
             </Right>
         </Header>
         <Content contentContainerStyle={{ flex: 1 }}>
           <Grid>
-            <Row style={{paddingTop:30}}>
+            <Row style={{paddingTop:30,height:400}}>
               <Col>
               </Col>
-              <Col style={{width:250}}>
+              <Col style={{width:370}}>
                   <View style={{ flex: 1}}>
                     <BarCodeScanner
                       onBarCodeScanned={this.handleBarCodeScanned}
@@ -56,7 +58,12 @@ export default class BarcodeScannerExample extends React.Component {
             <Row>
               <Col>
               </Col>
-              <Col style={{width:250}}>
+              <Col style={{width:300}}>
+                <Row>
+                <Col style={{paddingTop:30}}>
+                <Label>Amount:</Label>
+                </Col>
+                <Col style={{width:200}}>
                 <Form>
                   {/* <Item stackedLabel>
                     <Label>Code Type</Label>
@@ -64,13 +71,22 @@ export default class BarcodeScannerExample extends React.Component {
                     {this.state.type}
                     </Input>
                   </Item> */}
-                  <Item stackedLabel last>
-                    <Label>Amount</Label>
+                  <Item last>
                     <Input>
                     {this.state.data}
                     </Input>
                   </Item>
                 </Form>
+                </Col>
+                </Row>
+              </Col>
+              <Col>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+              </Col>
+              <Col style={{width:300}}>
                 <Button full warning>
                   <Text>Scan Now!</Text>
                 </Button>

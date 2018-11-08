@@ -151,7 +151,7 @@ export default class Home extends Component {
           <CardItem footer>
           <Row>
             <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
+              <Text style={{paddingBottom:5}}>Total Number of Customer: 789</Text>
               {/* <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
             </Col>
           </Row>
