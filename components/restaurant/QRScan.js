@@ -3,6 +3,7 @@ import { StyleSheet, Text, View,Alert,TouchableOpacity,Switch} from 'react-nativ
 import { BarCodeScanner, Permissions } from 'expo';
 import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Button, Icon, Body, Left, Right,Item,Form,Label,Input } from 'native-base';
 
+
 export default class BarcodeScannerExample extends React.Component {
   state = {
     hasCameraPermission: null,
@@ -39,9 +40,10 @@ export default class BarcodeScannerExample extends React.Component {
               </View>
             </Right>
         </Header>
-          <Grid>
+        <Content>
+          <Grid >
             <Row>
-              <Col style={{ height: 300 ,paddingTop: 30}}>
+              <Col style={{ height:350, padding:10}}>
                   <View style={{ flex: 1}}>
                     <BarCodeScanner
                       onBarCodeScanned={this.handleBarCodeScanned}
@@ -50,9 +52,9 @@ export default class BarcodeScannerExample extends React.Component {
                   </View>
               </Col>
             </Row>
-            <Row>
-                <Col style={{height:50}}>
-                  <Label>Amount:</Label>
+            <Row style={{padding:10}}>
+                <Col style={{width:70}}>
+                  <Label >Amount:</Label>
                 </Col>
                 <Col>
                   <Form>
@@ -65,13 +67,14 @@ export default class BarcodeScannerExample extends React.Component {
                </Col>
             </Row>
             <Row>
-              <Col style={{height:50}}>
+              <Col style={{height:50, padding:10}}>
                 <Button full warning>
                   <Text>Scan Now!</Text>
                 </Button>
               </Col>
             </Row>
           </Grid>
+          </Content>
       </Container>
     );
   }
