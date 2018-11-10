@@ -5,7 +5,7 @@ import Favourite from "../components/customer/Favourite";
 import GoneSin from "../components/customer/GoneSin";
 import Notification from "../components/customer/Notification";
 import { createBottomTabNavigator,Header, createStackNavigator,View } from 'react-navigation';
-import Userprofile from '../components/customer/Userprofile';
+import Search from '../components/customer/Search';
 import Restaurantdetail from '../components/customer/Restaurantdetail';
 import Login from "./Login";
 
@@ -13,8 +13,11 @@ const User = createStackNavigator({
   AppHome : {
     screen:Home,
   },
-  Userprofile:{
-    screen:Userprofile
+  // Userprofile:{
+  //   screen:Userprofile
+  // },
+  Search:{
+    screen:Search
   },
   Restaurantdetail:{
     screen:Restaurantdetail
@@ -39,7 +42,7 @@ const Buttontab = createBottomTabNavigator({
     screen: User,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-search" color={tintColor} size={24} />
+        <Icon name="ios-home" color={tintColor} size={24} />
       )
     }
   },

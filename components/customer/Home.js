@@ -15,7 +15,8 @@ export default class Home extends Component{
       return item;
 
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
+      console.log("key failed");
     }
     return
   }
@@ -40,7 +41,8 @@ export default class Home extends Component{
        });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
+      console.log("new failed");
     });
   }
 
@@ -56,7 +58,8 @@ export default class Home extends Component{
        });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
+      console.log("recommend failed");
     });
   }
 
@@ -102,19 +105,20 @@ export default class Home extends Component{
        });
     })
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
+      console.log("recommend failed");
     });
   }
 
   render(){
     return(
       <Container>
-      <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{height: 90,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
         <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
             <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
             <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
         </Button>
-        <Button transparent>
+        <Button transparent  onPress={() => this.props.navigation.navigate('Search')}>
             <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
         </Button>
         <Modal
@@ -211,40 +215,7 @@ export default class Home extends Component{
                   </CardItem>
                 </Card>
               <Row>
-                  <Col style={{ backgroundColor: 'white', height: 40 }}>
-                    <H3 style={{ color: 'black',fontWeight: "bold", paddingLeft: 10, paddingTop: 10 }}>
-                      Popular Restaurants!
-                    </H3>
-                  </Col>
-              </Row>
-                 {
-                    this.state.Restaurant.map((item, key)=>
-                        (
-                          <Row key={key}>
-                            <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
-                              <View style = {styles.imgcol}>
-                                <Button transparent style={{height: '100%', width: '100%'}}>
-                                  <Thumbnail style={styles.image} square large source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
-                                </Button>
-                              </View>
-                            </Col>
-                            <Col style={{ backgroundColor: 'white', height: 150 }}>
-                              <View style = {styles.imgcoltwo}>
-                                <Text style={{color: 'black',paddingBottom: 10}}>{item.Rest_Name}</Text>
-                                <Button style={{backgroundColor:'orange'}} >
-                                <Text>Get Direction</Text>
-                                </Button>
-                              </View>
-                            </Col>
-                            <Col style={{ backgroundColor: 'white', height: 150, width: 70 }}>
-                              <View style = {styles.imgcolthree}>
-                                <Icon name="md-heart" color={'grey'} size={30} />
-                              </View>
-                            </Col>
-                        </Row>
-                        )
-                      )
-                    }
+              </Row>      
           </Content>
         </Grid>
       </Container>

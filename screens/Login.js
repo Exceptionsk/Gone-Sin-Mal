@@ -47,7 +47,6 @@ export default class Login extends Component {
             .then((responsejson)=>{
               console.log(responsejson.User_Type);
               if(responsejson.User_Type=="normal"){
-                  console.log("cust");
                 this.props.navigation.navigate('CustHome')
               }else if (responsejson.User_Type=="admin") {
                 this.props.navigation.navigate('AdminHome')
@@ -55,9 +54,12 @@ export default class Login extends Component {
                 this.props.navigation.navigate('RestHome')
               };
               this.props.navigation.navigate('CustHome')
+            }).catch((error)=>{
+               this.props.navigation.navigate('CustHome')
             });
         } catch (e) {
           console.log('failed');
+
         }
     }
     else {

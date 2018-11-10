@@ -73,7 +73,7 @@ export default class GoneSin extends Component {
   render() {
     return(
       <Container>
-        <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+        <Header style = {{height: 90,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
           <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
               <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
               <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
