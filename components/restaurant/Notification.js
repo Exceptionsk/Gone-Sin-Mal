@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet, ImageBackground, ScrollView, Modal, AsyncStorage,TextInput  } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, List,Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
+import {Actions} from 'react-native-router-flux';
+import { ImagePicker,Permissions } from 'expo';
 export default class Notification extends Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -79,12 +81,16 @@ export default class Notification extends Component {
 
   Userbar(type){
     if(type=='transaction id'){
-      return <TextInput style = {styles.input}
-      underlineColorAndroid = "transparent"
-      placeholder = " Transaction Id"
-      placeholderTextColor = "#3f3f3f"
-      autoCapitalize = "none"
-      onChangeText = {this.handlePassword}/>
+      return <TextInput style = {styles.input} underlineColorAndroid = "transparent" placeholder = " Transaction Id" placeholderTextColor = "#3f3f3f" autoCapitalize = "none" onChangeText = {this.handlePassword}/>
+    }
+    else{
+
+    }
+
+  }
+  button(type){
+    if(type=='transaction id'){
+      return <Button transparent warning><Text>Warning</Text></Button>
     }
     else{
 
@@ -96,20 +102,33 @@ export default class Notification extends Component {
     let { image } = this.state;
     return(
     <Container>
-      <Header style = {{ height: 60,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{height: 80,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Left>
+      <Button transparent full success style={{height:70}} onPress={this._pickImage}>
+        {image &&
+              <Thumbnail style = {{borderColor: 'white', borderWidth: 2}} source={{ uri: image }} />}
+        <Text style={{paddingLeft:10,color:'white'}}>
+          Upload Logo
+        </Text>
+      </Button>
+      </Left>
       <Body>
-        <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Notification</H3>
+        <Text style = {{color: 'white'}}>  KFC something....</Text>
       </Body>
       </Header>
         <Grid>
+          <Row style={{height: 50}}>
+                  <Col style={{ height: 50, paddingTop: 15 }}>
+                    <H3 style={{ fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Notification</H3>
+                  </Col>
+            </Row>
             <Content style = {{backgroundColor:'#dfdfdf'}}>
             {
                 this.items.map((item, key)=>
                   (
                 <Row key={key}>
-                  <Col style={{ backgroundColor: '#dfdfdf', height: '100%', width: '100%'}}>
-                    <Card style={{flex: 0, marginLeft: 0, width: '100%' }}>
-                        <Col>
+                  <Card style={{flex: 0, marginLeft: 0, width: '100%', height: '100%' }}>
+                  <Col style={{ backgroundColor: '#dfdfdf', width: '100%'}}>
                             <CardItem>
                             <Left>
                                 <Thumbnail source={{uri : item.img}} />
@@ -119,14 +138,18 @@ export default class Notification extends Component {
                                 </Body>
                             </Left>
                             </CardItem>
-                        </Col>
-                        <Col>
-                            <CardItem>
+                    </Col>
+                    <Col style={{ backgroundColor: '#dfdfdf', width: '100%'}}>
+                        <CardItem>
+                            <Left>
                             {this.Userbar(item.type)}
-                            </CardItem>
-                        </Col>
-                    </Card>
-                  </Col>
+                                <Body>
+                                {this.button(item.type)}
+                                </Body>
+                            </Left>
+                        </CardItem>
+                    </Col>
+                  </Card>
                 </Row>
                 )
                   )
@@ -136,16 +159,28 @@ export default class Notification extends Component {
     </Container>
 );
 }
+_pickImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+  
+    console.log(result);
+  
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
 }
-
-
 
 const styles= StyleSheet.create({
     input: {
+        margin: 15,
         height: 40,
         borderColor: '#ff7d21',
         borderWidth: 1,
-        width:'100%',
+        width:'80%',
      },
     image:{
       height: '100%',

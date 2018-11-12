@@ -74,7 +74,7 @@ export default class BarcodeScannerExample extends React.Component {
                 <Row>
                   <Col style={{height:60}}>
                     <Button full warning>
-                      <Text>Scan Now!</Text>
+                      <Text style={{paddingBottom:10}}>Scan Now!</Text>
                     </Button>
                   </Col>
                 </Row>
@@ -91,3 +91,4 @@ export default class BarcodeScannerExample extends React.Component {
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   }
 }
+
