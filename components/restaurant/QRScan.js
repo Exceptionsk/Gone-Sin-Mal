@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View,Alert,TouchableOpacity,Switch} from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Button, Icon, Body, Left, Right,Item,Form,Label,Input } from 'native-base';
+import { Container, Footer, FooterTab, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Button, Icon, Body, Left, Right,Item,Form,Label,Input } from 'native-base';
 
 
 export default class BarcodeScannerExample extends React.Component {
@@ -40,10 +40,10 @@ export default class BarcodeScannerExample extends React.Component {
               </View>
             </Right>
         </Header>
-        <Content>
-          <Grid >
+        <Content contentContainerStyle={{ flex: 1 }}>
+          <Grid>
             <Row>
-              <Col style={{ height:350, padding:10}}>
+              <Col>
                   <View style={{ flex: 1}}>
                     <BarCodeScanner
                       onBarCodeScanned={this.handleBarCodeScanned}
@@ -52,29 +52,35 @@ export default class BarcodeScannerExample extends React.Component {
                   </View>
               </Col>
             </Row>
-            <Row style={{padding:10}}>
-                <Col style={{width:70}}>
-                  <Label >Amount:</Label>
-                </Col>
-                <Col>
-                  <Form>
-                    <Item>
-                      <Input>
-                        {this.state.data}
-                      </Input>
-                    </Item>
-                  </Form>
-               </Col>
-            </Row>
-            <Row>
-              <Col style={{height:50, padding:10}}>
-                <Button full warning>
-                  <Text>Scan Now!</Text>
-                </Button>
-              </Col>
-            </Row>
           </Grid>
           </Content>
+          <Footer style={{height:110}}>
+            <FooterTab>
+              <Grid>
+                <Row style={{padding:10}}>
+                    <Col style={{width:70}}>
+                      <Label >Amount:</Label>
+                    </Col>
+                    <Col>
+                      <Form>
+                        <Item>
+                          <Input>
+                            {this.state.data}
+                          </Input>
+                        </Item>
+                      </Form>
+                   </Col>
+                </Row>
+                <Row>
+                  <Col style={{height:60}}>
+                    <Button full warning>
+                      <Text>Scan Now!</Text>
+                    </Button>
+                  </Col>
+                </Row>
+              </Grid>
+            </FooterTab>
+        </Footer>
       </Container>
     );
   }
