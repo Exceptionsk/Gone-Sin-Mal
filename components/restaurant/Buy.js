@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, WebView, Modal} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
-import { Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { Container, Header,Right, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
 export default class Home extends Component{
+  state = {
+    modalVisible: false,
+  };
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
   constructor()
   {
     super();
     this.items = [
-      {name:'100 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'200 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'500 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'1000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
+      {name:'100 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'200 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'500 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'1000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
     ];
     this.items1 = [
-      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'30000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'100000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
+      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'30000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'100000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
     ];
   }
   render(){
@@ -42,8 +49,31 @@ export default class Home extends Component{
                 this.items.map((item, key)=>
                   (
                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
+                      <Modal
+                        animationType="slide"
+                        transparent={false}
+                        onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+                        visible={this.state.modalVisible}>
+                        <Header style = {{height: 55 ,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                        <Right>
+                          <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                          <Icon name="md-close-circle-outline" size={24} />
+                          </Button>
+                        </Right>
+                        </Header>
+                        <WebView
+                          source={{
+                          uri: item.link
+                          }}
+                          onNavigationStateChange={this.onNavigationStateChange}
+                          startInLoadingState
+                          scalesPageToFit
+                          javaScriptEnabled
+                          style={{ flex: 1 }}
+                          />
+                      </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} >
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={() => {this.setModalVisible(true);}} >
                             <Thumbnail style={styles.imagetwo} source={{uri : item.img}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>
@@ -71,8 +101,31 @@ export default class Home extends Component{
                 this.items1.map((item, key)=>
                   (
                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+                        visible={this.state.modalVisible}>
+                        <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                        <Right>
+                          <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                              <Icon name="close"/>
+                          </Button>
+                        </Right>
+                        </Header>
+                        <WebView
+                          source={{
+                          uri: item.link
+                          }}
+                          onNavigationStateChange={this.onNavigationStateChange}
+                          startInLoadingState
+                          scalesPageToFit
+                          javaScriptEnabled
+                          style={{ flex: 1 }}
+                          />
+                      </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} >
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={() => {this.setModalVisible(true);}}>
                             <Thumbnail style={styles.imagetwo} source={{uri : item.img}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>

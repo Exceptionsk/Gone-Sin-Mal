@@ -129,7 +129,7 @@ export default class Home extends Component{
           <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
           <Right>
             <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                <Icon name="close"/>
+              <Icon name="md-close-circle-outline" size={24} />
             </Button>
             </Right>
           </Header>

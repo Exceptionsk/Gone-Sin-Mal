@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Home from "../components/restaurant/Home";
 import QR from "../components/restaurant/QRScan";
 import Coins from "../components/restaurant/Coins";
+import Notification from "../components/restaurant/Notification";
 
 import { createBottomTabNavigator } from 'react-navigation';
 
@@ -43,10 +44,18 @@ const Buttontab = createBottomTabNavigator({
       )
     }
   },
+  Notification: {
+    screen: Notification,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-notifications" color={tintColor} size={24} />
+      )
+    }
+  },
 
 }, {//router config
     initialRouteName: 'Home',
-    order: ['QR','Home','Coins'],
+    order: ['QR','Home','Coins','Notification'],
     //navigation for complete tab navigator
     navigationOptions: {
       tabBarVisible: true
