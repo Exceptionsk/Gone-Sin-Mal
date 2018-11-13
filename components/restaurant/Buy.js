@@ -12,6 +12,25 @@ export default class Home extends Component{
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
+  beginTransaction(){
+    try {
+      fetch(global.HostURL + '/api/Transaction', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          User_id : id,
+        }),
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+          this.handleSearch();
+        });
+    } catch (e) {
+      console.log('failed');
+    }
+  }
   constructor()
   {
     super();

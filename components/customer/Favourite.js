@@ -25,11 +25,7 @@ export default class Home extends Component{
   };
   state = {
     modalVisible: false,
-    Profile:{},
   };
-  componentDidMount(){
-    this.retrieveItem('profile')
-  }
   constructor()
   {
     super();
@@ -47,8 +43,8 @@ export default class Home extends Component{
       <Container>
           <Header style = {{height: 90,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
             <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
-                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
-                <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
+                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+                <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
             </Button>
             <Button transparent>
                 <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>

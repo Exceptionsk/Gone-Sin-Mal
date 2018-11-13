@@ -8,27 +8,9 @@ export default class Notification extends Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   };
-  async retrieveItem(key) {
-    try {
-      const retrievedItem =  await AsyncStorage.getItem(key);
-      const item = JSON.parse(retrievedItem);
-      this.setState({
-         Profile: item,
-       });
-      return item;
-
-    } catch (error) {
-      console.log(error.message);
-    }
-    return
-  };
   state = {
     modalVisible: false,
-    Profile:{},
   };
-  componentWillMount(){
-    this.retrieveItem('profile')
-  }
   constructor()
   {
     super();
@@ -64,8 +46,8 @@ export default class Notification extends Component {
     <Container>
         <Header style = {{height: 90,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
           <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
-              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
-              <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
+              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+              <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
           </Button>
           <Button transparent>
               <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>

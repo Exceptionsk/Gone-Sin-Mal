@@ -28,7 +28,8 @@ export default class Login extends Component {
         const json = await response.json()
         try {
             var jsonOfItem = await AsyncStorage.setItem('profile', JSON.stringify(json));
-            console.log(json);
+            global.Profile = json;
+            // console.log(json);
         } catch (error) {
           console.log(error.message);
         }

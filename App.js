@@ -28,7 +28,8 @@ const TopLevelNavigator = createStackNavigator({
 export default class Start extends Component {
   constructor(){
     super();
-    global.HostURL = "http://192.168.1.6:2940"
+    global.HostURL = "http://192.168.8.101:2940",
+    global.Profile={}
   }
   state = {
   fontLoaded: false

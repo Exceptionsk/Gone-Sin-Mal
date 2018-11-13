@@ -146,8 +146,6 @@ export default class Notification extends Component {
 }
 }
 
-
-
 const styles= StyleSheet.create({
     input: {
         borderColor: '#ff7d21',

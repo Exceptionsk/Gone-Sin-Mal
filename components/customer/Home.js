@@ -5,28 +5,12 @@ import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbna
 import User from './Userprofile';
 
 export default class Home extends Component{
-  async retrieveItem(key) {
-    try {
-      const retrievedItem =  await AsyncStorage.getItem(key);
-      const item = JSON.parse(retrievedItem);
-      this.setState({
-         Profile: item,
-       });
-      return item;
-
-    } catch (error) {
-      // console.log(error.message);
-      console.log("key failed");
-    }
-    return
-  }
   state = {
     modalVisible: false,
     Recommended : [],
     New:[],
     Restaurant:[],
     value:'',
-    Profile:{},
   };
 
    getNew(){
@@ -66,10 +50,6 @@ export default class Home extends Component{
   componentDidMount(){
     this.getRecommended();
     this.getNew();
-  }
-  componentWillMount(){
-    this.retrieveItem('profile');
-
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -115,8 +95,8 @@ export default class Home extends Component{
       <Container>
       <Header style = {{height: 90,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
         <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
-            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ this.state.Profile.id + '/picture?type=normal'}} />
-            <Text style = {{color: 'white'}}>{this.state.Profile.name}</Text>
+            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+            <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
         </Button>
         <Button transparent  onPress={() => this.props.navigation.navigate('Search')}>
             <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
@@ -215,7 +195,7 @@ export default class Home extends Component{
                   </CardItem>
                 </Card>
               <Row>
-              </Row>      
+              </Row>
           </Content>
         </Grid>
       </Container>

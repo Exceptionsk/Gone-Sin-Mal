@@ -11,26 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../../NavigationService'
 import { AsyncStorage } from "react-native";
   export default class HelloWorld extends Component {
-    async retrieveItem(key) {
-      try {
-        const retrievedItem =  await AsyncStorage.getItem(key);
-        const item = JSON.parse(retrievedItem);
-        this.setState({
-           Profile: item,
-         });
-        return item;
-
-      } catch (error) {
-        console.log(error.message);
-      }
-      return
-    };
-    state = {
-      Profile:{},
-    };
-    componentWillMount(){
-      this.retrieveItem('profile')
-    }
     render() {
       return (
         <Container>
@@ -42,7 +22,7 @@ import { AsyncStorage } from "react-native";
                 <Col style={{height:230}}>
                         <View style={styles.container}>
                           <QRCode
-                            value={this.state.Profile.id}
+                            value={global.Profile.id}
                             size={200}
                             bgColor='purple'
                             fgColor='white'/>
