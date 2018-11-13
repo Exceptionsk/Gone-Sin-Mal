@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage } from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage, TextInput } from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container,List, Left, Header, ListItem, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 
@@ -86,12 +86,17 @@ export default class Admins extends Component {
         <Text style = {{color: 'white'}}>Add or remove Admin</Text>
       </Body>
       </Header>
-      <Header onSubmitEditing={this.handleSearch.bind(this)} onChange={this.handleChange.bind(this)} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
-          <Item style = {{borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-          </Item>
-        </Header>
+        <View style={styles.searchBar}>
+        <Icon name="ios-search" style={{padding:10}} />
+          <TextInput style={{flex:1}}
+          underlineColorAndroid = "transparent"
+          placeholder = " Search "
+          placeholderTextColor = "#3f3f3f"
+          autoCapitalize = "none"
+          returnKeyType="search"
+          onSubmitEditing={this.handleSearch.bind(this)}
+          />
+        </View>
         <Content>
           {
             this.state.Users.map((item, key)=>
@@ -118,3 +123,18 @@ export default class Admins extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+
+  searchBar: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ff7d21',
+    height: 40,
+    borderRadius: 5,
+    margin: 10,
+  },
+});
