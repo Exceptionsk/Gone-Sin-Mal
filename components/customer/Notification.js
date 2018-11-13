@@ -8,39 +8,17 @@ export default class Notification extends Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   };
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+        that.setState({Notification: global.CustNotification});
+    }, 1000);
+  }
   state = {
     modalVisible: false,
+    Notification:[],
   };
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
-  }
+  Component
   render() {
     return(
     <Container>
@@ -75,7 +53,7 @@ export default class Notification extends Component {
             </Row>
             <Content style = {{backgroundColor:'#dfdfdf'}}>
             {
-                this.items.map((item, key)=>
+                this.state.Notification.map((item, key)=>
                   (
                 <Row key={key}>
                   <Col style={{ backgroundColor: '#dfdfdf', height: 105, width: '100%'}}>
@@ -84,8 +62,8 @@ export default class Notification extends Component {
                             <Left>
                                 <Thumbnail source={{uri : item.img}} />
                                 <Body>
-                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.name}</Text>
-                                <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.description}</Text>
+                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_id}</Text>
+                                <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>
                                 </Body>
                             </Left>
                             </CardItem>

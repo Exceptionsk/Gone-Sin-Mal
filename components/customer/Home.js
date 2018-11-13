@@ -4,6 +4,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import User from './Userprofile';
 
+
 export default class Home extends Component{
   state = {
     modalVisible: false,
@@ -12,6 +13,7 @@ export default class Home extends Component{
     Restaurant:[],
     value:'',
   };
+
 
    getNew(){
     return fetch(global.HostURL + '/api/restaurant/new')

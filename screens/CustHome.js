@@ -8,14 +8,10 @@ import { createBottomTabNavigator,Header, createStackNavigator,View } from 'reac
 import Search from '../components/customer/Search';
 import Restaurantdetail from '../components/customer/Restaurantdetail';
 import Login from "./Login";
-
 const User = createStackNavigator({
   AppHome : {
     screen:Home,
   },
-  // Userprofile:{
-  //   screen:Userprofile
-  // },
   Search:{
     screen:Search
   },
@@ -27,6 +23,26 @@ const User = createStackNavigator({
    headerMode: 'none'
 });
 export default class CustHome extends Component{
+  getNoti(){
+    return fetch(global.HostURL + '/api/notification/' + global.Profile.id)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      global.CustNotification=responseJson;
+    })
+    .catch((error) => {
+      console.log("new failed");
+    });
+  };
+
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+      that.getNoti();
+      console.log("hi noti");
+      console.log(global.CustNotification);
+    }, 1000);
+  }
+
   static navigationOptions = {
     header:null
   }
