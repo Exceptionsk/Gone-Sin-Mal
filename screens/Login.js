@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image,ImageBackground,StyleSheet,View,Alert} from "react-native";
+import {Image,ImageBackground,StyleSheet,View,Alert,TextInput} from "react-native";
 import {Container, Button, Left, Right, Icon, Text} from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
@@ -80,7 +80,9 @@ export default class Login extends Component {
 //   updateState (data) {
 //     this.setState(data);
 // }
-
+handleType(e){
+  global.HostURL=e.nativeEvent.text;
+}
   render(){
     return(
       <Container>
@@ -92,6 +94,16 @@ export default class Login extends Component {
                   <Image source={require('../assets/splash.png')} style={{height:160, width:160}} />
                 </View>
                 <View style={{alignItems: 'center'}}>
+                  <TextInput style={{flex:1}}
+                  underlineColorAndroid = "transparent"
+                  placeholder = " Search "
+                  placeholderTextColor = "#3f3f3f"
+                  autoCapitalize = "none"
+                  returnKeyType="search"
+                  onSubmitEditing={this.handleType.bind(this)}
+                  value={global.HostURL}
+                  style={{alignSelf:'center', width: 250, backgroundColor:'white'}}
+                  />
                   <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={this.logInFB.bind(this)}>
                     <Icon name='logo-facebook' />
                     <Text> Login with Facebook </Text>
