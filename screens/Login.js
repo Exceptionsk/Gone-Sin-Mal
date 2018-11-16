@@ -80,9 +80,13 @@ export default class Login extends Component {
 //   updateState (data) {
 //     this.setState(data);
 // }
+
+
+
 handleType(e){
   global.HostURL=e.nativeEvent.text;
 }
+
   render(){
     return(
       <Container>
@@ -99,9 +103,9 @@ handleType(e){
                   placeholder = " Search "
                   placeholderTextColor = "#3f3f3f"
                   autoCapitalize = "none"
-                  returnKeyType="search"
+                  returnKeyType="done"
                   onSubmitEditing={this.handleType.bind(this)}
-                  value={global.HostURL}
+                  value={this.state.value}
                   style={{alignSelf:'center', width: 250, backgroundColor:'white'}}
                   />
                   <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={this.logInFB.bind(this)}>

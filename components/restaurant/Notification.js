@@ -130,7 +130,7 @@ export default class Notification extends Component {
                         <Col style={{padding:5, paddingLeft:10, paddingRight:0}}>
                           {this.TransactionBar(item.type)}
                         </Col>
-                        <Col style={{width:115, padding:5}}>
+                        <Col style={{width:135, padding:5}}>
                           {this.TransactionButton(item.type)}
                         </Col>
                       </Row>

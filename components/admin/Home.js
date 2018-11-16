@@ -21,36 +21,29 @@ export default class Home extends Component {
   state = {
     modalVisible: false,
     Coinstatus : [],
-    value:'',
   };
   getCoinstatus(){
-    return fetch(global.HostURL + '/api/System_Table')
+    return fetch(global.HostURL + '/api/System/totalcoin')
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
-        Coinstatus: responseJson,
+         Coinstatus: responseJson,
        }, function(){
 
        });
     })
     .catch((error) => {
       // console.error(error);
-      console.log("recommend failed");
+      console.log("new failed");
     });
   }
+
   componentDidMount(){
+
     this.getCoinstatus();
   }
-  componentDidMount(sum){
-    var sum = 0;
-  this.state.Coinstatus.map((item, key)=>
-  (
-     sum +=(item.Sold_coins)
-  )
-  )
-  alert(sum)
-}
+
 
   render() {
     
@@ -101,18 +94,9 @@ export default class Home extends Component {
           </CardItem>
           <CardItem>
               <Row>
-                {
-                  this.state.Coinstatus.map((item, key)=>
-                  (
-                    
                       <Col>
-                     <Text>{sum +=item.Sold_coins}</Text>
+                     <Text>{this.state.Coinstatus}</Text>
                       </Col>
-                  )
-                  )
-                  
-                }
-
                 <Col style={{backgroundColor:'white',height:'100%'}}>
                     <PieChart
                       data={data}

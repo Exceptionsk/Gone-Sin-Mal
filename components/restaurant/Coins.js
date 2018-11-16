@@ -30,8 +30,8 @@ export default class Coins extends Component{
               <Text style = {{color: 'white'}}>Spicial Coins : 414</Text>
         </Right>
       </Header>
-        <Tabs locked={true} style={{ tabBgColor: "red" }}>
-          <Tab  heading={ <TabHeading><Icon name="ios-cart" /><Text>Buy Coin</Text></TabHeading>}>
+        <Tabs locked={true} >
+          <Tab heading={ <TabHeading><Icon name="ios-cart" /><Text>Buy Coin</Text></TabHeading>}>
             <Buy />
           </Tab>
           <Tab heading={ <TabHeading><Icon name="logo-usd" /><Text>Refund Coins</Text></TabHeading>}>
