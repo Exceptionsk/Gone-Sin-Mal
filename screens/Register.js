@@ -9,8 +9,7 @@ export default class Register extends Component{
     header:null
   }
   state={
-    name:'a',
-    myanpay:'',
+    name:'',
     password1:'',
     password2:'',
     email:'',
@@ -55,7 +54,6 @@ export default class Register extends Component{
           Rest_Password : this.state.password1,
           Rest_email : this.state.email,
           Rest_phno : this.state.phone,
-          Rest_myanpay_name : this.state.myanpay,
           Rest_Township : this.state.township,
           Rest_lat : this.state.lat,
           Rest_long : this.state.long,
@@ -97,7 +95,7 @@ export default class Register extends Component{
           <Body>
             <Button transparent >
               <Icon style = {{color: 'white', paddingLeft:20}} name='ios-business' />
-              <Text style = {{color: 'white', width:'100%'}} >{this.state.name}</Text>
+              <Text style = {{color: 'white', width:'100%'}} >Register</Text>
             </Button>
           </Body>
           <Right>
@@ -120,8 +118,8 @@ export default class Register extends Component{
                   <Input onChangeText={(value) => this.setState({name:value})} placeholder="Enter Name"/>
                 </Item>
                 <Item >
-                  <Icon active name='ios-contacts' />
-                  <Input onChangeText={(value) => this.setState({myanpay:value})} placeholder="Enter Myanpay username"/>
+                  <Icon active name='ios-compass' />
+                  <Input onChangeText={(value) => this.setState({myanpay:value})} placeholder="Enter Township"/>
                 </Item>
               </Col>
             </Row>
@@ -142,10 +140,6 @@ export default class Register extends Component{
                 <Item >
                   <Icon active name='ios-call' />
                   <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number"/>
-                </Item>
-                <Item >
-                  <Icon active name='ios-compass' />
-                  <Input onChangeText={(value) => this.setState({township:value})} placeholder="Enter township"/>
                 </Item>
                   <Textarea rowSpan={5} bordered placeholder="Enter Address" style={{padding:10}} />
               </Col>

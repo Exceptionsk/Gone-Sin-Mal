@@ -18,13 +18,52 @@ import {
 
 
 export default class Home extends Component {
-  
+  state = {
+    modalVisible: false,
+    Coinstatus : [],
+    value:'',
+  };
+  getCoinstatus(){
+    return fetch(global.HostURL + '/api/System_Table')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+      this.setState({
+        Coinstatus: responseJson,
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      // console.error(error);
+      console.log("recommend failed");
+    });
+  }
+  componentDidMount(){
+    this.getCoinstatus();
+  }
+  componentDidMount(sum){
+    var sum = 0;
+  this.state.Coinstatus.map((item, key)=>
+  (
+     sum +=(item.Sold_coins)
+  )
+  )
+  alert(sum)
+}
+
   render() {
-    const data = [
-      { name: 'Normal Coin', population: 8000, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      { name: 'Special Coin', population: 1000, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      { name: 'Expired Coin', population: 1000, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    ]
+    
+      
+      const data = 
+      [
+        { name: 'Normal Coin', population: 2000, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Special Coin', population: 3000, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Expired Coin', population: 1000, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      ]
+
+    
+
     const chartConfig = {
       backgroundGradientFrom: '#1E2923',
       backgroundGradientTo: '#08130D',
@@ -62,17 +101,29 @@ export default class Home extends Component {
           </CardItem>
           <CardItem>
               <Row>
-                <Col style={{backgroundColor:'white'}}>
-                <PieChart
-                  data={data}
-                  width={390}
-                  height={220}
-                  chartConfig={chartConfig}
-                  accessor="population"
-                  backgroundColor="transparent"
-                  paddingLeft="15"
-                />
-                </Col>
+                {
+                  this.state.Coinstatus.map((item, key)=>
+                  (
+                    
+                      <Col>
+                     <Text>{sum +=item.Sold_coins}</Text>
+                      </Col>
+                  )
+                  )
+                  
+                }
+
+                <Col style={{backgroundColor:'white',height:'100%'}}>
+                    <PieChart
+                      data={data}
+                      width={390}
+                      height={220}
+                      chartConfig={chartConfig}
+                      accessor="population"
+                      backgroundColor="transparent"
+                      paddingLeft="15"
+                    />
+                  </Col>
               </Row>
           </CardItem>
           <CardItem footer>
