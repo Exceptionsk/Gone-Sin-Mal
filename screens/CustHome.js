@@ -30,7 +30,7 @@ export default class CustHome extends Component{
       global.CustNotification=responseJson;
     })
     .catch((error) => {
-      console.log("new failed");
+      console.log("noti failed");
     });
   };
 
@@ -38,8 +38,6 @@ export default class CustHome extends Component{
     let that = this;
     setInterval(() => {
       that.getNoti();
-      console.log("hi noti");
-      console.log(global.CustNotification);
     }, 1000);
   }
 

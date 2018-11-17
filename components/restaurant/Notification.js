@@ -30,6 +30,24 @@ export default class Notification extends Component {
   componentWillMount(){
     this.retrieveItem('profile')
   }
+  sendTransactionID(tran_id){
+    fetch(global.HostURL + '/api/transaction/comfirm', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({
+        Rest_id : global.Profile.id,
+        Tran_id : tran_id,
+      }),
+    }).then((response) => response.json())
+      .then((responsejson)=>{
+        console.log(responsejson);
+      }).catch((error)=>{
+        console.log('Transaction failed');
+      });
+  }
   constructor()
   {
     super();
@@ -93,7 +111,7 @@ export default class Notification extends Component {
   }
   TransactionButton(type){
     if(type=='transaction id'){
-      return <Button danger style={{height:40}}><Text>Redeem Coin</Text></Button>
+      return <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,"248455")}><Text>Redeem Coin</Text></Button>
     }
   }
 

@@ -58,6 +58,9 @@ export default class Register extends Component{
           Rest_lat : this.state.lat,
           Rest_long : this.state.long,
           Rest_created_date : date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),
+          Rest_Coin:0,
+          Rest_special_coin:0,
+          Rest_coin_purchased:0,
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
