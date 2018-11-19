@@ -7,30 +7,55 @@ import ToggleSwitch from 'toggle-switch-react-native';
 export default class Home extends Component{
   state = {
     modalVisible: false,
+    Normal:[],
+    Special:[],
   };
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  beginTransaction(){
-    try {
-      fetch(global.HostURL + '/api/Transaction', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          User_id : id,
-        }),
-      }).then((response) => response.json())
-        .then((responsejson)=>{
-          this.handleSearch();
-        });
-    } catch (e) {
-      console.log('failed');
-    }
+  newTransaction(type){
+    this.setModalVisible(true);
+    fetch(global.HostURL + '/api/transaction/request', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({
+        User_id : global.Profile.id,
+        Tran_Type: type,
+        Pending: true,
+      }),
+    }).then((response) => response.json())
+      .then((responsejson)=>{
+        console.log(responsejson);
+    }).catch((error) => {
+      console.log(error);
+      console.log("Transaction failed");
+    });
   }
+  getPackage(){
+    return fetch(global.HostURL + '/api/package')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log("package pass");
+      console.log(responseJson);
+      this.setState({
+         Normal: responseJson.filter(function (item) {return item.Package_type === "normal";}),
+         Special:responseJson.filter(function (item) {return item.Package_type === "special";}),
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      console.log("Package failed");
+    });
+  }
+  componentWillMount(){
+    this.getPackage();
+  }
+
   constructor()
   {
     super();
@@ -65,7 +90,7 @@ export default class Home extends Component{
             <ScrollView horizontal={true}>
               <Row>
               {
-                this.items.map((item, key)=>
+                this.state.Normal.map((item, key)=>
                   (
                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                       <Modal
@@ -82,7 +107,7 @@ export default class Home extends Component{
                         </Header>
                         <WebView
                           source={{
-                          uri: item.link
+                          uri: item.Myanpay_button_link
                           }}
                           onNavigationStateChange={this.onNavigationStateChange}
                           startInLoadingState
@@ -92,11 +117,11 @@ export default class Home extends Component{
                           />
                       </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={() => {this.setModalVisible(true);}} >
-                            <Thumbnail style={styles.imagetwo} source={{uri : item.img}} />
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal')} >
+                            <Thumbnail style={styles.imagetwo} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>
-                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.name}</Text>
+                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
                           </Button>
                         </View>
                     </Col>
@@ -117,7 +142,7 @@ export default class Home extends Component{
             <ScrollView horizontal={true}>
               <Row>
               {
-                this.items1.map((item, key)=>
+                this.state.Special.map((item, key)=>
                   (
                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                     <Modal
@@ -134,7 +159,7 @@ export default class Home extends Component{
                         </Header>
                         <WebView
                           source={{
-                          uri: item.link
+                          uri: item.Myanpay_button_link
                           }}
                           onNavigationStateChange={this.onNavigationStateChange}
                           startInLoadingState
@@ -144,11 +169,11 @@ export default class Home extends Component{
                           />
                       </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={() => {this.setModalVisible(true);}}>
-                            <Thumbnail style={styles.imagetwo} source={{uri : item.img}} />
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special')}>
+                            <Thumbnail style={styles.imagetwo} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>
-                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.name}</Text>
+                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
                           </Button>
                         </View>
                     </Col>
