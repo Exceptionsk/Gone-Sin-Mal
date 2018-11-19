@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
-import { View, Image, Modal, AsyncStorage } from 'react-native';
+import { View, Image, Modal, AsyncStorage, StyleSheet, AppRegistry } from 'react-native';
 import { Container, Badge, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import QRCode from 'react-native-qrcode';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp, listenOrientationChange as lor,
+  removeOrientationListener as rol} from 'react-native-responsive-screen';
 import User from './Userprofile';
 export default class GoneSin extends Component {
+  componentDidMount() {
+    lor(this);
+  }
+  
+  componentWillUnmount() {
+    rol();
+  }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   };
+  setModalVisibleGoneSin(visible) {
+    this.setState({modalVisibleGoneSin: visible});
+  };
   state = {
+    text: '1000 points',
     modalVisible: false,
+    modalVisibleGoneSin: false,
   };
   constructor()
   {
@@ -102,7 +117,47 @@ export default class GoneSin extends Component {
                             </CardItem>
                             <CardItem>
                             <Left>
-                                <Button transparent textStyle={{color: '#87838B'}}>
+                              <Modal
+                                animationType="slide"
+                                transparent={false}
+                                onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
+                                visible={this.state.modalVisibleGoneSin}>
+                                <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                                <Right>
+                                  <Button transparent onPress={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}>
+                                      <Icon name="close"/>
+                                  </Button>
+                                </Right>
+                                </Header>
+                                <Container>
+                                  <Content>
+                                    <Grid>
+                                      <Row>
+                                        {/* <Col style={{backgroundColor:'red'}}></Col> */}
+                                        <Col>
+                                          <Card>
+                                            <CardItem header>
+                                              <View style={styles.container}>
+                                                <View style={styles.textWrapper}>
+                                                    <QRCode
+                                                      value={global.Profile.id+this.state.text}
+                                                      size={200}
+                                                      bgColor='purple'
+                                                      fgColor='white'/>
+                                                </View>
+                                              </View>
+                                            </CardItem>
+                                          </Card>
+                                        </Col>
+                                        {/* <Col style={{backgroundColor:'blue'}}></Col> */}
+                                      </Row>
+                                    </Grid>
+                                  </Content>
+                                </Container>
+
+
+                              </Modal>
+                                <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
                                 {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
                                 <Badge style={{ backgroundColor: 'black' }}>
                                     <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
@@ -149,3 +204,20 @@ export default class GoneSin extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      // width: wp('70%'),
+      // height: hp('80%'),
+  },
+  textWrapper: {
+    height: hp('86.5%'),
+    paddingTop: hp('30%'),
+  },
+});
+
+AppRegistry.registerComponent('HelloWorld', () => GoneSin);
+
+module.exports = GoneSin;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
-import { Right, Container, Header, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { Right, Container, Header, H1,H2,H3, H4,Title, Left, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
 import User from './Userprofile';
 export default class Home extends Component{
@@ -75,7 +75,36 @@ export default class Home extends Component{
                 this.items.map((item, key)=>
                   (
                     <Row key={key}>
-                      <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
+                      <Col>
+                        <Card style={{flex: 0}}>
+                          <CardItem>
+                            <Left>
+                              <Thumbnail source={{uri: 'Image URL'}} />
+                              <Body>
+                                <Text>NativeBase</Text>
+                                <Text note>April 15, 2016</Text>
+                              </Body>
+                            </Left>
+                          </CardItem>
+                          <CardItem>
+                            <Body>
+                              <Image source={{uri: 'Image URL'}} style={{height: 200, width: 200, flex: 1}}/>
+                              <Text>
+                                //Your text here
+                              </Text>
+                            </Body>
+                          </CardItem>
+                          <CardItem>
+                            <Left>
+                              <Button transparent textStyle={{color: '#87838B'}}>
+                                <Icon name="logo-github" />
+                                <Text>1,926 stars</Text>
+                              </Button>
+                            </Left>
+                          </CardItem>
+                        </Card>
+                      </Col>
+                      {/* <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
                         <View style = {styles.imgcol}>
                           <Button transparent style={{height: '100%', width: '100%'}}>
                             <Thumbnail style={styles.image} square large source={{uri : item.img}} />
@@ -94,7 +123,7 @@ export default class Home extends Component{
                         <View style = {styles.imgcolthree}>
                           <Ionicons name="md-heart" size={30} color="red" />
                         </View>
-                      </Col>
+                      </Col> */}
                   </Row>
                   )
                 )
