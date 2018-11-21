@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, Modal, AsyncStorage, StyleSheet, AppRegistry } from 'react-native';
 import { Container, Badge, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import QRCode from 'react-native-qrcode';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp, listenOrientationChange as lor,
   removeOrientationListener as rol} from 'react-native-responsive-screen';
@@ -99,102 +99,101 @@ export default class GoneSin extends Component {
                    <H3 style={{ fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Gone Sin List!</H3>
                 </Col>
           </Row>
-          <Content style={{ backgroundColor: '#484848'}}>
+          <Content style={{ backgroundColor: '#dfdfdf'}}>
             {
               this.items.map((item, key)=>
               (
-            <Row key={key}>
-              <Col style={{ backgroundColor: '#484848', height: 150 }}>
-                      <Card style={{flex: 0, marginLeft: 7, width: 192 }}>
-                            <CardItem>
-                            <Left>
-                                <Thumbnail source={{uri : item.img}} />
-                                <Body>
-                                <Text>{item.name}</Text>
-                                <Text note>{item.date}</Text>
-                                </Body>
-                            </Left>
-                            </CardItem>
-                            <CardItem>
-                            <Left>
-                              <Modal
-                                animationType="slide"
-                                transparent={false}
-                                onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
-                                visible={this.state.modalVisibleGoneSin}>
-                                <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                                <Right>
-                                  <Button transparent onPress={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}>
-                                      <Icon name="close"/>
-                                  </Button>
-                                </Right>
-                                </Header>
-                                <Container>
-                                  <Content>
-                                    <Grid>
-                                      <Row>
-                                        {/* <Col style={{backgroundColor:'red'}}></Col> */}
-                                        <Col>
-                                          <Card>
-                                            <CardItem header>
-                                              <View style={styles.container}>
-                                                <View style={styles.textWrapper}>
-                                                    <QRCode
-                                                      value={global.Profile.id+this.state.text}
-                                                      size={200}
-                                                      bgColor='purple'
-                                                      fgColor='white'/>
-                                                </View>
-                                              </View>
-                                            </CardItem>
-                                          </Card>
-                                        </Col>
-                                        {/* <Col style={{backgroundColor:'blue'}}></Col> */}
-                                      </Row>
-                                    </Grid>
-                                  </Content>
-                                </Container>
+                <View style={{flex: 1,flexDirection: 'row',paddingBottom:0,marginBottom:0}} key={key}>
+                  <View style={{width: '50%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
+                  <Card style={{flex: 0, marginLeft: 12}}>
+                                <CardItem>
+                                <Left>
+                                    <Thumbnail source={{uri : item.img}} />
+                                    <Body>
+                                    <Text>{item.name}</Text>
+                                    <Text note>{item.date}</Text>
+                                    </Body>
+                                </Left>
+                                </CardItem>
+                                <CardItem>
+                                <Left>
+                                  <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
+                                    visible={this.state.modalVisibleGoneSin}>
+                                    
+                                   <View style={{
+                                      flex: 1,
+                                      flexDirection: 'column',
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                      shadowColor: '#000000',
+                                      shadowOffset: {
+                                        width: 0,
+                                        height: 0,
+                                      },
+                                      shadowRadius: 2,
+                                      shadowOpacity: 0.5
+                                      }}>
+                                      <View style={{
+                                        width: '80%',
+                                        height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
+                                      <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                                        <Right>
+                                        <Button transparent onPress={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}>
+                                            <MaterialCommunityIcons name="window-close" size="20" color="#959595" />
+                                        </Button>
+                                        </Right>
+                                      </Header>
+                                      </View>
+                                      <View style={{width: '80%', height: '50%',justifyContent: 'center',alignItems: 'center',backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
+                                      <QRCode
+                                      value={global.Profile.id+this.state.text}
+                                      size={200}
+                                      bgColor='purple'
+                                      fgColor='white'/>
+                                      </View>
+                                  </View>
+                                  </Modal>
+                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
+                                    {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
+                                    <Badge style={{ backgroundColor: 'black' }}>
+                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
+                                    </Badge>
+                                    <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
+                                    </Button>
+                                </Left>
 
+                                </CardItem>
+                          </Card>
+                  </View>
+                  <View style={{width: '50%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
+                  <Card style={{flex: 0, marginRight: 12 }}>
+                                <CardItem>
+                                <Left>
+                                    <Thumbnail source={{uri : item.img}} />
+                                    <Body>
+                                    <Text>{item.name}</Text>
+                                    <Text note>{item.date}</Text>
+                                    </Body>
+                                </Left>
+                                </CardItem>
+                                <CardItem>
+                                <Left>
+                                    <Button transparent textStyle={{color: '#87838B'}}>
+                                    {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
+                                    <Badge style={{ backgroundColor: 'black' }}>
+                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
+                                    </Badge>
+                                    <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
+                                    </Button>
+                                </Left>
 
-                              </Modal>
-                                <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
-                                {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
-                                <Badge style={{ backgroundColor: 'black' }}>
-                                    <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
-                                </Badge>
-                                <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
-                                </Button>
-                            </Left>
-
-                            </CardItem>
-                      </Card>
-              </Col>
-              <Col style={{ backgroundColor: '#484848', height: 150 }}>
-                      <Card style={{flex: 0, marginLeft: 7, width: 192 }}>
-                            <CardItem>
-                            <Left>
-                                <Thumbnail source={{uri : item.img}} />
-                                <Body>
-                                <Text>{item.name}</Text>
-                                <Text note>{item.date}</Text>
-                                </Body>
-                            </Left>
-                            </CardItem>
-                            <CardItem>
-                            <Left>
-                                <Button transparent textStyle={{color: '#87838B'}}>
-                                {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
-                                <Badge style={{ backgroundColor: 'black' }}>
-                                    <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
-                                </Badge>
-                                <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
-                                </Button>
-                            </Left>
-
-                            </CardItem>
-                      </Card>
-              </Col>
-            </Row>
+                                </CardItem>
+                          </Card>
+                  </View>
+                </View>
               )
               )
             }
