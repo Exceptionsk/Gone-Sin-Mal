@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet, ImageBackground, ScrollView, Modal, AsyncStorage,TextInput } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, List,Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
+import { BlurView } from 'expo';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
 export default class Notification extends Component {
   setModalVisible(visible) {
@@ -153,12 +155,12 @@ export default class Notification extends Component {
                               </Left>
                             </CardItem>
                             <Modal
-                              animationType="slide"
+                              animationType="fade"
                               transparent={true}
                               onRequestClose={()=>{this.setModalVisibleTransaction(!this.state.transactionmodalVisible);}}
                               visible={this.state.transactionmodalVisible}>
 
-                              <View style={{
+                              <BlurView tint="light" intensity={50}  style={{
                                       flex: 1,
                                       flexDirection: 'column',
                                       justifyContent: 'center',
@@ -173,16 +175,16 @@ export default class Notification extends Component {
                                       }}>
                                 <View style={{
                                         width: '80%',
-                                        height: 40, borderColor: 'red', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
-                                <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                                        height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
+                                <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
                                 <Right>
                                   <Button transparent onPress={()=>{this.setModalVisibleTransaction(!this.state.transactionmodalVisible);}}>
-                                      <Icon name="close"/>
+                                    <MaterialCommunityIcons name="window-close" size="20" color="#959595" />
                                   </Button>
                                   </Right>
                                 </Header>
                                 </View>
-                                <View style={{width: '80%', height: 150, backgroundColor: 'white', borderColor: 'red' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
+                                <View style={{width: '80%', height: 150, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
                                   <TextInput style = {styles.input}
                                   underlineColorAndroid = "transparent"
                                   placeholder = " Enter transation ID"
@@ -193,7 +195,7 @@ export default class Notification extends Component {
                                    <Button danger style={{height:40}}><Text>Send</Text></Button>
                                    </Right>
                                 </View>
-                              </View>
+                              </BlurView>
                             </Modal>
                         </Col>
                       </Row>

@@ -94,9 +94,6 @@ export default class Home extends Component {
           </CardItem>
           <CardItem>
               <Row>
-                      <Col>
-                     {/* <Text>{this.state.Coinstatus}</Text> */}
-                      </Col>
                 <Col style={{backgroundColor:'white',height:'100%'}}>
                     <PieChart
                       data={data}

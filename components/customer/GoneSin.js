@@ -6,6 +6,8 @@ import QRCode from 'react-native-qrcode';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp, listenOrientationChange as lor,
   removeOrientationListener as rol} from 'react-native-responsive-screen';
 import User from './Userprofile';
+import { BlurView } from 'expo';
+
 export default class GoneSin extends Component {
   componentDidMount() {
     lor(this);
@@ -118,12 +120,12 @@ export default class GoneSin extends Component {
                                 <CardItem>
                                 <Left>
                                   <Modal
-                                    animationType="slide"
+                                    animationType="fade"
                                     transparent={true}
                                     onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
                                     visible={this.state.modalVisibleGoneSin}>
                                     
-                                   <View style={{
+                                   <BlurView tint="light" intensity={50} style={{
                                       flex: 1,
                                       flexDirection: 'column',
                                       justifyContent: 'center',
@@ -154,7 +156,7 @@ export default class GoneSin extends Component {
                                       bgColor='purple'
                                       fgColor='white'/>
                                       </View>
-                                  </View>
+                                  </BlurView>
                                   </Modal>
                                     <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
                                     {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
