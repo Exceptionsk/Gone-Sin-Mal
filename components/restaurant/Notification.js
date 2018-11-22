@@ -30,7 +30,7 @@ export default class Notification extends Component {
   state = {
     modalVisible: false,
     transactionmodalVisible: false,
-    Profile:{},
+    Notification:[],
   };
   componentWillMount(){
     this.retrieveItem('profile')
@@ -52,6 +52,13 @@ export default class Notification extends Component {
       }).catch((error)=>{
         console.log('Transaction failed');
       });
+  }
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+      console.log(global.RestNotification);
+        that.setState({Notification: global.RestNotification});
+    }, 1000);
   }
   constructor()
   {
@@ -114,13 +121,13 @@ export default class Notification extends Component {
     }
 
   }
-  TransactionButton(type){
+  TransactionButton(id){
     if(type=='transaction id'){
       return <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,"248455")}><Text>Redeem Coin</Text></Button>
     }
   }
-  TransactionModelTest(type){
-    if(type=='transaction id'){
+  TransactionModelTest(id){
+      if(id!=null){
       return <Button danger style={{height:40}} onPress={() => {this.setModalVisibleTransaction(true);}}><Text>Redeem Coin</Text></Button>
     }
   }
@@ -137,7 +144,7 @@ export default class Notification extends Component {
         <Grid>
             <Content style = {{backgroundColor:'#dfdfdf'}}>
             {
-                this.items.map((item, key)=>
+                this.state.Notification.map((item, key)=>
                   (
                     <View key={key}>
                       <Card style={{flex: 0, marginLeft: 0, width: '100%' }}>
@@ -147,8 +154,8 @@ export default class Notification extends Component {
                               <Left>
                                   <Thumbnail source={{uri : item.img}} />
                                   <Body>
-                                  <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.name}</Text>
-                                  <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.description}</Text>
+                                  <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_id}</Text>
+                                  <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>
                                   </Body>
                               </Left>
                             </CardItem>
@@ -199,7 +206,7 @@ export default class Notification extends Component {
                       </Row>
                       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{padding:20}}>
-                          {this.TransactionModelTest(item.type)}
+                          {this.TransactionModelTest(item.ID)}
                         </View>
                       </View>
 

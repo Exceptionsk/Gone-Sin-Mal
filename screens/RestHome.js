@@ -7,7 +7,25 @@ import Notification from "../components/restaurant/Notification";
 
 import { createBottomTabNavigator } from 'react-navigation';
 
-export default class CustHome extends Component{
+export default class RestHome extends Component{
+  getNoti(){
+    return fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=restaurant")
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log("rest noti here");
+      global.RestNotification=responseJson;
+    })
+    .catch((error) => {
+      console.log("Restaurant noti failed");
+    });
+  };
+
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+      that.getNoti();
+    }, 1000);
+  }
   static navigationOptions = {
     header:null
   }

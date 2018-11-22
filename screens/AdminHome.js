@@ -7,7 +7,25 @@ import PNoti from "../components/admin/PNoti";
 import Home from "../components/admin/Home";
 import Admins from "../components/admin/Admins";
 
-export default class CustHome extends Component{
+export default class AdminHome extends Component{
+  getNoti(){
+    return fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=admin")
+    .then((response) => response.json())
+    .then((responseJson) => {
+      global.AdminNotification=responseJson;
+    })
+    .catch((error) => {
+      console.log("Admin noti failed");
+    });
+  };
+
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+      that.getNoti();
+    }, 1000);
+  }
+
   static navigationOptions = {
     header:null
   }

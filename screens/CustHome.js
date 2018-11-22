@@ -24,13 +24,13 @@ const User = createStackNavigator({
 });
 export default class CustHome extends Component{
   getNoti(){
-    return fetch(global.HostURL + '/api/notification/' + global.Profile.id)
+    return fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=customer")
     .then((response) => response.json())
     .then((responseJson) => {
       global.CustNotification=responseJson;
     })
     .catch((error) => {
-      console.log("noti failed");
+      console.log("Customer noti failed");
     });
   };
 
