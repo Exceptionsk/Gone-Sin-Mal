@@ -12,7 +12,7 @@ export default class GoneSin extends Component {
   componentDidMount() {
     lor(this);
   }
-  
+
   componentWillUnmount() {
     rol();
   }
@@ -124,7 +124,7 @@ export default class GoneSin extends Component {
                                     transparent={true}
                                     onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
                                     visible={this.state.modalVisibleGoneSin}>
-                                    
+
                                    <BlurView tint="light" intensity={50} style={{
                                       flex: 1,
                                       flexDirection: 'column',
@@ -144,7 +144,7 @@ export default class GoneSin extends Component {
                                       <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
                                         <Right>
                                         <Button transparent onPress={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}>
-                                            <MaterialCommunityIcons name="window-close" size="20" color="#959595" />
+                                            <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
                                         </Button>
                                         </Right>
                                       </Header>

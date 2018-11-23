@@ -186,7 +186,7 @@ export default class Notification extends Component {
                                 <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
                                 <Right>
                                   <Button transparent onPress={()=>{this.setModalVisibleTransaction(!this.state.transactionmodalVisible);}}>
-                                    <MaterialCommunityIcons name="window-close" size="20" color="#959595" />
+                                    <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
                                   </Button>
                                   </Right>
                                 </Header>
