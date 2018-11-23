@@ -6,15 +6,14 @@ import { BlurView } from 'expo';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
 export default class Notification extends Component {
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  };
   setModalVisibleTransaction(visible) {
     this.setState({transactionmodalVisible: visible});
   };
-  handlePassword = (text) => {
-    this.setState({ password: text })
- }
+  handleCode(e){
+    this.setState({
+      code: e.nativeEvent.text
+    })
+  }
   async retrieveItem(key) {
     try {
       const retrievedItem =  await AsyncStorage.getItem(key);
@@ -30,14 +29,14 @@ export default class Notification extends Component {
     return
   };
   state = {
-    modalVisible: false,
     transactionmodalVisible: false,
     Notification:[],
+    code:'',
   };
   componentWillMount(){
     this.retrieveItem('profile')
   }
-  sendTransactionID(tran_id){
+  sendTransactionID(record_id){
     fetch(global.HostURL + '/api/transaction/comfirm', {
       method: 'POST',
       headers: {
@@ -46,13 +45,18 @@ export default class Notification extends Component {
       },
       body:JSON.stringify({
         Rest_id : global.Profile.id,
-        Tran_id : tran_id,
+        Tran_id : this.state.code,
+        ID: record_id,
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
         console.log(responsejson);
+        this.setState({transactionmodalVisible:false})
+          this.setState({ code: '' });
       }).catch((error)=>{
         console.log('Transaction failed');
+        console.log(error);
+        this.setState({ code: '' });
       });
   }
   componentDidMount() {
@@ -62,52 +66,7 @@ export default class Notification extends Component {
         that.setState({Notification: global.RestNotification});
     }, 1000);
   }
-  constructor()
-  {
-    super();
-    this.items = [
-      {id: '1',
-      type: 'transaction id',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '2',
-      type: 'normal',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '3',
-      type: 'transaction id',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '4',
-      type: 'normal',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '5',
-      type: 'normal',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '6',
-      type: 'normal',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '7',
-      type: 'normal',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {id: '8',
-      type: 'normal',
-      name:'KFC',
-      description:'You have gained 500 points from KFC. Please Keep in mind that these points are only valid before the expire date.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
-  }
+
 
   TransactionBar(type){
     if(type=='transaction id'){
@@ -116,17 +75,12 @@ export default class Notification extends Component {
       placeholder = " Enter transation ID"
       placeholderTextColor = "#3f3f3f"
       autoCapitalize = "none"
-      onChangeText = {this.handlePassword}/>
+      onChangeText = {this.handleCode}/>
     }
     else{
 
     }
 
-  }
-  TransactionButton(id){
-    if(type=='transaction id'){
-      return <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,"248455")}><Text>Redeem Coin</Text></Button>
-    }
   }
   TransactionModelTest(id){
       if(id!=null){
@@ -197,9 +151,9 @@ export default class Notification extends Component {
                                   placeholder = " Enter transation ID"
                                   placeholderTextColor = "#3f3f3f"
                                   autoCapitalize = "none"
-                                  onChangeText = {this.handlePassword}/>
+                                  onChange = {this.handleCode.bind(this)}/>
                                    <Right style={{paddingTop:20}}>
-                                   <Button danger style={{height:40}}><Text>Send</Text></Button>
+                                   <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,item.ID)} ><Text>{this.state.code}</Text></Button>
                                    </Right>
                                 </View>
                               </BlurView>
