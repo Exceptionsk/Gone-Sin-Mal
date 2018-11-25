@@ -7,13 +7,66 @@ import { Container, Footer, FooterTab, Badge, H2, H3, Header, Content, Row,Grid,
 export default class BarcodeScannerExample extends React.Component {
   state = {
     hasCameraPermission: null,
-    isSwitchOn: false
+    isSwitchOn: false,
+    amount:0
   }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({hasCameraPermission: status === 'granted'});
     }
 
+BeginTransaction(){
+  console.log("gg");
+    fetch(global.HostURL + '/api/resturant/qr', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({
+        Rest_id : global.Profile.id,
+        User_id: this.state.data,
+        Amount: this.state.amount,
+      }),
+    }).then((response) => response.json())
+      .then((responsejson)=>{
+        console.log(responsejson);
+        if(responsejson=="not enought"){
+          Alert.alert(
+            'Error',
+            'Low Coin Amount in balance.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            // { cancelable: false }
+          )
+        }else if (responsejson=="OK"){
+          Alert.alert(
+            'Success',
+            'Coin transfer was successful.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            // { cancelable: false }
+          )
+        }
+    }).catch((error) => {
+      console.log(error);
+      console.log("Transaction failed");
+      Alert.alert(
+        'Error',
+        error,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        // { cancelable: false }
+      )
+    });
+}
+
+handleAmount(e){
+  this.setState({amount:e.nativeEvent.text})
+}
   render() {
     const { hasCameraPermission } = this.state;
 
@@ -56,7 +109,7 @@ export default class BarcodeScannerExample extends React.Component {
           </Content>
           <Footer style={{height:110}}>
             <FooterTab>
-              <Grid>
+              <Grid style={{backgroundColor:'white'}}>
                 <Row style={{padding:10}}>
                     <Col>
                       <TextInput style = {styles.input}
@@ -64,20 +117,14 @@ export default class BarcodeScannerExample extends React.Component {
                       placeholder = " Enter transation ID"
                       placeholderTextColor = "#3f3f3f"
                       autoCapitalize = "none"
-                      value = {this.state.data}
-                      onChangeText = {this.handlePassword}/>
-                      {/* <Form>
-                        <Item>
-                          <Input>
-                            {this.state.data}
-                          </Input>
-                        </Item>
-                      </Form> */}
+                      keyboardType="numeric"
+                      onChangeText={(text) => this.setState({amount:text})}
+                    />
                    </Col>
                 </Row>
                 <Row>
                   <Col style={{height:60}}>
-                    <Button full warning>
+                    <Button full warning onPress={this.BeginTransaction.bind(this)}>
                       <Text style={{paddingBottom:10}}>Scan Now!</Text>
                     </Button>
                   </Col>
@@ -104,4 +151,3 @@ const styles= StyleSheet.create({
       height:40
    },
 })
-
