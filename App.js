@@ -15,6 +15,7 @@ import RestHome from "./screens/RestHome";
 import LoginScreen from "./screens/Login";
 import AdminHome from "./screens/AdminHome";
 import Register from "./screens/Register";
+import Pushnoti from "./screens/Pushnoti";
 
 
 const TopLevelNavigator = createStackNavigator({
@@ -23,12 +24,13 @@ const TopLevelNavigator = createStackNavigator({
   RestHome: {screen: RestHome},
   AdminHome: {screen: AdminHome},
   Register: {screen: Register},
+  Pushnoti: {screen: Pushnoti},
 });
 
 export default class Start extends Component {
   constructor(){
     super();
-    global.HostURL = "http://192.168.8.102:2940",
+    global.HostURL = "http://192.168.1.6:2940",
     global.Profile={},
     global.CustNotification=[],
     global.AdminNotification=[],
