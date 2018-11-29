@@ -16,7 +16,7 @@ export default class RestHome extends Component{
       global.RestNotification=responseJson;
     })
     .catch((error) => {
-      console.log("Restaurant noti failed");
+      // console.log("Restaurant noti failed");
     });
   };
 

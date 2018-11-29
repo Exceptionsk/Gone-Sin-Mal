@@ -16,7 +16,6 @@ export default class BarcodeScannerExample extends React.Component {
     }
 
 BeginTransaction(){
-  console.log("gg");
     fetch(global.HostURL + '/api/resturant/qr', {
       method: 'POST',
       headers: {
@@ -27,11 +26,12 @@ BeginTransaction(){
         Rest_id : global.Profile.id,
         User_id: this.state.data,
         Amount: this.state.amount,
+        Take: this.state.isSwitchOn,
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
         console.log(responsejson);
-        if(responsejson=="not enought"){
+        if(responsejson=="not enough"){
           Alert.alert(
             'Error',
             'Low Coin Amount in balance.',
@@ -55,7 +55,7 @@ BeginTransaction(){
       console.log("Transaction failed");
       Alert.alert(
         'Error',
-        error,
+        'ggwp',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],

@@ -30,7 +30,7 @@ export default class CustHome extends Component{
       global.CustNotification=responseJson;
     })
     .catch((error) => {
-      console.log("Customer noti failed");
+      // console.log("Customer noti failed");
     });
   };
 

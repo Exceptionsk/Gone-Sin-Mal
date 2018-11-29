@@ -43,6 +43,7 @@ export default class Login extends Component {
             body:JSON.stringify({
               User_id : json.id,
               User_Name : json.name,
+              User_available_coin:0,
             }),
           }).then((response) => response.json())
             .then((responsejson)=>{

@@ -15,7 +15,7 @@ export default class AdminHome extends Component{
       global.AdminNotification=responseJson;
     })
     .catch((error) => {
-      console.log("Admin noti failed");
+      // console.log("Admin noti failed");
     });
   };
 
