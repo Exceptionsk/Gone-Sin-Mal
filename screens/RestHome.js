@@ -21,10 +21,10 @@ export default class RestHome extends Component{
   };
 
   componentDidMount() {
-    let that = this;
-    setInterval(() => {
-      that.getNoti();
-    }, 1000);
+    // let that = this;
+    // setInterval(() => {
+    //   that.getNoti();
+    // }, 1000);
   }
   static navigationOptions = {
     header:null

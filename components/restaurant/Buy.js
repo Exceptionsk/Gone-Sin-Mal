@@ -24,7 +24,7 @@ export default class Home extends Component{
       },
       body:JSON.stringify({
         User_id : global.Profile.id,
-        Tran_Type: type,
+        Tran_type: type,
         Pending: true,
       }),
     }).then((response) => response.json())

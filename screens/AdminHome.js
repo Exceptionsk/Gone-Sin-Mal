@@ -20,10 +20,10 @@ export default class AdminHome extends Component{
   };
 
   componentDidMount() {
-    let that = this;
-    setInterval(() => {
-      that.getNoti();
-    }, 1000);
+    // let that = this;
+    // setInterval(() => {
+    //   that.getNoti();
+    // }, 1000);
   }
 
   static navigationOptions = {

@@ -29,7 +29,7 @@ export default class App extends React.Component {
         return;
       }
     }
-    
+
     const token = await Notifications.getExpoPushTokenAsync();
     console.log(status,token);
     this.subscription = Notifications.addListener(this.handleNotification);
@@ -106,7 +106,7 @@ export default class App extends React.Component {
         {this.state.notification ? (
           <View>
             <Text style={styles.text}>Last Notification:</Text>
-            <Text style={styles.text}>{JSON.stringify(this.state.notification.data.message)}</Text>
+            <Text style={styles.text}>{JSON.stringify(this.state.notification.title)}</Text>
           </View>
         ) : null}
       </View>
