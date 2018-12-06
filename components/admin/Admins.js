@@ -9,13 +9,15 @@ export default class Admins extends Component {
     Users:[],
   };
   handleChange(e) {
+
        this.setState({
          value: e.nativeEvent.text,
        });
+       console.log(this.state.value);
      }
 
   handleSearch(){
-    return fetch(global.HostURL + '/api/User/' + this.state.value)
+    return fetch(global.HostURL + '/api/User/search?name=' + this.state.value)
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
@@ -118,6 +120,7 @@ export default class Admins extends Component {
           placeholderTextColor = "#3f3f3f"
           autoCapitalize = "none"
           returnKeyType="search"
+          onChange={this.handleChange.bind(this)}
           onSubmitEditing={this.handleSearch.bind(this)}
           />
         </View>
@@ -131,11 +134,11 @@ export default class Admins extends Component {
                       <Thumbnail source={{ uri: 'https://graph.facebook.com/'+ item.User_id + '/picture?type=normal' }} />
                     </Left>
                     <Body>
-                      <Text>{item.User_Name}</Text>
-                      <Text note>{item.User_Type}</Text>
+                      <Text>{item.User_name}</Text>
+                      <Text note>{item.User_type}</Text>
                     </Body>
                     <Right>
-                      {this.Userbar(item.User_id, item.User_Type)}
+                      {this.Userbar(item.User_id, item.User_type)}
                     </Right>
                   </ListItem>
                 </List>

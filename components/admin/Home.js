@@ -20,96 +20,43 @@ import {
 export default class Home extends Component {
   state = {
     modalVisible: false,
-    Expired : [],
-    Normal : [],
-    Special : [],
-    Total : [],
+    AdminStatus:null,
   };
-  getExpired(){
-    return fetch(global.HostURL + '/api/Admin/expired')
+
+  getStatus(){
+    return fetch(global.HostURL + '/api/Admin')
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
-        Expired: responseJson,
+        AdminStatus: responseJson,
        }, function(){
 
        });
     })
     .catch((error) => {
       // console.error(error);
-      console.log("Expired Coin failed");
-    });
-  }
-  getNormal(){
-    return fetch(global.HostURL + '/api/Admin/normal')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson);
-      this.setState({
-        Normal: responseJson,
-       }, function(){
-
-       });
-    })
-    .catch((error) => {
-      // console.error(error);
-      console.log("Normal Coin failed");
-    });
-  }
-  getSpecial(){
-    return fetch(global.HostURL + '/api/Admin/special')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson);
-      this.setState({
-        Special: responseJson,
-       }, function(){
-
-       });
-    })
-    .catch((error) => {
-      // console.error(error);
-      console.log("Special Coin failed");
-    });
-  }
-  getTotal(){
-    return fetch(global.HostURL + '/api/Admin/total')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson);
-      this.setState({
-        Total: responseJson,
-       }, function(){
-
-       });
-    })
-    .catch((error) => {
-      // console.error(error);
-      console.log("Total Coin failed");
+      console.log("Admin status failed");
     });
   }
 
 
   componentDidMount(){
-    this.getExpired();
-    this.getNormal();
-    this.getSpecial();
-    this.getTotal();
+    this.getStatus();
   }
 
 
   render() {
-    
-      
-      const data = 
+
+
+      const data =
       [
-        { name: 'Normal Coin', population: this.state.Normal, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Special Coin', population: this.state.Special, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Expired Coin', population: this.state.Expired, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Normal Coin', population: 1000, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Special Coin', population: 1000, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Expired Coin', population: 1000, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
       ]
 
-    
+
 
     const chartConfig = {
       backgroundGradientFrom: '#1E2923',
@@ -149,13 +96,13 @@ export default class Home extends Component {
           <CardItem>
               <Row>
                 <Col style={{backgroundColor:'white',height:'100%'}}>
-                    <PieChart 
+                    <PieChart
                       data={data}
                       width={390}
                       height={220}
                       chartConfig={chartConfig}
                       accessor="population"
-                      backgroundColor="transparent" 
+                      backgroundColor="transparent"
                       paddingLeft="15"
                     />
                   </Col>
@@ -164,10 +111,10 @@ export default class Home extends Component {
           <CardItem footer>
           <Row>
             <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Coin: {this.state.Total}</Text>
-              <Text style={{paddingBottom:5}}>Normal Coin: {this.state.Normal}</Text>
-              <Text style={{paddingBottom:5}}>Special Coin: {this.state.Special}</Text>
-              <Text style={{paddingBottom:5}}>Expired Coin: {this.state.Expired}</Text>
+              <Text style={{paddingBottom:5}}>Total Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Normal Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Special Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Expired Coin: 1000</Text>
               {/* <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
               <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
             </Col>
@@ -182,8 +129,8 @@ export default class Home extends Component {
             </Col>
           </Row>
           </CardItem>
-          <CardItem> 
-              <Row style={{width:378}}>      
+          <CardItem>
+              <Row style={{width:378}}>
                 <Col style={{backgroundColor:'white'}}>
                 <ScrollView horizontal={true}>
                 <BarChart
@@ -194,7 +141,7 @@ export default class Home extends Component {
                 />
                 </ScrollView>
                 </Col>
-              </Row>         
+              </Row>
           </CardItem>
           <CardItem footer>
           <Row>
@@ -213,8 +160,8 @@ export default class Home extends Component {
             </Col>
           </Row>
           </CardItem>
-          <CardItem> 
-              <Row style={{width:378}}>      
+          <CardItem>
+              <Row style={{width:378}}>
                 <Col style={{backgroundColor:'white'}}>
                 <ScrollView horizontal={true}>
                 {/* <BarChart
@@ -232,7 +179,7 @@ export default class Home extends Component {
                 />
                 </ScrollView>
                 </Col>
-              </Row>         
+              </Row>
           </CardItem>
           <CardItem footer>
           <Row>

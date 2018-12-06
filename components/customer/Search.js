@@ -3,7 +3,10 @@ import {Container,Content, Header,Button, Badge,Icon,Right, Left, Body, Text, It
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
 export default class Home extends Component{
-
+  state = {
+    Results: [],
+    value:'',
+  };
 
   FavouriteButtonStatus(favouritestatus){
     if(favouritestatus=='yes'){
@@ -14,19 +17,26 @@ export default class Home extends Component{
     }
   }
 
+  handleChange(e) {
+       this.setState({
+         value: e.nativeEvent.text,
+       });
+     }
+
   handleSearch(value){
-    return fetch(global.HostURL + 'api/restaurant/' + value)
+    return fetch(global.HostURL + '/api/restaurant/search?name=' + this.state.value)
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
-         Users: responseJson,
+         Results: responseJson,
        }, function(){
 
        });
     })
     .catch((error) => {
       console.error(error);
+      console.log("search failed");
     });
   }
 
@@ -36,38 +46,24 @@ export default class Home extends Component{
         <Header searchBar rounded style = {{height: 70,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 10, paddingTop: 20}}>
             <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
               <Icon name="ios-search" />
-              <Input placeholder="Search"  onSubmitEditing={(value)=>this.handleSearch.bind(value)} />
+              <Input placeholder="Search" onChange={this.handleChange.bind(this)} onSubmitEditing={this.handleSearch.bind(this)} returnKeyType="search" />
             </Item>
-            {/* <Button transparent onPress={()=>this.props.navigation.goBack()} >
-              <Icon style = {{color: 'white', paddingLeft:20}} name='arrow-back' />
-              <Text style = {{color: 'white', width:'100%'}} >Search</Text>
-            </Button> */}
-          {/* <Right>
-          </Right> */}
         </Header>
         <Content padder>
               {
-                this.items.map((item, key)=>
+                this.state.Results.map((item, key)=>
                 (
                   <Card key={key} style={{borderColor:'red', borderRadius: 2}}>
                     <CardItem style={{paddingTop:0, paddingBottom:0, paddingRight:0}}>
                       <Body>
                       <View style={{flex: 1,flexDirection: 'row'}}>
                         <View style={{width: 100, height: '100%', paddingTop:10, paddingBottom:10}}>
-                          <Thumbnail square large source={{uri: item.img}} style={{borderWidth:1, borderColor:'#616161', borderRadius: 10}} />
+                          <Thumbnail square large source={{uri: global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} style={{borderWidth:1, borderColor:'#616161', borderRadius: 10}} />
                         </View>
                         <View style={{alignSelf: 'flex-start' , height: '100%', padding:20,alignItems: 'center', justifyContent: 'center'}}>
-                          <Text style={{fontWeight:'bold'}}>{item.name}</Text>
+                          <Text style={{fontWeight:'bold'}}>{item.Rest_name}</Text>
                         </View>
-                        <Right>
-                          <View style={{width: 70, height: '100%', backgroundColor: 'white',alignItems: 'center', justifyContent: 'center'}}>
-                            {this.FavouriteButtonStatus(item.favouritestatus)}
-                          </View>
-                        </Right>
                       </View>
-                        {/* <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }}>
-
-                        </Col> */}
                       </Body>
                     </CardItem>
                   </Card>
