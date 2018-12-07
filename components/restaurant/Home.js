@@ -21,9 +21,30 @@ const cards = [
 ];
 
 export default class Home extends Component{
+  componentDidMount(){
+    this.getInfo();
+  }
   state = {
+    resturant: [],
     image: null,
   };
+  getInfo(){
+    return fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+      this.setState({
+         resturant: responseJson,
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log("search failed");
+    });
+  }
+
   constructor()
   {
     super();
@@ -43,7 +64,7 @@ export default class Home extends Component{
       <Left>
       <Button transparent full success style={{height:70}} onPress={this._pickImage}>
         {image &&
-              <Thumbnail style = {{borderColor: 'white', borderWidth: 2}} source={{ uri: image }} />}
+              <Thumbnail style = {{borderColor: 'white', borderWidth: 2}} source={{ uri: global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id }} />}
         <Text style={{paddingLeft:10,color:'white'}}>
           Upload Logo
         </Text>
@@ -89,7 +110,7 @@ export default class Home extends Component{
                  <CardItem>
                      <Left>
                       <Icon name="ios-compass"/>
-                      <Text> afassdf asdf dsfsasdfdsfsdsdfasdfsdfdasf sdfasdfasdf</Text>
+                      <Text>{this.state.resturant.Rest_location}</Text>
                      </Left>
                      <Right>
                       <Icon name="md-create" style={{ color: '#ED4A6A' }} />
@@ -98,7 +119,7 @@ export default class Home extends Component{
                  <CardItem>
                    <Left>
                     <Icon name="ios-call"/>
-                    <Text>+959656423812</Text>
+                    <Text>{this.state.resturant.Rest_phno}</Text>
                    </Left>
                    <Right>
                     <Icon name="md-create" style={{ color: '#ED4A6A' }} />
@@ -107,7 +128,7 @@ export default class Home extends Component{
                  <CardItem>
                    <Left>
                     <Icon name="md-mail"/>
-                    <Text>minthukhant.it@gmail.com</Text>
+                    <Text>{this.state.resturant.Rest_email}</Text>
                    </Left>
                    <Right>
                     <Icon name="md-create" style={{ color: '#ED4A6A' }} />
@@ -134,9 +155,9 @@ export default class Home extends Component{
       allowsEditing: true,
       aspect: [4, 3],
     });
-  
+
     console.log(result);
-  
+
     if (!result.cancelled) {
       this.setState({ image: result.uri });
     }
