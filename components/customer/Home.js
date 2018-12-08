@@ -148,7 +148,7 @@ export default class Home extends Component{
                                         <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
                                       </Button>
                                       <Button transparent textStyle={{color: '#87838B'}}>
-                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
+                                        <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_name}</Text>
                                       </Button>
                                     </View>
                                 </Col>

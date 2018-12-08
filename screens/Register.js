@@ -18,6 +18,7 @@ export default class Register extends Component{
     lat:'4',
     long:'5',
     profilepic:'',
+    location:'',
   }
   _pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -50,15 +51,16 @@ export default class Register extends Component{
         },
         body:JSON.stringify({
           User_id : item.id,
-          Rest_Name : this.state.name,
+          Rest_name : this.state.name,
           Rest_Password : this.state.password1,
           Rest_email : this.state.email,
           Rest_phno : this.state.phone,
-          Rest_Township : this.state.township,
+          Rest_township : this.state.township,
+          Rest_location: this.state.location,
           Rest_lat : this.state.lat,
           Rest_long : this.state.long,
           Rest_created_date : date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),
-          Rest_Coin:0,
+          Rest_coin:0,
           Rest_special_coin:0,
           Rest_coin_purchased:0,
         }),
@@ -144,7 +146,7 @@ export default class Register extends Component{
                   <Icon active name='ios-call' />
                   <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number"/>
                 </Item>
-                  <Textarea rowSpan={5} bordered placeholder="Enter Address" style={{padding:10}} />
+                  <Textarea rowSpan={5} onChangeText={(value) => this.setState({location:value})} bordered placeholder="Enter Address" style={{padding:10}} />
               </Col>
             </Row>
             <Row>

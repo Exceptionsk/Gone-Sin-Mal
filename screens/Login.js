@@ -4,6 +4,7 @@ import {Container, Button, Left, Right, Icon, Text} from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
 import { AsyncStorage } from "react-native"
+import Expo, { Permissions, Notifications } from 'expo';
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -11,11 +12,73 @@ export default class Login extends Component {
   }
  constructor(props){
    super(props);
-   this.state={userInfo:null};
+   this.state={
+     userInfo:null,
+     token:null,
+   };
+ }
+
+ async registerForPushNotifications() {
+   const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+
+   if (status !== 'granted') {
+     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+     if (status !== 'granted') {
+       return;
+     }
+   }
+
+   const token = await Notifications.getExpoPushTokenAsync();
+   console.log(status,token);
+   this.subscription = Notifications.addListener(this.handleNotification);
+
+   this.setState({
+     token:token,
+   });
+ }
+
+ handleNotification = notification => {
+   // console.log(notification, 'notification details')
+   // this.setState({
+   //   notification,
+   // });
+   fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=customer")
+   .then((response) => response.json())
+   .then((responseJson) => {
+     global.CustNotification=responseJson;
+   })
+   .catch((error) => {
+     // console.log("Customer noti failed");
+   });
+
+   fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=admin")
+   .then((response) => response.json())
+   .then((responseJson) => {
+     global.AdminNotification=responseJson;
+   })
+   .catch((error) => {
+     // console.log("Admin noti failed");
+   });
+
+   fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=restaurant")
+   .then((response) => response.json())
+   .then((responseJson) => {
+     console.log("rest noti here");
+     global.RestNotification=responseJson;
+   })
+   .catch((error) => {
+     // console.log("Restaurant noti failed");
+   });
+
+ };
+
+ componentDidMount() {
+   (async () => {
+     await this.registerForPushNotifications();
+ })();
  }
 
   async logInFB() {
-
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
       "2071732326473547",
       {
@@ -42,17 +105,18 @@ export default class Login extends Component {
             },
             body:JSON.stringify({
               User_id : json.id,
-              User_Name : json.name,
+              User_name : json.name,
               User_available_coin:0,
+              User_noti_token: this.state.token,
             }),
           }).then((response) => response.json())
             .then((responsejson)=>{
-              console.log(responsejson.User_Type);
-              if(responsejson.User_Type=="customer"){
+              console.log(responsejson.User_type);
+              if(responsejson.User_type=="customer"){
                 this.props.navigation.navigate('CustHome')
-              }else if (responsejson.User_Type=="admin") {
+              }else if (responsejson.User_type=="admin") {
                 this.props.navigation.navigate('AdminHome')
-              }else if (responsejson.User_Type=="owner"){
+              }else if (responsejson.User_type=="owner"){
                 this.props.navigation.navigate('RestHome')
               };
               this.props.navigation.navigate('CustHome')

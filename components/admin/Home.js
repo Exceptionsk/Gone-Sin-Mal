@@ -20,42 +20,43 @@ import {
 export default class Home extends Component {
   state = {
     modalVisible: false,
-    Coinstatus : [],
+    AdminStatus:null,
   };
-  // getCoinstatus(){
-  //   return fetch(global.HostURL + '/api/System/totalcoin')
-  //   .then((response) => response.json())
-  //   .then((responseJson) => {
-  //     console.log(responseJson);
-  //     this.setState({
-  //        Coinstatus: responseJson,
-  //      }, function(){
 
-  //      });
-  //   })
-  //   .catch((error) => {
-  //     // console.error(error);
-  //     console.log("new failed");
-  //   });
-  // }
+  getStatus(){
+    return fetch(global.HostURL + '/api/Admin')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+      this.setState({
+        AdminStatus: responseJson,
+       }, function(){
 
-  // componentDidMount(){
+       });
+    })
+    .catch((error) => {
+      // console.error(error);
+      console.log("Admin status failed");
+    });
+  }
 
-  //   this.getCoinstatus();
-  // }
+
+  componentDidMount(){
+    this.getStatus();
+  }
 
 
   render() {
-    
-      
-      const data = 
+
+
+      const data =
       [
-        { name: 'Normal Coin', population: 2000, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Special Coin', population: 3000, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Normal Coin', population: 1000, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Special Coin', population: 1000, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
         { name: 'Expired Coin', population: 1000, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
       ]
 
-    
+
 
     const chartConfig = {
       backgroundGradientFrom: '#1E2923',
@@ -110,10 +111,10 @@ export default class Home extends Component {
           <CardItem footer>
           <Row>
             <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Coin: 10,000</Text>
-              <Text style={{paddingBottom:5}}>Normal Coin: 8,000</Text>
-              <Text style={{paddingBottom:5}}>Special Coin: 1,000</Text>
-              <Text style={{paddingBottom:5}}>Expired Coin: 1,000</Text>
+              <Text style={{paddingBottom:5}}>Total Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Normal Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Special Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Expired Coin: 1000</Text>
               {/* <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
               <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
             </Col>
@@ -128,8 +129,8 @@ export default class Home extends Component {
             </Col>
           </Row>
           </CardItem>
-          <CardItem> 
-              <Row style={{width:378}}>      
+          <CardItem>
+              <Row style={{width:378}}>
                 <Col style={{backgroundColor:'white'}}>
                 <ScrollView horizontal={true}>
                 <BarChart
@@ -140,7 +141,7 @@ export default class Home extends Component {
                 />
                 </ScrollView>
                 </Col>
-              </Row>         
+              </Row>
           </CardItem>
           <CardItem footer>
           <Row>
@@ -159,8 +160,8 @@ export default class Home extends Component {
             </Col>
           </Row>
           </CardItem>
-          <CardItem> 
-              <Row style={{width:378}}>      
+          <CardItem>
+              <Row style={{width:378}}>
                 <Col style={{backgroundColor:'white'}}>
                 <ScrollView horizontal={true}>
                 {/* <BarChart
@@ -178,7 +179,7 @@ export default class Home extends Component {
                 />
                 </ScrollView>
                 </Col>
-              </Row>         
+              </Row>
           </CardItem>
           <CardItem footer>
           <Row>
