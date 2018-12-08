@@ -10,9 +10,19 @@ export default class Login extends Component {
   state = {
     modalVisible: false,
   };
-    static navigationOptions = {
+  static navigationOptions = {
         header:null
-      }
+  }
+
+  getinfo(){
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('itemId', 'NO-ID');
+    const otherParam = navigation.getParam('otherParam', 'some default value');
+  }
+
+  componentDidMount(){
+    this.getinfo();
+  }
     render(){
         return(
             <Container>

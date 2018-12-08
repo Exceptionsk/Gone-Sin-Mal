@@ -144,7 +144,7 @@ export default class Home extends Component{
                               (
                                 <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>
-                                      <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail')}>
+                                      <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail',{itemId: 86,otherParam: 'anything you want here'})}>
                                         <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
                                       </Button>
                                       <Button transparent textStyle={{color: '#87838B'}}>
