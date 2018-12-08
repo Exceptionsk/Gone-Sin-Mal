@@ -63,15 +63,11 @@ export default class Home extends Component{
       <Header style = {{height: 80,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
       <Left>
       <Button transparent full success style={{height:70}} onPress={this._pickImage}>
-        {image &&
-              <Thumbnail style = {{borderColor: 'white', borderWidth: 2}} source={{ uri: global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id }} />}
-        <Text style={{paddingLeft:10,color:'white'}}>
-          Upload Logo
-        </Text>
+          <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id}} />
       </Button>
       </Left>
       <Body>
-        <Text style = {{color: 'white'}}>  KFC something....</Text>
+        <Text style = {{color: 'white'}}>{this.state.resturant.Rest_name}</Text>
       </Body>
       </Header>
       <Content contentContainerStyle={{ flex: 1 }}>
