@@ -120,12 +120,12 @@ export default class GoneSin extends Component {
                                 <CardItem>
                                 <Left>
                                   <Modal
-                                    animationType="fade"
+                                    animationType="slide"
                                     transparent={true}
                                     onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
                                     visible={this.state.modalVisibleGoneSin}>
 
-                                   <BlurView tint="light" intensity={50} style={{
+                                   <View tint="light" intensity={50} style={{
                                       flex: 1,
                                       flexDirection: 'column',
                                       justifyContent: 'center',
@@ -135,7 +135,7 @@ export default class GoneSin extends Component {
                                         width: 0,
                                         height: 0,
                                       },
-                                      shadowRadius: 2,
+                                      shadowRadius: 3,
                                       shadowOpacity: 0.5
                                       }}>
                                       <View style={{
@@ -156,7 +156,7 @@ export default class GoneSin extends Component {
                                       bgColor='purple'
                                       fgColor='white'/>
                                       </View>
-                                  </BlurView>
+                                  </View>
                                   </Modal>
                                     <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
                                     {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}

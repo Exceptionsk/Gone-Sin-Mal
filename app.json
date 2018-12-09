@@ -4,6 +4,10 @@
     "androidStatusBar": {
       "barStyle": "light-content"
     },
+    "notification": {
+      "icon": "./assets/splash.png",
+      "color": ""   
+    },
     "description": "This project is really great.",
     "slug": "gone-sin-mal",
     "privacy": "public",

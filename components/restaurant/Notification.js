@@ -9,6 +9,9 @@ export default class Notification extends Component {
   setModalVisibleTransaction(visible) {
     this.setState({transactionmodalVisible: visible});
   };
+  setModalVisibleTransactionSpecilaCoin(visible) {
+    this.setState({transactionmodalVisibleSpecialCoin: visible});
+  };
   handleCode(e){
     this.setState({
       code: e.nativeEvent.text
@@ -30,6 +33,7 @@ export default class Notification extends Component {
   };
   state = {
     transactionmodalVisible: false,
+    transactionmodalVisibleSpecialCoin: false,
     Notification:[],
     code:'',
   };
@@ -51,7 +55,7 @@ export default class Notification extends Component {
     }).then((response) => response.json())
       .then((responsejson)=>{
         console.log(responsejson);
-        this.setState({transactionmodalVisible:false})
+        this.setState({transactionmodalVisibleSpecialCoin:false})
           this.setState({ code: '' });
       }).catch((error)=>{
         console.log('Transaction failed');
@@ -84,7 +88,7 @@ export default class Notification extends Component {
   }
   TransactionModelTest(id){
       if(id!=null){
-      return <Button danger style={{height:40}} onPress={() => {this.setModalVisibleTransaction(true);}}><Text>Redeem Coin</Text></Button>
+      return <Button danger style={{height:40}} onPress={() => {this.setModalVisibleTransactionSpecilaCoin(true);}}><Text>Redeem Coin</Text></Button>
     }
   }
 
@@ -116,12 +120,12 @@ export default class Notification extends Component {
                               </Left>
                             </CardItem>
                             <Modal
-                              animationType="fade"
+                              animationType="slide"
                               transparent={true}
                               onRequestClose={()=>{this.setModalVisibleTransaction(!this.state.transactionmodalVisible);}}
                               visible={this.state.transactionmodalVisible}>
 
-                              <BlurView tint="light" intensity={50}  style={{
+                              <View style={{
                                       flex: 1,
                                       flexDirection: 'column',
                                       justifyContent: 'center',
@@ -156,7 +160,56 @@ export default class Notification extends Component {
                                    <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,item.ID)} ><Text>{this.state.code}</Text></Button>
                                    </Right>
                                 </View>
-                              </BlurView>
+                              </View>
+                            </Modal>
+                            <Modal
+                              animationType="slide"
+                              transparent={true}
+                              onRequestClose={()=>{this.setModalVisibleTransactionSpecilaCoin(!this.state.transactionmodalVisibleSpecialCoin);}}
+                              visible={this.state.transactionmodalVisibleSpecialCoin}>
+
+                              <View style={{
+                                      flex: 1,
+                                      flexDirection: 'column',
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                      shadowColor: '#000000',
+                                      shadowOffset: {
+                                        width: 0,
+                                        height: 0
+                                      },
+                                      shadowRadius: 3,
+                                      shadowOpacity: 1.0
+                                      }}>
+                                <View style={{
+                                        width: '80%',
+                                        height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
+                                <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                                <Right>
+                                  <Button transparent onPress={()=>{this.setModalVisibleTransactionSpecilaCoin(!this.state.transactionmodalVisibleSpecialCoin);}}>
+                                    <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                                  </Button>
+                                  </Right>
+                                </Header>
+                                </View>
+                                <View style={{width: '80%', height: 250, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
+                                  <TextInput style = {styles.input}
+                                  underlineColorAndroid = "transparent"
+                                  placeholder = " Enter number of users"
+                                  placeholderTextColor = "#3f3f3f"
+                                  autoCapitalize = "none"/>
+                                  <Text style={{paddingTop:20,paddingBottom:20}}>30 coins/user</Text>
+                                  <TextInput style = {styles.input}
+                                  underlineColorAndroid = "transparent"
+                                  placeholder = " Enter transation ID"
+                                  placeholderTextColor = "#3f3f3f"
+                                  autoCapitalize = "none"
+                                  onChange = {this.handleCode.bind(this)}/>
+                                   <Right style={{paddingTop:20}}>
+                                   <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,item.ID)} ><Text>{this.state.code}</Text></Button>
+                                   </Right>
+                                </View>
+                              </View>
                             </Modal>
                         </Col>
                       </Row>
