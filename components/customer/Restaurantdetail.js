@@ -9,6 +9,7 @@ export default class Login extends Component {
   };
   state = {
     modalVisible: false,
+    resturant:'',
   };
   static navigationOptions = {
         header:null
@@ -16,8 +17,20 @@ export default class Login extends Component {
 
   getinfo(){
     const { navigation } = this.props;
-    const itemId = navigation.getParam('itemId', 'NO-ID');
-    const otherParam = navigation.getParam('otherParam', 'some default value');
+    return fetch(global.HostURL + '/api/Restaurant?id=' + navigation.getParam('Rest_id', '1'))
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+      this.setState({
+         resturant: responseJson,
+       }, function(){
+
+       });
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log("resturant info failed");
+    });
   }
 
   componentDidMount(){
@@ -55,11 +68,11 @@ export default class Login extends Component {
                             <CardItem header>
                             <Row>
                                 <Col style={{backgroundColor:'white',width:110}}>
-                                    <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}}  source={require('../../assets/kfclogo.png')} />
+                                    <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id}} />
                                 </Col>
                                 <Col style={{backgroundColor:'white'}}>
-                                    <H2>KFC</H2>
-                                    <H2 style={{color:'#404040'}}>Catagory: Fast Food</H2>
+                                    <H2>{this.state.resturant.Rest_name}</H2>
+                                    <H2 style={{color:'#404040'}}>Catagory: {this.state.resturant.Rest_id}</H2>
                                 </Col>
                             </Row>
                             </CardItem>
@@ -83,9 +96,9 @@ export default class Login extends Component {
                             <CardItem footer>
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
-                                        <Text style={{paddingBottom:5}}>Detail Address: Building Number 102, Orchid Street San Chaung Township</Text>
-                                        <Text style={{paddingBottom:5}}>Phone Number: 0933245667</Text>
-                                        <Text style={{paddingBottom:5}}>Email: kfcsogood@gmail.com</Text>
+                                        <Text style={{paddingBottom:5}}>Detail Address: {this.state.resturant.Rest_location}</Text>
+                                        <Text style={{paddingBottom:5}}>Phone Number: {this.state.resturant.Rest_phno}</Text>
+                                        <Text style={{paddingBottom:5}}>Email: {this.state.resturant.Rest_email}</Text>
                                     </Col>
                                 </Row>
                             </CardItem>
