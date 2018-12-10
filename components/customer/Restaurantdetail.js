@@ -17,7 +17,7 @@ export default class Login extends Component {
 
   getinfo(){
     const { navigation } = this.props;
-    return fetch(global.HostURL + '/api/Restaurant?id=' + navigation.getParam('Rest_id', '1'))
+    return fetch(global.HostURL + '/api/Restaurant?id=' + navigation.getParam('Rest_id', '1') + "&profile=false")
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);

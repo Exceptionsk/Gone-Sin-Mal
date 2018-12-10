@@ -57,32 +57,9 @@ export default class Admins extends Component {
           this.handleSearch();
         });
     } catch (e) {
-      console.log('failed');
+      console.log('promote failed');
     }
   }
-
-
-  getNotification(){
-    try {
-      fetch(global.HostURL + '/api/user/demote', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          User_id : id,
-          Tran_Date: date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),
-        }),
-      }).then((response) => response.json())
-        .then((responsejson)=>{
-
-        });
-    } catch (e) {
-      console.log('failed');
-    }
-  }
-
 
   Demote(id){
     try {
@@ -94,14 +71,13 @@ export default class Admins extends Component {
         },
         body:JSON.stringify({
           User_id : id,
-          Tran_Date: date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
-
+          this.handleSearch();
         });
     } catch (e) {
-      console.log('failed');
+      console.log('demote failed');
     }
   }
   render() {

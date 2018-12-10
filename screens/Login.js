@@ -189,10 +189,6 @@ handleType(e){
                     <Icon name='logo-facebook' />
                     <Text> Register </Text>
                   </Button>
-                  <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('Pushnoti')}>
-                    <Icon name='logo-facebook' />
-                    <Text> Test </Text>
-                  </Button>
                 </View>
               </Col>
             </Row>

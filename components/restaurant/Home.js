@@ -29,7 +29,7 @@ export default class Home extends Component{
     image: null,
   };
   getInfo(){
-    return fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id)
+    return fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);

@@ -6,7 +6,7 @@
     },
     "notification": {
       "icon": "./assets/splash.png",
-      "color": ""   
+      "color": "#000000"   
     },
     "description": "This project is really great.",
     "slug": "gone-sin-mal",
