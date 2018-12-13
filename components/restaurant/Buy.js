@@ -14,7 +14,7 @@ export default class Home extends Component{
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  newTransaction(type){
+  newTransaction(type, package_id){
     this.setModalVisible(true);
     fetch(global.HostURL + '/api/transaction/request', {
       method: 'POST',
@@ -26,6 +26,7 @@ export default class Home extends Component{
         User_id : global.Profile.id,
         Tran_type: type,
         Pending: true,
+        Package_id: package_id,
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
@@ -56,24 +57,7 @@ export default class Home extends Component{
     this.getPackage();
   }
 
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'100 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'200 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'500 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'1000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-    ];
-    this.items1 = [
-      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'30000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'100000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-    ];
-  }
+
   render(){
     return(
       <Container>
@@ -117,8 +101,8 @@ export default class Home extends Component{
                           />
                       </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal')} >
-                            <Thumbnail style={styles.imagetwo} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal',item.Package_id)} >
+                            <Thumbnail style={styles.imagetwo} source={{uri : global.HostURL + "/api/package/image/" + item.Package_id}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>
                             <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
@@ -169,8 +153,8 @@ export default class Home extends Component{
                           />
                       </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special')}>
-                            <Thumbnail style={styles.imagetwo} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special',item.Package_id)}>
+                            <Thumbnail style={styles.imagetwo} source={{uri : global.HostURL + "/api/package/image/" + item.Package_id}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>
                             <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
@@ -199,9 +183,6 @@ const styles= StyleSheet.create({
   imagetwo:{
     height: 125,
     width: 120,
-    borderColor: '#a3a3a3',
-    borderWidth: 0.5,
-    padding: 0
   },
   imgcol:{
     padding: 20,

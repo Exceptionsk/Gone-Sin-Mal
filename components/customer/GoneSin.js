@@ -11,6 +11,10 @@ import { BlurView } from 'expo';
 export default class GoneSin extends Component {
   componentDidMount() {
     lor(this);
+    let that = this;
+    setInterval(() => {
+        that.setState({GoneSinList: global.GoneSinList});
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -26,49 +30,9 @@ export default class GoneSin extends Component {
     text: '1000 points',
     modalVisible: false,
     modalVisibleGoneSin: false,
+    GoneSinList:[],
   };
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'KFC',
-       date:'April 15, 2019' ,
-       img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
-       point:'1,000 Points',
-       gonesin: 'GoneSin!',
-      },
-      {name:'KFC',
-      date:'April 15, 2019' ,
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
-      point:'1,000 Points',
-      gonesin: 'GoneSin!',
-      },
-      {name:'KFC',
-      date:'April 15, 2019' ,
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
-      point:'1,000 Points',
-      gonesin: 'GoneSin!',
-      },
-      {name:'KFC',
-      date:'April 15, 2019' ,
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
-      point:'1,000 Points',
-      gonesin: 'GoneSin!',
-      },
-      {name:'KFC',
-      date:'April 15, 2019' ,
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
-      point:'1,000 Points',
-      gonesin: 'GoneSin!',
-      },
-      {name:'KFC',
-      date:'April 15, 2019' ,
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
-      point:'1,000 Points',
-      gonesin: 'GoneSin!',
-      },
-    ];
-  }
+
   render() {
     return(
       <Container>
@@ -103,17 +67,17 @@ export default class GoneSin extends Component {
           </Row>
           <Content style={{ backgroundColor: '#dfdfdf'}}>
             {
-              this.items.map((item, key)=>
+              this.state.GoneSinList.map((item, key)=>
               (
                 <View style={{flex: 1,flexDirection: 'row',paddingBottom:0,marginBottom:0}} key={key}>
                   <View style={{width: '50%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
                   <Card style={{flex: 0, marginLeft: 12}}>
                                 <CardItem>
                                 <Left>
-                                    <Thumbnail source={{uri : item.img}} />
+                                    <Thumbnail source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
                                     <Body>
-                                    <Text>{item.name}</Text>
-                                    <Text note>{item.date}</Text>
+                                    <Text>{item.Rest_id}</Text>
+                                    <Text note>{item.User_id}</Text>
                                     </Body>
                                 </Left>
                                 </CardItem>
@@ -151,7 +115,7 @@ export default class GoneSin extends Component {
                                       </View>
                                       <View style={{width: '80%', height: '50%',justifyContent: 'center',alignItems: 'center',backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
                                       <QRCode
-                                      value={global.Profile.id+this.state.text}
+                                      value={item.User_promotion_amount}
                                       size={200}
                                       bgColor='purple'
                                       fgColor='white'/>
@@ -161,7 +125,7 @@ export default class GoneSin extends Component {
                                     <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
                                     {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
                                     <Badge style={{ backgroundColor: 'black' }}>
-                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
+                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.User_promotion_amount}</Text>
                                     </Badge>
                                     <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
                                     </Button>

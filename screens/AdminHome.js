@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from 'react-navigation';
 
-import NNoti from "../components/admin/NNoti";
-import PNoti from "../components/admin/PNoti";
+import Notification from "../components/admin/NNoti";
+import Refund from "../components/admin/PNoti";
 import Home from "../components/admin/Home";
 import Admins from "../components/admin/Admins";
 
@@ -37,16 +37,16 @@ export default class AdminHome extends Component{
 }
 
 const Buttontab = createBottomTabNavigator({
-  NNoti: {
-    screen: NNoti,
+  Notification: {
+    screen: Notification,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-notifications" color={tintColor} size={24} />
       )
     }
   },
-  PNoti: {
-    screen: PNoti,
+  Refund: {
+    screen: Refund,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-notifications-outline" color={tintColor} size={24} />
@@ -72,7 +72,7 @@ const Buttontab = createBottomTabNavigator({
 
 }, {//router config
     initialRouteName: 'Home',
-    order: ['NNoti','PNoti','Home','Admins'],
+    order: ['Notification','Refund','Home','Admins'],
     //navigation for complete tab navigator
     navigationOptions: {
       tabBarVisible: true

@@ -64,6 +64,7 @@ export default class Login extends Component {
    .then((response) => response.json())
    .then((responseJson) => {
      console.log("rest noti here");
+     console.log(responseJson);
      global.RestNotification=responseJson;
    })
    .catch((error) => {
@@ -87,7 +88,7 @@ export default class Login extends Component {
     );
     if (type === 'success') {
       const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}&fields=id,name,picture.type(large)` );
+        `https://graph.facebook.com/me?access_token=${token}&fields=id,name` );
         const json = await response.json()
         try {
             var jsonOfItem = await AsyncStorage.setItem('profile', JSON.stringify(json));

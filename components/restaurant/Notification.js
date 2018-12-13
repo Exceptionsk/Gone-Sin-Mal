@@ -6,17 +6,20 @@ import { BlurView } from 'expo';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
 export default class Notification extends Component {
-  setModalVisibleTransaction(visible) {
-    this.setState({transactionmodalVisible: visible});
-  };
-  setModalVisibleTransactionSpecilaCoin(visible) {
-    this.setState({transactionmodalVisibleSpecialCoin: visible});
-  };
+
+
   handleCode(e){
     this.setState({
-      code: e.nativeEvent.text
+      Code: e.nativeEvent.text
     })
   }
+
+  handleCount(e){
+    this.setState({
+      Count: e.nativeEvent.text
+    })
+  }
+
   async retrieveItem(key) {
     try {
       const retrievedItem =  await AsyncStorage.getItem(key);
@@ -35,12 +38,14 @@ export default class Notification extends Component {
     transactionmodalVisible: false,
     transactionmodalVisibleSpecialCoin: false,
     Notification:[],
-    code:'',
+    Code:'',
+    ID:'',
+    Cout:'',
   };
   componentWillMount(){
     this.retrieveItem('profile')
   }
-  sendTransactionID(record_id){
+  sendTransactionID(){
     fetch(global.HostURL + '/api/transaction/comfirm', {
       method: 'POST',
       headers: {
@@ -49,18 +54,19 @@ export default class Notification extends Component {
       },
       body:JSON.stringify({
         Rest_id : global.Profile.id,
-        Tran_id : this.state.code,
-        ID: record_id,
+        Tran_id : this.state.Code,
+        ID: this.state.ID,
+        Count: this.state.Count
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
         console.log(responsejson);
         this.setState({transactionmodalVisibleSpecialCoin:false})
-          this.setState({ code: '' });
+          this.setState({ Code: '' });
       }).catch((error)=>{
         console.log('Transaction failed');
         console.log(error);
-        this.setState({ code: '' });
+        this.setState({ Code: '' });
       });
   }
   componentDidMount() {
@@ -86,9 +92,13 @@ export default class Notification extends Component {
     }
 
   }
-  TransactionModelTest(id){
+  TransactionModelTest(id,type){
       if(id!=null){
-      return <Button danger style={{height:40}} onPress={() => {this.setModalVisibleTransactionSpecilaCoin(true);}}><Text>Redeem Coin</Text></Button>
+        if(type=="special"){
+            return <Button danger style={{height:40}} onPress={() => {this.setState({transactionmodalVisibleSpecialCoin: true});this.setState({ID: id});}}><Text>{type}</Text></Button>
+        }else{
+            return <Button danger style={{height:40}} onPress={() => {this.setState({transactionmodalVisible: true});this.setState({ID: id});}}><Text>normal Coin</Text></Button>
+        }
     }
   }
 
@@ -101,6 +111,99 @@ export default class Notification extends Component {
         <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Notification</H3>
       </Body>
       </Header>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        onRequestClose={()=>{this.setState({transactionmodalVisible: false});}}
+        visible={this.state.transactionmodalVisible}>
+        <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                shadowColor: '#000000',
+                shadowOffset: {
+                  width: 0,
+                  height: 3
+                },
+                shadowRadius: 5,
+                shadowOpacity: 1.0
+                }}>
+          <View style={{
+                  width: '80%',
+                  height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
+          <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+          <Right>
+            <Button transparent onPress={()=>{this.setState({transactionmodalVisible: false});}}>
+              <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+            </Button>
+            </Right>
+          </Header>
+          </View>
+          <View style={{width: '80%', height: 150, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
+            <TextInput style = {styles.input}
+            underlineColorAndroid = "transparent"
+            placeholder = " Enter transation ID"
+            placeholderTextColor = "#3f3f3f"
+            autoCapitalize = "none"
+            onChange = {this.handleCode.bind(this)}/>
+             <Right style={{paddingTop:20}}>
+             <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this)} ><Text>{this.state.Code}</Text></Button>
+             </Right>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        onRequestClose={()=>{  this.setState({transactionmodalVisibleSpecialCoin: false});}}
+        visible={this.state.transactionmodalVisibleSpecialCoin}>
+
+        <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                shadowColor: '#000000',
+                shadowOffset: {
+                  width: 0,
+                  height: 0
+                },
+                shadowRadius: 3,
+                shadowOpacity: 1.0
+                }}>
+          <View style={{
+                  width: '80%',
+                  height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
+          <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+          <Right>
+            <Button transparent onPress={()=>{ this.setState({transactionmodalVisibleSpecialCoin: false});}}>
+              <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+            </Button>
+            </Right>
+          </Header>
+          </View>
+          <View style={{width: '80%', height: 250, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
+            <TextInput style = {styles.input}
+            underlineColorAndroid = "transparent"
+            placeholder = " Enter number of users"
+            placeholderTextColor = "#3f3f3f"
+            autoCapitalize = "none"
+            onChange = {this.handleCount.bind(this)}
+            />
+            <Text style={{paddingTop:20,paddingBottom:20}}>{this.state.Count}</Text>
+            <TextInput style = {styles.input}
+            underlineColorAndroid = "transparent"
+            placeholder = " Enter transation ID"
+            placeholderTextColor = "#3f3f3f"
+            autoCapitalize = "none"
+            onChange = {this.handleCode.bind(this)}/>
+             <Right style={{paddingTop:20}}>
+             <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this)} ><Text>{this.state.Code}</Text></Button>
+             </Right>
+          </View>
+        </View>
+      </Modal>
         <Grid>
             <Content style = {{backgroundColor:'#dfdfdf'}}>
             {
@@ -119,106 +222,13 @@ export default class Notification extends Component {
                                   </Body>
                               </Left>
                             </CardItem>
-                            <Modal
-                              animationType="slide"
-                              transparent={true}
-                              onRequestClose={()=>{this.setModalVisibleTransaction(!this.state.transactionmodalVisible);}}
-                              visible={this.state.transactionmodalVisible}>
-
-                              <View style={{
-                                      flex: 1,
-                                      flexDirection: 'column',
-                                      justifyContent: 'center',
-                                      alignItems: 'center',
-                                      shadowColor: '#000000',
-                                      shadowOffset: {
-                                        width: 0,
-                                        height: 3
-                                      },
-                                      shadowRadius: 5,
-                                      shadowOpacity: 1.0
-                                      }}>
-                                <View style={{
-                                        width: '80%',
-                                        height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
-                                <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                                <Right>
-                                  <Button transparent onPress={()=>{this.setModalVisibleTransaction(!this.state.transactionmodalVisible);}}>
-                                    <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                                  </Button>
-                                  </Right>
-                                </Header>
-                                </View>
-                                <View style={{width: '80%', height: 150, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
-                                  <TextInput style = {styles.input}
-                                  underlineColorAndroid = "transparent"
-                                  placeholder = " Enter transation ID"
-                                  placeholderTextColor = "#3f3f3f"
-                                  autoCapitalize = "none"
-                                  onChange = {this.handleCode.bind(this)}/>
-                                   <Right style={{paddingTop:20}}>
-                                   <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,item.ID)} ><Text>{this.state.code}</Text></Button>
-                                   </Right>
-                                </View>
-                              </View>
-                            </Modal>
-                            <Modal
-                              animationType="slide"
-                              transparent={true}
-                              onRequestClose={()=>{this.setModalVisibleTransactionSpecilaCoin(!this.state.transactionmodalVisibleSpecialCoin);}}
-                              visible={this.state.transactionmodalVisibleSpecialCoin}>
-
-                              <View style={{
-                                      flex: 1,
-                                      flexDirection: 'column',
-                                      justifyContent: 'center',
-                                      alignItems: 'center',
-                                      shadowColor: '#000000',
-                                      shadowOffset: {
-                                        width: 0,
-                                        height: 0
-                                      },
-                                      shadowRadius: 3,
-                                      shadowOpacity: 1.0
-                                      }}>
-                                <View style={{
-                                        width: '80%',
-                                        height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
-                                <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                                <Right>
-                                  <Button transparent onPress={()=>{this.setModalVisibleTransactionSpecilaCoin(!this.state.transactionmodalVisibleSpecialCoin);}}>
-                                    <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                                  </Button>
-                                  </Right>
-                                </Header>
-                                </View>
-                                <View style={{width: '80%', height: 250, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
-                                  <TextInput style = {styles.input}
-                                  underlineColorAndroid = "transparent"
-                                  placeholder = " Enter number of users"
-                                  placeholderTextColor = "#3f3f3f"
-                                  autoCapitalize = "none"/>
-                                  <Text style={{paddingTop:20,paddingBottom:20}}>30 coins/user</Text>
-                                  <TextInput style = {styles.input}
-                                  underlineColorAndroid = "transparent"
-                                  placeholder = " Enter transation ID"
-                                  placeholderTextColor = "#3f3f3f"
-                                  autoCapitalize = "none"
-                                  onChange = {this.handleCode.bind(this)}/>
-                                   <Right style={{paddingTop:20}}>
-                                   <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this,item.ID)} ><Text>{this.state.code}</Text></Button>
-                                   </Right>
-                                </View>
-                              </View>
-                            </Modal>
                         </Col>
                       </Row>
                       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{padding:20}}>
-                          {this.TransactionModelTest(item.ID)}
+                          {this.TransactionModelTest(item.ID,item.Tran_type)}
                         </View>
                       </View>
-
                       </Card>
                     </View>
                   )

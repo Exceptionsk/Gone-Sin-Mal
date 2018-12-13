@@ -23,24 +23,6 @@ const User = createStackNavigator({
    headerMode: 'none'
 });
 export default class CustHome extends Component{
-  getNoti(){
-    return fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=customer")
-    .then((response) => response.json())
-    .then((responseJson) => {
-      global.CustNotification=responseJson;
-    })
-    .catch((error) => {
-      // console.log("Customer noti failed");
-    });
-  };
-
-  componentDidMount() {
-    // let that = this;
-    // setInterval(() => {
-    //   that.getNoti();
-    // }, 1000);
-  }
-
   static navigationOptions = {
     header:null
   }
@@ -75,22 +57,44 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-restaurant" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        fetch(global.HostURL + '/api/Promotion/' + global.Profile.id)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          global.GoneSinList=responseJson;
+        })
+        .catch((error) => {
+          // console.log("Customer noti failed");
+        });
+        defaultHandler();
+      }
     }
   },
-  Noti: {
+  Notification: {
     screen: Notification,
     tabBarLabel: '',
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-notifications" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=customer")
+        .then((response) => response.json())
+        .then((responseJson) => {
+          global.CustNotification=responseJson;
+        })
+        .catch((error) => {
+          // console.log("Customer noti failed");
+        });
+        defaultHandler();
+      }
     }
   }
 
 }, {//router config
     initialRouteName: 'Home',
-    order: ['Home','Favourite','GoneSin', 'Noti'],
+    order: ['Home','Favourite','GoneSin', 'Notification'],
     //navigation for complete tab navigator
     navigationOptions: {
       tabBarVisible: true
