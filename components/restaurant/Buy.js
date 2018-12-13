@@ -60,18 +60,18 @@ export default class Home extends Component{
   {
     super();
     this.items = [
-      {name:'100 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'200 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'500 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'1000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'100 coins', img:'https://cdn.myanimelist.net/images/anime/10/88111l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'200 coins', img:'../../assets/Normal Coin 500.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'500 coins', img:'../../assets/Normal Coin 1000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'1000 coins', img:'../../assets/Normal Coin 5000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'10000 coins', img:'../../assets/Normal Coin 10000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
     ];
     this.items1 = [
-      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'10000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'30000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'5000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'100000 coins', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'5000 coins', img:'../../assets/Special Coin 300.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'10000 coins', img:'../../assets/Special Coin 500.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'30000 coins', img:'../../assets/Special Coin 1000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'5000 coins', img:'../../assets/Special Coin 5000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'100000 coins', img:'../../assets/Special Coin 10000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
     ];
   }
   render(){
@@ -117,11 +117,11 @@ export default class Home extends Component{
                           />
                       </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal')} >
-                            <Thumbnail style={styles.imagetwo} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
-                          </Button>
-                          <Button transparent textStyle={{color: '#87838B'}}>
-                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
+                          <Button transparent style={{height: 120 , width: '100%',alignSelf:'center'}} onPress={this.newTransaction.bind(this,'normal')} >
+                            <Thumbnail style={styles.imagetwo} source={require('../../assets/NormalCoin300.png')} />
+                          </Button>  
+                        <Button transparent textStyle={{color: '#87838B'}} style={{alignSelf:'center'}}>
+                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black'}}>{item.Package_coin_amount}</Text>
                           </Button>
                         </View>
                     </Col>
@@ -170,10 +170,10 @@ export default class Home extends Component{
                       </Modal>
                         <View style = {styles.imgcolfour}>
                           <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special')}>
-                            <Thumbnail style={styles.imagetwo} source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
+                            <Thumbnail style={styles.imagetwo} source={require('../../assets/SpecialCoin300.png')} />
                           </Button>
-                          <Button transparent textStyle={{color: '#87838B'}}>
-                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
+                          <Button transparent textStyle={{color: '#87838B'}}  style={{alignSelf:'center'}}>
+                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black' }}>{item.Package_coin_amount}</Text>
                           </Button>
                         </View>
                     </Col>
@@ -200,7 +200,7 @@ const styles= StyleSheet.create({
     height: 125,
     width: 120,
     borderColor: '#a3a3a3',
-    borderWidth: 0.5,
+    borderWidth: 0,
     padding: 0
   },
   imgcol:{
