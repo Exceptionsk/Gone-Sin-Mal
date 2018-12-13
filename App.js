@@ -15,6 +15,7 @@ import RestHome from "./screens/RestHome";
 import LoginScreen from "./screens/Login";
 import AdminHome from "./screens/AdminHome";
 import Register from "./screens/Register";
+import MapView from "./screens/MapView";
 
 
 const TopLevelNavigator = createStackNavigator({
@@ -23,6 +24,7 @@ const TopLevelNavigator = createStackNavigator({
   RestHome: {screen: RestHome},
   AdminHome: {screen: AdminHome},
   Register: {screen: Register},
+  MapView: {screen: MapView},
 });
 
 export default class Start extends Component {

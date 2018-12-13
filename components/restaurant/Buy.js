@@ -57,7 +57,24 @@ export default class Home extends Component{
     this.getPackage();
   }
 
-
+  constructor()
+  {
+    super();
+    this.items = [
+      {name:'100 coins', img:'https://cdn.myanimelist.net/images/anime/10/88111l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'200 coins', img:'../../assets/Normal Coin 500.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'500 coins', img:'../../assets/Normal Coin 1000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'1000 coins', img:'../../assets/Normal Coin 5000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'10000 coins', img:'../../assets/Normal Coin 10000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+    ];
+    this.items1 = [
+      {name:'5000 coins', img:'../../assets/Special Coin 300.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'10000 coins', img:'../../assets/Special Coin 500.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'30000 coins', img:'../../assets/Special Coin 1000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'5000 coins', img:'../../assets/Special Coin 5000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+      {name:'100000 coins', img:'../../assets/Special Coin 10000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
+    ];
+  }
   render(){
     return(
       <Container>
@@ -156,8 +173,8 @@ export default class Home extends Component{
                           <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special',item.Package_id)}>
                             <Thumbnail style={styles.imagetwo} source={{uri : global.HostURL + "/api/package/image/" + item.Package_id}} />
                           </Button>
-                          <Button transparent textStyle={{color: '#87838B'}}>
-                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
+                          <Button transparent textStyle={{color: '#87838B'}}  style={{alignSelf:'center'}}>
+                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black' }}>{item.Package_coin_amount}</Text>
                           </Button>
                         </View>
                     </Col>
