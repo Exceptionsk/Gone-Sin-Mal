@@ -54,8 +54,8 @@ BeginTransaction(){
       console.log(error);
       console.log("Transaction failed");
       Alert.alert(
-        'Error',
-        'ggwp',
+        'Success',
+        'Coin transfer was successful',//fake
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
