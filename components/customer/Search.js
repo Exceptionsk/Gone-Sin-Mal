@@ -47,7 +47,7 @@ export default class Home extends Component{
   render(){
     return(
       <Container>
-        <Header searchBar rounded style = {{height: 70,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 10, paddingTop: 20}}>
+        <Header searchBar rounded style = {{height: 70,backgroundColor: '#a3080c', paddingBottom: 10, paddingTop: 20}}>
             <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
               <Icon name="ios-search" />
               <Input placeholder="Search" onChange={this.handleChange.bind(this)} onSubmitEditing={this.handleSearch.bind(this)} returnKeyType="search" />

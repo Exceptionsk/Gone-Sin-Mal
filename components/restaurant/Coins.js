@@ -22,7 +22,7 @@ export default class Coins extends Component{
   render(){
     return(
       <Container>
-      <Header style = {{height: 60,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{height: 60,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
         <Body style={{width:300}}>
               <Text style = {{color: 'white'}}>Available Coins: 1023</Text>
         </Body>

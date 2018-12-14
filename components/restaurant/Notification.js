@@ -72,7 +72,6 @@ export default class Notification extends Component {
   componentDidMount() {
     let that = this;
     setInterval(() => {
-      console.log(global.RestNotification);
         that.setState({Notification: global.RestNotification});
     }, 1000);
   }
@@ -106,7 +105,7 @@ export default class Notification extends Component {
     let { image } = this.state;
     return(
     <Container>
-      <Header style = {{ height: 60,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{ height: 60,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
       <Body>
         <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Notification</H3>
       </Body>

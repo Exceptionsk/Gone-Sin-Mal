@@ -56,17 +56,6 @@ export default class Home extends Component{
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'KFC', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Sar Mal', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gone Sin', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'YKKO', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Golden Pot', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
-  }
 
   handleChange(e) {
        this.setState({
@@ -95,13 +84,13 @@ export default class Home extends Component{
   render(){
     return(
       <Container>
-      <Header style = {{height: 90,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{height: 90,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
         <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
             <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
-            <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
+            <Text >{global.Profile.name}</Text>
         </Button>
         <Button transparent  onPress={() => this.props.navigation.navigate('Search')}>
-            <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
+            <Text >Available Coin : 1,866P</Text>
         </Button>
         <Modal
           animationType="slide"

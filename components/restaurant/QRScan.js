@@ -78,7 +78,7 @@ handleAmount(e){
     }
     return (
       <Container>
-        <Header style = {{alignItems:'center',height: 70,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+        <Header style = {{alignItems:'center',height: 70,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
             <Body style={{paddingLeft:300}}>
             <Badge style={{ backgroundColor: 'black' }}>
                   <Text style={{ color: 'white' }}>{String(this.state.isSwitchOn)}</Text>

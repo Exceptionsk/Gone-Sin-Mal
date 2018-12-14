@@ -20,9 +20,9 @@ import {
 export default class Home extends Component {
   state = {
     modalVisible: false,
-    NormalCoin:null,
-    SpecialCoin:null,
-    ExpiredCoin:null,
+    NormalCoin:'',
+    SpecialCoin:'',
+    ExpiredCoin:'',
   };
 
   getStatus(){
@@ -82,8 +82,8 @@ export default class Home extends Component {
       <Container>
           <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
           <Button transparent style={{height:70}}>
-              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/saitama.jpg')} />
-              <Text style = {{color: 'white'}}>Saitama</Text>
+              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+              <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
           </Button>
         </Header>
         <Grid>
@@ -118,8 +118,6 @@ export default class Home extends Component {
               <Text style={{paddingBottom:5}}>Normal Coin: {this.state.NormalCoin}</Text>
               <Text style={{paddingBottom:5}}>Special Coin: {this.state.SpecialCoin}</Text>
               <Text style={{paddingBottom:5}}>Expired Coin: {this.state.ExpiredCoin}</Text>
-              {/* <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
-              <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
             </Col>
           </Row>
           </CardItem>
@@ -188,7 +186,6 @@ export default class Home extends Component {
           <Row>
             <Col style={{backgroundColor:'white'}}>
               <Text style={{paddingBottom:5}}>Total Number of Customer: 789</Text>
-              {/* <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
             </Col>
           </Row>
           </CardItem>

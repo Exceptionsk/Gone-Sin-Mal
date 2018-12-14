@@ -5,43 +5,13 @@ import { Container, Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text,
 import {Actions} from 'react-native-router-flux';
 
 export default class NNoti extends Component {
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Lotteria',
-      description:'Lotteria has bought 300 special coins for 10 users.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
-  }
   render() {
     return(
     <Container>
           <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
             <Button transparent style={{height:70}}>
-                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/saitama.jpg')} />
-                <Text style = {{color: 'white'}}>Saitama</Text>
+                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+                <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
             </Button>
           </Header>
         <Grid>

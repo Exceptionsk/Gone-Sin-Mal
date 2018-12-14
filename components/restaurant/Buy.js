@@ -9,13 +9,15 @@ export default class Home extends Component{
     modalVisible: false,
     Normal:[],
     Special:[],
+    Payment_Link:'',
   };
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  newTransaction(type, package_id){
+  newTransaction(type, package_id, url){
     this.setModalVisible(true);
+    this.setState({Payment_Link:url});
     fetch(global.HostURL + '/api/transaction/request', {
       method: 'POST',
       headers: {
@@ -57,27 +59,32 @@ export default class Home extends Component{
     this.getPackage();
   }
 
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'100 coins', img:'https://cdn.myanimelist.net/images/anime/10/88111l.jpg', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'200 coins', img:'../../assets/Normal Coin 500.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'500 coins', img:'../../assets/Normal Coin 1000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'1000 coins', img:'../../assets/Normal Coin 5000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'10000 coins', img:'../../assets/Normal Coin 10000.png',link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-    ];
-    this.items1 = [
-      {name:'5000 coins', img:'../../assets/Special Coin 300.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'10000 coins', img:'../../assets/Special Coin 500.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'30000 coins', img:'../../assets/Special Coin 1000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'5000 coins', img:'../../assets/Special Coin 5000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-      {name:'100000 coins', img:'../../assets/Special Coin 10000.png', link:'https://www.myanpay.com.mm/Personal/ButtonDonationLogIn.aspx?sid=18ad6219-7b30-49a2-99d9-8d95c2d0cf30'},
-    ];
-  }
   render(){
     return(
       <Container>
+      <Modal
+          animationType="slide"
+          transparent={false}
+          onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+          visible={this.state.modalVisible}>
+          <Header style = {{height: 40,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
+          <Right>
+            <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                <Icon name="close"/>
+            </Button>
+          </Right>
+          </Header>
+          <WebView
+            source={{
+              uri: this.state.Payment_Link
+            }}
+            onNavigationStateChange={this.onNavigationStateChange}
+            startInLoadingState
+            scalesPageToFit
+            javaScriptEnabled
+            style={{ flex: 1 }}
+            />
+        </Modal>
         <Grid>
           <Content style = {{backgroundColor:'#dfdfdf'}}>
           <Row>
@@ -94,31 +101,8 @@ export default class Home extends Component{
                 this.state.Normal.map((item, key)=>
                   (
                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
-                      <Modal
-                        animationType="slide"
-                        transparent={false}
-                        onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
-                        visible={this.state.modalVisible}>
-                        <Header style = {{height: 55 ,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                        <Right>
-                          <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                          <Icon name="md-close-circle-outline" size={24} />
-                          </Button>
-                        </Right>
-                        </Header>
-                        <WebView
-                          source={{
-                          uri: item.Myanpay_button_link
-                          }}
-                          onNavigationStateChange={this.onNavigationStateChange}
-                          startInLoadingState
-                          scalesPageToFit
-                          javaScriptEnabled
-                          style={{ flex: 1 }}
-                          />
-                      </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal',item.Package_id)} >
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal',item.Package_id, item.Myanpay_button_link)} >
                             <Thumbnail style={styles.imagetwo} source={{uri : global.HostURL + "/api/package/image/" + item.Package_id}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}>
@@ -146,31 +130,8 @@ export default class Home extends Component{
                 this.state.Special.map((item, key)=>
                   (
                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
-                        visible={this.state.modalVisible}>
-                        <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                        <Right>
-                          <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                              <Icon name="close"/>
-                          </Button>
-                        </Right>
-                        </Header>
-                        <WebView
-                          source={{
-                          uri: item.Myanpay_button_link
-                          }}
-                          onNavigationStateChange={this.onNavigationStateChange}
-                          startInLoadingState
-                          scalesPageToFit
-                          javaScriptEnabled
-                          style={{ flex: 1 }}
-                          />
-                      </Modal>
                         <View style = {styles.imgcolfour}>
-                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special',item.Package_id)}>
+                          <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'special',item.Package_id, item.Myanpay_button_link)}>
                             <Thumbnail style={styles.imagetwo} source={{uri : global.HostURL + "/api/package/image/" + item.Package_id}} />
                           </Button>
                           <Button transparent textStyle={{color: '#87838B'}}  style={{alignSelf:'center'}}>
@@ -218,7 +179,6 @@ const styles= StyleSheet.create({
     paddingTop: 20,
     paddingLeft:20,
     paddingRight:0,
-    color: 'white',
   },
   container:{
     flex:1,

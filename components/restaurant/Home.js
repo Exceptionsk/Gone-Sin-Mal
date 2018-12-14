@@ -60,7 +60,7 @@ export default class Home extends Component{
     let { image } = this.state;
     return(
       <Container>
-      <Header style = {{height: 80,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{height: 80,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
       <Left>
       <Button transparent full success style={{height:70}} onPress={this._pickImage}>
           <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id}} />

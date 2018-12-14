@@ -3,35 +3,14 @@ import { View, Image, StyleSheet, ImageBackground, ScrollView  } from 'react-nat
 import { Container, Badge, H3, Header, Content, Card, CardItem,Grid,Row,Col, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
 export default class PNoti extends Component {
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'Gong Cha',
-      message:'Gong Cha has requested to Refund 500 coins.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gong Cha',
-      message:'Gong Cha has requested to Refund 500 coins.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gong Cha',
-      message:'Gong Cha has requested to Refund 500 coins.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gong Cha',
-      message:'Gong Cha has requested to Refund 500 coins.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gong Cha',
-      message:'Gong Cha has requested to Refund 500 coins.',
-      img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
-  }
   render() {
     return(
     <Container>
           <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-            <Button transparent style={{height:70}}>
-                <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={require('../../assets/saitama.jpg')} />
-                <Text style = {{color: 'white'}}>Saitama</Text>
-            </Button>
+          <Button transparent style={{height:70}}>
+              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+              <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
+          </Button>
           </Header>
         <Grid>
             <Row style={{height: 50}}>
