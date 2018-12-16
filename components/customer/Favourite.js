@@ -25,6 +25,7 @@ export default class Home extends Component{
   };
   state = {
     modalVisible: false,
+    favourites:[],
   };
   constructor()
   {
@@ -36,6 +37,22 @@ export default class Home extends Component{
       {name:'YKKO', img:'https://cdn.myanimelist.net/images/anime/1949/93415l.jpg',catagory:'Chinese Restaurant'},
       {name:'Golden Pot', img:'https://cdn.myanimelist.net/images/anime/1973/95616l.jpg',catagory:'Shabu Shabu'},
     ];
+  }
+
+  getfav(){
+    return fetch(global.HostURL + '/api/Favorite/all?User_id='+ global.Profile.id)
+    .then((response) => response.json())
+    .then((responseJson) => {
+        this.setState({
+           favourites: responseJson,
+        });
+      }).catch((error) => {
+      console.log("fav failed");
+    });
+  }
+
+  componentDidMount(){
+    this.getfav();
   }
   render(){
     return(
@@ -71,7 +88,7 @@ export default class Home extends Component{
               </Row>
           <Content style = {{backgroundColor:'#dfdfdf'}}>
               {
-                this.items.map((item, key)=>
+                this.state.favourites.map((item, key)=>
                   (
                     <Row key={key}>
                       <Col>
@@ -87,9 +104,9 @@ export default class Home extends Component{
                           </CardItem> */}
                           <CardItem>
                             <Body>
-                              <Image source={{uri:item.img}} style={{height: 200, width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
+                              <Image source={{uri:this.items.img}} style={{height: 200, width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
                               <Text style={{paddingTop:15,fontWeight:'bold', fontSize:20}}>
-                                {item.name}
+                                {item.Rest_id}
                               </Text>
                             </Body>
                           </CardItem>

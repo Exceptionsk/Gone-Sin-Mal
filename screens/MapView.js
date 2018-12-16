@@ -29,7 +29,7 @@
 //     }
 
 //     let location = await Location.getCurrentPositionAsync({});
-//     this.setState({ 
+//     this.setState({
 //         latitude: location.coords.latitude,
 //         longitude: location.coords.longitude,
 //      });
@@ -58,7 +58,7 @@
 //           latitudeDelta: 0.0922,
 //           longitudeDelta: 0.0421,
 //         }}
-  
+
 //       />
 
 //     );
@@ -82,7 +82,7 @@
 
 
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Platform } from 'react-native';
 import { Constants, MapView, Location, Permissions, Marker } from 'expo';
 
 export default class App extends Component {
@@ -107,7 +107,7 @@ export default class App extends Component {
 
   _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
-  };  
+  };
 
   _getLocationAsync = async () => {
    let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -125,7 +125,7 @@ export default class App extends Component {
 //  _getcurrentlocation () {
 //   e => console.log(e.nativeEvent);
 //   let currentlocation = e;
-//   this.setState({ 
+//   this.setState({
 //       latitude: currentlocation.coordinate.latitude,
 //       longitude: currentlocation.coordinate.longitude,
 //    });
@@ -148,7 +148,7 @@ logAddress(lat, long){
         <MapView
           style={{ flex: 1 }}
           region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
-          zoomEnabled='true'
+          zoomEnabled={true}
         >
     <MapView.Marker
       draggable
@@ -158,8 +158,8 @@ logAddress(lat, long){
       onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
     />
         </MapView>
-      
-      
+
+
 
     );
   }

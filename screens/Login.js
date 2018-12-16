@@ -38,10 +38,6 @@ export default class Login extends Component {
  }
 
  handleNotification = notification => {
-   // console.log(notification, 'notification details')
-   // this.setState({
-   //   notification,
-   // });
    fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=customer")
    .then((response) => response.json())
    .then((responseJson) => {
@@ -109,6 +105,7 @@ export default class Login extends Component {
               User_name : json.name,
               User_available_coin:0,
               User_noti_token: this.state.token,
+              User_visited_restaurant:0,
             }),
           }).then((response) => response.json())
             .then((responsejson)=>{

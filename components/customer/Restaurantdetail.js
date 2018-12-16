@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image,StyleSheet, Modal, AsyncStorage } from 'react-native';
 import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Body, Right } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import User from './Userprofile';
 export default class Login extends Component {
   setModalVisible(visible) {
@@ -10,6 +10,7 @@ export default class Login extends Component {
   state = {
     modalVisible: false,
     resturant:'',
+    fav_status:'',
   };
   static navigationOptions = {
         header:null
@@ -33,8 +34,69 @@ export default class Login extends Component {
     });
   }
 
+  togglefav(){
+      fetch(global.HostURL + '/api/Favorite', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          User_id:global.Profile.id,
+          Rest_id:this.state.resturant.Rest_id,
+        }),
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        if(responseJson){
+          this.setState({
+             fav_status: "red",
+          });
+        }else{
+          this.setState({
+             fav_status: "grey",
+          });
+        }
+
+      })
+      .catch((error) => {
+        this.setState({
+           fav_status: "grey",
+         }, function(){
+
+         });
+        console.log("toggle failed");
+      });
+    }
+
+  getfav(){
+    const { navigation } = this.props;
+    return fetch(global.HostURL + '/api/Favorite/?User_id='+ global.Profile.id+ '&Rest_id=' + navigation.getParam('Rest_id', '1'))
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if(responseJson){
+        this.setState({
+           fav_status: "red",
+        });
+      }else{
+        this.setState({
+           fav_status: "grey",
+        });
+      }
+
+    })
+    .catch((error) => {
+      this.setState({
+         fav_status: "grey",
+       }, function(){
+
+       });
+      console.log("fav failed");
+    });
+  }
+
   componentDidMount(){
     this.getinfo();
+    this.getfav();
   }
     render(){
         return(
@@ -86,6 +148,7 @@ export default class Login extends Component {
                             <CardItem>
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
+                                        <MaterialCommunityIcons name="tag-heart" size={35} color={this.state.fav_status} onPress={()=> this.togglefav()} />
                                         <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('RestHome')}>
                                             <Ionicons name="md-map" size={30} color="white" />
                                             <Text> Get Direction </Text>

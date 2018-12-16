@@ -18,6 +18,7 @@ export default class Register extends Component{
     lat:'4',
     long:'5',
     profilepic:'',
+    location:'',
   }
   _pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -61,6 +62,7 @@ export default class Register extends Component{
           Rest_coin:0,
           Rest_special_coin:0,
           Rest_coin_purchased:0,
+          Rest_location: this.state.location
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
@@ -122,7 +124,7 @@ export default class Register extends Component{
                 </Item>
                 <Item >
                   <Icon active name='ios-compass' />
-                  <Input onChangeText={(value) => this.setState({myanpay:value})} placeholder="Enter Township"/>
+                  <Input onChangeText={(value) => this.setState({township:value})} placeholder="Enter Township"/>
                 </Item>
               </Col>
             </Row>
@@ -144,7 +146,7 @@ export default class Register extends Component{
                   <Icon active name='ios-call' />
                   <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number"/>
                 </Item>
-                  <Textarea rowSpan={5} bordered placeholder="Enter Address" style={{padding:10}} />
+                  <Textarea rowSpan={3} onChangeText={(value) => this.setState({location:value})} bordered placeholder="Enter Address" style={{padding:10}} />
               </Col>
             </Row>
             <Row>

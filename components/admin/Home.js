@@ -20,9 +20,7 @@ import {
 export default class Home extends Component {
   state = {
     modalVisible: false,
-    NormalCoin:'',
-    SpecialCoin:'',
-    ExpiredCoin:'',
+    System:[],
   };
 
   getStatus(){
@@ -31,9 +29,7 @@ export default class Home extends Component {
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
-        NormalCoin: responseJson.Sold_coins,
-        SpecialCoin: responseJson.Sold_special_coins,
-        ExpiredCoin: responseJson.Expired_coins,
+        System: responseJson,
        }, function(){
 
        });
@@ -54,9 +50,9 @@ export default class Home extends Component {
 
   const data =
   [
-    { name: 'Normal Coin', population: this.state.NormalCoin, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Special Coin', population: this.state.SpecialCoin, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Expired Coin', population: this.state.ExpiredCoin, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Normal Coin', population: 12, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Special Coin', population: 12, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Expired Coin', population: 12, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
   ]
 
 
@@ -115,9 +111,9 @@ export default class Home extends Component {
           <Row>
             <Col style={{backgroundColor:'white'}}>
               <Text style={{paddingBottom:5}}>Total Coin: 1000</Text>
-              <Text style={{paddingBottom:5}}>Normal Coin: {this.state.NormalCoin}</Text>
-              <Text style={{paddingBottom:5}}>Special Coin: {this.state.SpecialCoin}</Text>
-              <Text style={{paddingBottom:5}}>Expired Coin: {this.state.ExpiredCoin}</Text>
+              <Text style={{paddingBottom:5}}>Normal Coin: {this.state.System.Sold_coins}</Text>
+              <Text style={{paddingBottom:5}}>Special Coin: {this.state.System.Sold_special_coins}</Text>
+              <Text style={{paddingBottom:5}}>Expired Coin: {this.state.System.Expired_coins}</Text>
             </Col>
           </Row>
           </CardItem>
