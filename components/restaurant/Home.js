@@ -7,15 +7,23 @@ import { ImagePicker,Permissions } from 'expo';
 
 const cards = [
   {
-    name: 'Kitchen View',
-    image: 'https://myanimelist.cdn-dena.com/images/anime/8/41125.jpg',
+    name: 'Gallery 1',
+    gallery:1,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
   },
   {
-    name: 'Something View 1',
-    image: 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg',
+    name: 'Gallery 2',
+    gallery:2,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
   },
   {
-    name: 'Something View 2',
+    name: 'Gallery 3',
+    gallery:3,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
+  },
+  {
+    name: 'Gallery 4',
+    gallery:4,
     image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
   },
 ];
@@ -27,7 +35,12 @@ export default class Home extends Component{
   state = {
     resturant: [],
     image: null,
+    clicked:"",
   };
+  uploadImage(click){
+    this.setState({ clicked: click });
+    this._pickImage;
+  }
   getInfo(){
     return fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
     .then((response) => response.json())
@@ -45,25 +58,14 @@ export default class Home extends Component{
     });
   }
 
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'KFC', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Sar Mal', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gone Sin', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'YKKO', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Golden Pot', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
-  }
   render(){
     let { image } = this.state;
     return(
       <Container>
       <Header style = {{height: 80,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
       <Left>
-      <Button transparent full success style={{height:70}} onPress={this._pickImage}>
-          <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id}} />
+      <Button transparent full success style={{height:70}} onPress={()=>this._pickImage("profile")}>
+          <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id}} />
       </Button>
       </Left>
       <Body>
@@ -81,7 +83,7 @@ export default class Home extends Component{
                   renderItem={item =>
                     <Card style={{ elevation: 3 }}>
                       <CardItem cardBody>
-                        <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : item.image}} />
+                        <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id+ "&gallery=" +item.gallery}} />
                       </CardItem>
                       <CardItem>
                         <Icon name="md-images" style={{ color: '#ED4A6A' }} />
@@ -90,7 +92,7 @@ export default class Home extends Component{
 
                         </Body>
                         <Right>
-                         <Icon name="md-create" style={{ color: '#ED4A6A' }} />
+                         <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>this._pickImage(item.gallery)} />
                         </Right>
                       </CardItem>
                     </Card>
@@ -145,19 +147,39 @@ export default class Home extends Component{
       </Container>
     );
   }
-  _pickImage = async () => {
+  _pickImage = async (click) => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let result =null
+    console.log(click);
+    if(click=="profile"){
+        result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+      console.log("i am profile");
+    }else{
+      result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
+      aspect: [16, 9],
+      });
+      console.log("i am gallery");
     }
+    if (!result.cancelled) {
+      const data = new FormData();
+      data.append('name', result.uri); // you can append anyone.
+      data.append('photo', {
+        uri: result.uri,
+        type: 'image/jpeg', // or photo.type
+        name: "img",
+      });
+      fetch(global.HostURL + '/api/resturant/pic?id='+ this.state.resturant.Rest_id+"&gallery="+click, {
+        method: 'post',
+        body: data
+      });
+    }
+
   };
+
 }
 
 const styles= StyleSheet.create({

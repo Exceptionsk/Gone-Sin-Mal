@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { TouchableOpacity } from 'react-native';
 import {Container,Content, Header,Button, Badge,Icon,Right, Left, Body, Text, Item, Input, Card, CardItem, View, Thumbnail, ListItem, CheckBox} from 'native-base';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
@@ -50,7 +51,7 @@ export default class Home extends Component{
         <Header searchBar rounded style = {{height: 70,backgroundColor: '#a3080c', paddingBottom: 10, paddingTop: 20}}>
             <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
               <Icon name="ios-search" />
-              <Input placeholder="Search" onChange={this.handleChange.bind(this)} onSubmitEditing={this.handleSearch.bind(this)} returnKeyType="search" />
+              <Input autoFocus={true} placeholder="Search" onChange={this.handleChange.bind(this)} onSubmitEditing={this.handleSearch.bind(this)} returnKeyType="search" />
             </Item>
         </Header>
         <Content padder>
@@ -60,14 +61,17 @@ export default class Home extends Component{
                   <Card key={key} style={{borderColor:'red', borderRadius: 2}}>
                     <CardItem style={{paddingTop:0, paddingBottom:0, paddingRight:0}}>
                       <Body>
-                      <View style={{flex: 1,flexDirection: 'row'}}>
+                      <TouchableOpacity onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})}>
+                      <View style={{flex: 1,flexDirection: 'row'}} >
                         <View style={{width: 100, height: '100%', paddingTop:10, paddingBottom:10}}>
-                          <Thumbnail square large source={{uri: global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} style={{borderWidth:1, borderColor:'#616161', borderRadius: 10}} />
+                          <Thumbnail square large source={{uri: global.HostURL + '/api/resturant/pic/' + item.Rest_id}} style={{borderWidth:1, borderColor:'#616161', borderRadius: 10}} />
                         </View>
-                        <View style={{alignSelf: 'flex-start' , height: '100%', padding:20,alignItems: 'center', justifyContent: 'center'}}>
+                        <View style={{alignSelf: 'flex-start' , height: '100%', padding:20,justifyContent: 'center'}}>
                           <Text style={{fontWeight:'bold'}}>{item.Rest_name}</Text>
+                            <Text style={{fontWeight:'bold'}}>{item.Rest_category}</Text>
                         </View>
                       </View>
+                      </TouchableOpacity >
                       </Body>
                     </CardItem>
                   </Card>

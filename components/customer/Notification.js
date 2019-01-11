@@ -62,7 +62,7 @@ export default class Notification extends Component {
                             <Left>
                                 <Thumbnail source={{uri : item.img}} />
                                 <Body>
-                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_id}</Text>
+                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_text}</Text>
                                 <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>
                                 </Body>
                             </Left>

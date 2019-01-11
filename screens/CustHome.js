@@ -48,7 +48,18 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="md-heart" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        fetch(global.HostURL + '/api/Favorite/all?User_id='+ global.Profile.id)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          global.FavList=responseJson;
+        })
+        .catch((error) => {
+          // console.log("Customer noti failed");
+        });
+        defaultHandler();
+      }
     }
   },
   GoneSin: {

@@ -66,7 +66,6 @@ export default class Register extends Component{
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
-
           const data = new FormData();
           data.append('name', this.state.name); // you can append anyone.
           data.append('photo', {
@@ -74,7 +73,7 @@ export default class Register extends Component{
             type: 'image/jpeg', // or photo.type
             name: this.state.name,
           });
-          fetch(global.HostURL + '/api/resturant/profile_pic/'+ responsejson.Rest_id, {
+          fetch(global.HostURL + '/api/resturant/pic?id='+ responsejson.Rest_id + "&gallery=0", {
             method: 'post',
             body: data
           }).then(res => {

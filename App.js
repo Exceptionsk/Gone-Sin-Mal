@@ -30,12 +30,13 @@ const TopLevelNavigator = createStackNavigator({
 export default class Start extends Component {
   constructor(){
     super();
-    global.HostURL = "http://192.168.8.104:2940",
+    global.HostURL = "http://192.168.8.101:2940",
     global.Profile={},
     global.CustNotification=[],
     global.AdminNotification=[],
     global.RestNotification=[],
-    global.GoneSinList=[]
+    global.GoneSinList=[],
+    global.FavList=[]
   }
   state = {
   fontLoaded: false

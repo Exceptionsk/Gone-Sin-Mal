@@ -89,7 +89,7 @@ export default class Home extends Component{
             <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
             <Text >{global.Profile.name}</Text>
         </Button>
-        <Button transparent  onPress={() => this.props.navigation.navigate('Search')}>
+        <Button transparent >
             <Text >Available Coin : 1,866P</Text>
         </Button>
         <Modal
@@ -110,7 +110,7 @@ export default class Home extends Component{
       <Header onSubmitEditing={this.handleSearch.bind(this)} onChange={this.handleChange.bind(this)} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
           <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
             <Icon name="ios-search" />
-            <Input placeholder="Search" />
+            <Input placeholder="Search"  onFocus={() => this.props.navigation.navigate('Search')}/>
           </Item>
         </Header>
         <Grid>
@@ -134,7 +134,7 @@ export default class Home extends Component{
                                 <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                     <View style = {styles.imgcolfour}>
                                       <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})}>
-                                        <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
+                                        <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/pic?id=' + item.Rest_id}} />
                                       </Button>
                                       <Button transparent textStyle={{color: '#87838B'}}>
                                         <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_name}</Text>
@@ -169,7 +169,7 @@ export default class Home extends Component{
                                     <Col style={{ backgroundColor: 'white', height: 180, width: 140,marginRight:0 }} key={key}>
                                         <View style = {styles.imgcolfour}>
                                           <Button transparent style={{height: 120 , width: '100%'}} onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})}>
-                                            <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/profile_pic/' + item.Rest_id}} />
+                                            <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/resturant/pic?id=' + item.Rest_id}} />
                                           </Button>
                                           <Button transparent textStyle={{color: '#87838B'}}>
                                             <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>

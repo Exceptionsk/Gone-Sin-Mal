@@ -1,9 +1,34 @@
 import React, { Component } from 'react';
 import { Image,StyleSheet, Modal, AsyncStorage } from 'react-native';
-import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Body, Right } from 'native-base';
+import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Body, Right, DeckSwiper } from 'native-base';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import User from './Userprofile';
+
+const cards = [
+  {
+    name: 'Gallery 1',
+    gallery:1,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
+  },
+  {
+    name: 'Gallery 2',
+    gallery:2,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
+  },
+  {
+    name: 'Gallery 3',
+    gallery:3,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
+  },
+  {
+    name: 'Gallery 4',
+    gallery:4,
+    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
+  },
+];
+
 export default class Login extends Component {
+
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   };
@@ -130,7 +155,7 @@ export default class Login extends Component {
                             <CardItem header>
                             <Row>
                                 <Col style={{backgroundColor:'white',width:110}}>
-                                    <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/profile_pic/' + this.state.resturant.Rest_id}} />
+                                    <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id}} />
                                 </Col>
                                 <Col style={{backgroundColor:'white'}}>
                                     <H2>{this.state.resturant.Rest_name}</H2>
@@ -140,8 +165,27 @@ export default class Login extends Component {
                             </CardItem>
                             <CardItem>
                                 <Row>
-                                    <Col style={{backgroundColor:'white'}}>
-                                        <Thumbnail square style = {{ width:'100%',height: 300, marginLeft:0, borderColor: '#404040', borderWidth: 0.5}}  source={require('../../assets/kfcphoto.jpg')} />
+                                    <Col style={{backgroundColor:'white', height:400}}>
+                                    <DeckSwiper
+                                      dataSource={cards}
+                                      renderItem={item =>
+                                        <Card style={{ elevation: 3 }}>
+                                          <CardItem cardBody>
+                                            <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id+ "&gallery=" +item.gallery}} />
+                                          </CardItem>
+                                          <CardItem>
+                                            <Icon name="md-images" style={{ color: '#ED4A6A' }} />
+                                            <Text>{item.name}</Text>
+                                            <Body>
+
+                                            </Body>
+                                            <Right>
+                                             <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>this._pickImage(item.gallery)} />
+                                            </Right>
+                                          </CardItem>
+                                        </Card>
+                                      }
+                                    />
                                     </Col>
                                 </Row>
                             </CardItem>

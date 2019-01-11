@@ -39,21 +39,43 @@ export default class Home extends Component{
     ];
   }
 
-  getfav(){
-    return fetch(global.HostURL + '/api/Favorite/all?User_id='+ global.Profile.id)
+  componentDidMount(){
+    let that = this;
+    setInterval(() => {
+        that.setState({favourites: global.FavList});
+    }, 1000);
+  }
+  refreshFav(){
+    fetch(global.HostURL + '/api/Favorite/all?User_id='+ global.Profile.id)
     .then((response) => response.json())
     .then((responseJson) => {
-        this.setState({
-           favourites: responseJson,
-        });
-      }).catch((error) => {
-      console.log("fav failed");
+      global.FavList=responseJson;
+    })
+    .catch((error) => {
+      // console.log("Customer noti failed");
     });
   }
+  togglefav(rest_id){
+      fetch(global.HostURL + '/api/Favorite', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          User_id:global.Profile.id,
+          Rest_id:rest_id,
+        }),
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        this.refreshFav();
+      })
+      .catch((error) => {
+        console.log("toggle failed");
+      });
+    }
 
-  componentDidMount(){
-    this.getfav();
-  }
+
   render(){
     return(
       <Container>
@@ -104,16 +126,18 @@ export default class Home extends Component{
                           </CardItem> */}
                           <CardItem>
                             <Body>
-                              <Image source={{uri:this.items.img}} style={{height: 200, width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
+                              <Button transparent onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})} style={{height:200}}>
+                              <Image source={{uri:global.HostURL + '/api/resturant/pic?id=' + item.Rest_id}} style={{height: '100%', width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
+                              </Button>
                               <Text style={{paddingTop:15,fontWeight:'bold', fontSize:20}}>
-                                {item.Rest_id}
+                                {item.Rest_name}
                               </Text>
                             </Body>
                           </CardItem>
                           <CardItem>
                             <Left>
                               <Button transparent>
-                                <MaterialCommunityIcons name="tag-heart" size={35} color="red" />
+                                <MaterialCommunityIcons name="tag-heart" size={35} color="red" onPress={()=> this.togglefav(item.Rest_id)} />
                                 <Text style={{color: '#87838B',fontSize:15}}>{item.catagory}</Text>
                               </Button>
                             </Left>
