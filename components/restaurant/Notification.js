@@ -91,8 +91,8 @@ export default class Notification extends Component {
     }
 
   }
-  TransactionModelTest(id,type){
-      if(id!="Comfirmation completed!"){
+  TransactionModelTest(id,type,text){
+      if(text!="Comfirmation completed!"){
         if(type=="special"){
             return <Button danger style={{height:40}} onPress={() => {this.setState({transactionmodalVisibleSpecialCoin: true});this.setState({ID: id});}}><Text>{type}</Text></Button>
         }else{
@@ -225,7 +225,7 @@ export default class Notification extends Component {
                       </Row>
                       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{padding:20}}>
-                          {this.TransactionModelTest(item.Noti_text,item.Tran_type)}
+                          {this.TransactionModelTest(item.ID,item.Tran_type, item.Noti_text)}
                         </View>
                       </View>
                       </Card>
