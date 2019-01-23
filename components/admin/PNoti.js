@@ -6,12 +6,11 @@ export default class PNoti extends Component {
   render() {
     return(
     <Container>
-          <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-          <Button transparent style={{height:70}}>
-              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
-              <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
-          </Button>
-          </Header>
+    <Header style = {{ height: 60,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
+    <Body>
+      <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Notification</H3>
+    </Body>
+    </Header>
         <Grid>
             <Row style={{height: 50}}>
                   <Col style={{ height: 50, paddingTop: 15 }}>

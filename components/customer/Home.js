@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage } from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text, Left } from 'native-base';
 import User from './Userprofile';
 
 
@@ -84,14 +84,12 @@ export default class Home extends Component{
   render(){
     return(
       <Container>
-      <Header style = {{height: 90,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
-        <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
-            <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+      <Header style = {{height: 70,backgroundColor: '#a3080c'}}>
+          <Button transparent style={{height:55, width:'100%', backgroundColor: '#a3080c', justifyContent: 'flex-start'}} onPress={() => {this.setModalVisible(true);}}>
+            <Thumbnail style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
             <Text >{global.Profile.name}</Text>
-        </Button>
-        <Button transparent >
-            <Text >Available Coin : 1,866P</Text>
-        </Button>
+          </Button>
+      </Header>
         <Modal
           animationType="slide"
           transparent={false}
@@ -106,7 +104,6 @@ export default class Home extends Component{
           </Header>
           <User/>
         </Modal>
-      </Header>
       <Header onSubmitEditing={this.handleSearch.bind(this)} onChange={this.handleChange.bind(this)} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
           <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
             <Icon name="ios-search" />

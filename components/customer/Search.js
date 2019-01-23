@@ -64,7 +64,7 @@ export default class Home extends Component{
                       <TouchableOpacity onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})}>
                       <View style={{flex: 1,flexDirection: 'row'}} >
                         <View style={{width: 100, height: '100%', paddingTop:10, paddingBottom:10}}>
-                          <Thumbnail square large source={{uri: global.HostURL + '/api/resturant/pic/' + item.Rest_id}} style={{borderWidth:1, borderColor:'#616161', borderRadius: 10}} />
+                          <Thumbnail square large source={{uri: global.HostURL + '/api/resturant/pic?id=' + item.Rest_id}} style={{borderWidth:1, borderColor:'#616161', borderRadius: 10}} />
                         </View>
                         <View style={{alignSelf: 'flex-start' , height: '100%', padding:20,justifyContent: 'center'}}>
                           <Text style={{fontWeight:'bold'}}>{item.Rest_name}</Text>

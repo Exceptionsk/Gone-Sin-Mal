@@ -42,7 +42,18 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-notifications" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=admin")
+        .then((response) => response.json())
+        .then((responseJson) => {
+          global.AdminNotification=responseJson;
+        })
+        .catch((error) => {
+          // console.log("admin noti failed");
+        });
+        defaultHandler();
+      }
     }
   },
   Refund: {

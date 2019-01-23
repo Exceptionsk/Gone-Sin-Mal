@@ -42,35 +42,33 @@ export default class Home extends Component{
     this._pickImage;
   }
   getInfo(){
-    return fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
+    fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
          resturant: responseJson,
-       }, function(){
-
-       });
+      });
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].image= global.HostURL + '/api/resturant/pic?id=' + responseJson.Rest_id+ "&gallery=" +(i+1);
+      }
     })
     .catch((error) => {
       console.error(error);
       console.log("search failed");
     });
+
   }
 
   render(){
     let { image } = this.state;
     return(
       <Container>
-      <Header style = {{height: 80,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
-      <Left>
-      <Button transparent full success style={{height:70}} onPress={()=>this._pickImage("profile")}>
+      <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
+      <Button transparent full success style={{height:70, width:'100%', justifyContent: 'flex-start'}} onPress={()=>this._pickImage("profile")}>
           <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id}} />
+          <Text style = {{color: 'white'}}>{this.state.resturant.Rest_name}</Text>
       </Button>
-      </Left>
-      <Body>
-        <Text style = {{color: 'white'}}>{this.state.resturant.Rest_name}</Text>
-      </Body>
       </Header>
       <Content contentContainerStyle={{ flex: 1 }}>
         <ScrollView>
@@ -79,11 +77,12 @@ export default class Home extends Component{
             <Col style={{height:350}}>
             <View>
                 <DeckSwiper
+                  ref={(c) => this._deckSwiper = c}
                   dataSource={cards}
                   renderItem={item =>
                     <Card style={{ elevation: 3 }}>
                       <CardItem cardBody>
-                        <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id+ "&gallery=" +item.gallery}} />
+                        <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : item.image}} />
                       </CardItem>
                       <CardItem>
                         <Icon name="md-images" style={{ color: '#ED4A6A' }} />
@@ -165,6 +164,8 @@ export default class Home extends Component{
       console.log("i am gallery");
     }
     if (!result.cancelled) {
+      cards[click-1].image=result.uri;
+      this._deckSwiper._root.swipeRight();
       const data = new FormData();
       data.append('name', result.uri); // you can append anyone.
       data.append('photo', {

@@ -41,8 +41,9 @@ export default class Home extends Component {
   }
 
 
-  componentDidMount(){
+  componentWillMount(){
     this.getStatus();
+    console.log(this.state.System);
   }
 
 

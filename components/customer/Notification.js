@@ -22,14 +22,11 @@ export default class Notification extends Component {
   render() {
     return(
     <Container>
-        <Header style = {{height: 90,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
-          <Button transparent style={{height:70}} onPress={() => {this.setModalVisible(true);}}>
-              <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
-              <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
-          </Button>
-          <Button transparent>
-              <Text style = {{color: 'white'}}>Available Coin : 1,866P</Text>
-          </Button>
+        <Header style = {{height: 75,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
+        <Button transparent style={{height:70, width:'100%', justifyContent: 'flex-start'}} onPress={() => {this.setModalVisible(true);}}>
+          <Thumbnail style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+          <Text >{global.Profile.name}</Text>
+        </Button>
           <Modal
             animationType="slide"
             transparent={false}

@@ -89,7 +89,7 @@ export default class Login extends Component {
         try {
             var jsonOfItem = await AsyncStorage.setItem('profile', JSON.stringify(json));
             global.Profile = json;
-            // console.log(json);
+            console.log(json);
         } catch (error) {
           console.log(error.message);
         }
