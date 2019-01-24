@@ -80,9 +80,9 @@ handleAmount(e){
       <Container>
         <Header style = {{alignItems:'center',height: 70,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
             <Body style={{paddingLeft:300}}>
-            <Badge style={{ backgroundColor: 'black' }}>
+            {/* <Badge style={{ backgroundColor: 'black' }}>
                   <Text style={{ color: 'white' }}>{String(this.state.isSwitchOn)}</Text>
-            </Badge>
+            </Badge> */}
             </Body>
             <Right>
               <View style={{justifyContent: 'center'}}>
@@ -114,7 +114,7 @@ handleAmount(e){
                     <Col>
                       <TextInput style = {styles.input}
                       underlineColorAndroid = "transparent"
-                      placeholder = " Enter transation ID"
+                      placeholder = " Enter coin amount"
                       placeholderTextColor = "#3f3f3f"
                       autoCapitalize = "none"
                       keyboardType="numeric"

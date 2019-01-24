@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container, Left, Right, Header, Icon, DeckSwiper, Thumbnail,Button, Content, Card, CardItem, Body, Text } from 'native-base';
+import { Container, Left, Right, Header, Icon, DeckSwiper, Thumbnail,Button, Content, Card, CardItem, Body, Text, Textarea, Input } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { ImagePicker,Permissions } from 'expo';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
 const cards = [
   {
@@ -33,6 +35,9 @@ export default class Home extends Component{
     this.getInfo();
   }
   state = {
+    modalVisible: false,
+    phmodalVisible: false,
+    emailmodalVisible: false,
     resturant: [],
     image: null,
     clicked:"",
@@ -59,7 +64,15 @@ export default class Home extends Component{
     });
 
   }
-
+  setaddressModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+  setphnumberModalVisible(visible) {
+    this.setState({phmodalVisible: visible});
+  }
+  setemailModalVisible(visible) {
+    this.setState({emailmodalVisible: visible});
+  }
   render(){
     let { image } = this.state;
     return(
@@ -110,8 +123,29 @@ export default class Home extends Component{
                       <Text>{this.state.resturant.Rest_location}</Text>
                      </Left>
                      <Right>
-                      <Icon name="md-create" style={{ color: '#ED4A6A' }} />
+                      <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}/>
                      </Right>
+                     <Modal
+                      animationType="slide"
+                      transparent={true}
+                      onRequestClose={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}
+                      visible={this.state.modalVisible}>
+                      <View style={styles.modalcontainer}>
+                        <View style={styles.responsiveBox}>
+                            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                            <Right>
+                              <Button transparent onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}>
+                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                              </Button>
+                              </Right>
+                            </Header>
+                            <Textarea rowSpan={3} placeholder="Enter Address" style={{padding:10}} />
+                            <View style={{alignSelf:'center', paddingBottom: 5}}>
+                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}/>
+                            </View>
+                        </View>
+                      </View>
+                    </Modal>
                  </CardItem>
                  <CardItem>
                    <Left>
@@ -119,8 +153,29 @@ export default class Home extends Component{
                     <Text>{this.state.resturant.Rest_phno}</Text>
                    </Left>
                    <Right>
-                    <Icon name="md-create" style={{ color: '#ED4A6A' }} />
+                    <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
                    </Right>
+                   <Modal
+                      animationType="slide"
+                      transparent={true}
+                      onRequestClose={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}
+                      visible={this.state.phmodalVisible}>
+                      <View style={styles.modalcontainer}>
+                        <View style={styles.responsiveBoxphnumber}>
+                            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                            <Right>
+                              <Button transparent onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}>
+                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                              </Button>
+                              </Right>
+                            </Header>
+                            <Input keyboardType='number-pad' placeholder="Enter phone number"/>
+                            <View style={{alignSelf:'center'}}>
+                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
+                            </View>
+                        </View>
+                      </View>
+                    </Modal>
                  </CardItem>
                  <CardItem>
                    <Left>
@@ -128,8 +183,29 @@ export default class Home extends Component{
                     <Text>{this.state.resturant.Rest_email}</Text>
                    </Left>
                    <Right>
-                    <Icon name="md-create" style={{ color: '#ED4A6A' }} />
+                    <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}} />
                    </Right>
+                   <Modal
+                      animationType="slide"
+                      transparent={true}
+                      onRequestClose={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}
+                      visible={this.state.emailmodalVisible}>
+                      <View style={styles.modalcontainer}>
+                        <View style={styles.responsiveBoxphnumber}>
+                            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                            <Right>
+                              <Button transparent onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}>
+                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                              </Button>
+                              </Right>
+                            </Header>
+                            <Input keyboardType='email-address' placeholder="Enter email address"/>
+                            <View style={{alignSelf:'center'}}>
+                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}/>
+                            </View>
+                        </View>
+                      </View>
+                    </Modal>
                  </CardItem>
              </Card>
           </View>
@@ -184,6 +260,53 @@ export default class Home extends Component{
 }
 
 const styles= StyleSheet.create({
+  modalcontainer:{
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  responsiveBox: {
+    width: wp('84.5%'),
+    height: hp('23%'),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'grey',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around' 
+  },
+  responsiveBoxphnumber: {
+    width: wp('84.5%'),
+    height: hp('22%'),
+    paddingBottom: 8,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'grey',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around' 
+  },
   image:{
     height: '100%',
     width: '100%',
