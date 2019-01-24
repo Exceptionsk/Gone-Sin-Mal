@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage, Modal, Platform} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Ionicons } from '@expo/vector-icons';
-import { ImagePicker,Permissions } from 'expo';
+import { ImagePicker,Permissions,Constants, MapView, Location, Marker } from 'expo';
 import { Container,Textarea, Left, Right, Form, Label, Input, Header, H1,H2,H3, H4,Title, Item, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { MaterialCommunityIcons,Ionicons,MaterialIcons } from '@expo/vector-icons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 export default class Register extends Component{
   static navigationOptions = {
     header:null
@@ -19,6 +21,15 @@ export default class Register extends Component{
     long:'5',
     profilepic:'',
     location:'',
+
+    mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+    locationResult: null,
+    location: {coords: { latitude: 37.78825, longitude: -122.4324}},
+    currentlocation: null,
+    latitude: null,
+    longitude: null,
+
+    modalVisible: false,
   }
   _pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -92,10 +103,55 @@ export default class Register extends Component{
       console.log(e);
     }
   }
+
+
+
+  componentDidMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
+  }
+
+  _handleMapRegionChange = mapRegion => {
+    this.setState({ mapRegion });
+  };
+
+  _getLocationAsync = async () => {
+   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+   if (status !== 'granted') {
+     this.setState({
+       locationResult: 'Permission to access location was denied',
+       location,
+     });
+   }
+
+   let location = await Location.getCurrentPositionAsync({});
+   this.setState({ locationResult: JSON.stringify(location), location, });
+ };
+
+  logAddress(lat, long){
+    fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+    })
+    .catch((error) => {
+      console.log("address failed");
+    });
+  }
+
+  setMapModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   render(){
     return(
       <Container>
-        <Header style = {{height: 70,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+        <Header style = {{height: 70,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
           <Body>
             <Button transparent >
               <Icon style = {{color: 'white', paddingLeft:20}} name='ios-business' />
@@ -112,7 +168,8 @@ export default class Register extends Component{
           <Form>
             <Row>
               <Col style={{width:100}}>
-                <Button onPress={this._pickImage} transparent style={{width:100, height:100}}>
+                <Button onPress={this._pickImage} transparent style={{alignSelf:'center',width:100, height:100, borderWidth: 1, borderColor:'black'}}>
+                  <Text style={{textAlign:'center'}}>Logo Here</Text>
                   <Image style={{ height: 100, width:100, flex: 1 }} source={{uri : this.state.profilepic}} />
                 </Button>
               </Col>
@@ -145,7 +202,44 @@ export default class Register extends Component{
                   <Icon active name='ios-call' />
                   <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number"/>
                 </Item>
-                  <Textarea rowSpan={3} onChangeText={(value) => this.setState({location:value})} bordered placeholder="Enter Address" style={{padding:10}} />
+                <Item>
+                  <Textarea rowSpan={3} onChangeText={(value) => this.setState({location:value})} placeholder="Press the icon to choose your address" style={{padding:10}} />
+                  <Right>
+                    <Button onPress={()=>{this.setMapModalVisible(!this.state.modalVisible);}} transparent style={{height:70}}>
+                      <MaterialIcons name="add-location" size={50} color="#4cd58a"/>
+                    </Button>
+                  </Right>
+                </Item>
+                <Modal
+                animationType="slide"
+                transparent={true}
+                onRequestClose={()=>{this.setMapModalVisible(!this.state.modalVisible);}}
+                visible={this.state.modalVisible}>
+                  <View style={styles.Mapmodalcontainer}>
+                      <View style={styles.responsiveMapBox}>
+                          <Header style = {{height: hp('5%'),backgroundColor: '#4cd58a', paddingBottom: 0, paddingTop: 0, marginBottom: 8, borderBottomWidth:0}}>
+                              <Right>
+                                <Button transparent onPress={()=>{this.setMapModalVisible(!this.state.modalVisible);}}>
+                                  <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                                </Button>
+                              </Right>
+                          </Header>
+                          <MapView
+                              style={{ flex: 1 }}
+                              region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+                              zoomEnabled={true}
+                          >
+                          <MapView.Marker
+                          draggable
+                          coordinate={this.state.location.coords}
+                          title="My Location"
+                          description="Location description"
+                          onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
+                          />
+                          </MapView>
+                      </View>
+                  </View>
+                </Modal>
               </Col>
             </Row>
             <Row>
@@ -168,3 +262,46 @@ export default class Register extends Component{
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#34495e',
+  },
+  Mapmodalcontainer:{
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  responsiveMapBox: {
+    width: wp('84.5%'),
+    height: hp('43%'),
+    backgroundColor: '#4cd58a',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'white',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around' 
+  },
+});

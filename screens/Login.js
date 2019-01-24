@@ -191,6 +191,10 @@ handleType(e){
                     <Icon name='logo-facebook' />
                     <Text> MapView </Text>
                   </Button>
+                  <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('UserRegister')}>
+                    <Icon name='logo-facebook' />
+                    <Text> UserRegister </Text>
+                  </Button>
                 </View>
               </Col>
             </Row>
