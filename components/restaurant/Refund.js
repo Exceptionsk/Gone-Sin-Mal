@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Alert} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Ionicons } from '@expo/vector-icons';
 import { Container, Form, Label, Input, Header, H1,H2,H3, H4,Title, Item, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 export default class Home extends Component{
-
-  Request(amount){
+  state={
+    refund:'',
+    myan_pay:''
+  };
+  RequestRefund(){
     fetch(global.HostURL + '/api/Refund', {
       method: 'POST',
       headers: {
@@ -14,10 +17,28 @@ export default class Home extends Component{
       },
       body:JSON.stringify({
         User_id : global.Profile.id,
-        Amount : amount
+        Amount : this.state.refund,
+        Myan_pay: this.state.myan_pay
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
+        if(responsejson=="Not Enough"){
+          Alert.alert(
+            'Low Balance!',
+            'Your balance is lower then amount you entered.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+        }else if (responsejson=="OK"){
+          Alert.alert(
+            'Request Success!',
+            'You will get notification once Amount has been transfered.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+        }
         console.log(responsejson);
     }).catch((error) => {
       console.log(error);
@@ -31,9 +52,12 @@ export default class Home extends Component{
       <Container>
         <Form>
             <Item>
-              <Input placeholder="Enter refund amount"/>
+              <Input onChangeText={(refund) => this.setState({refund:refund})} placeholder="Enter refund amount"/>
             </Item>
-            <Button block success onPress={()=> this.Request(1000)}>
+            <Item>
+              <Input onChangeText={(myan_pay) => this.setState({myan_pay:myan_pay})} placeholder="Enter Myan Pay User Account"/>
+            </Item>
+            <Button block success onPress={()=> this.RequestRefund()}>
               <Text>Refund Now</Text>
             </Button>
           </Form>

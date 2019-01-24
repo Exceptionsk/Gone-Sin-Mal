@@ -61,7 +61,18 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-notifications-outline" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        fetch(global.HostURL + '/api/Refund')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          global.RefundNotification=responseJson;
+        })
+        .catch((error) => {
+          // console.log("admin noti failed");
+        });
+        defaultHandler();
+      }
     }
   },
   Home: {

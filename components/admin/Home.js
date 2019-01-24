@@ -21,17 +21,24 @@ export default class Home extends Component {
   state = {
     modalVisible: false,
     System:[],
+    Data:[]
   };
-
+ getTotalCoins(){
+   return (this.state.System.Sold_coins+ this.state.System.Sold_special_coins+ this.state.System.Expired_coins);
+ }
   getStatus(){
     return fetch(global.HostURL + '/api/Admin')
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
+      let newdata = [
+        { name: 'Normal Coin', population: responseJson.Sold_coins, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Special Coin', population: responseJson.Sold_special_coins, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Expired Coin', population: responseJson.Expired_coins, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      ]
       this.setState({
         System: responseJson,
-       }, function(){
-
+        Data:newdata
        });
     })
     .catch((error) => {
@@ -48,16 +55,6 @@ export default class Home extends Component {
 
 
   render() {
-
-  const data =
-  [
-    { name: 'Normal Coin', population: 12, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Special Coin', population: 12, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Expired Coin', population: 12, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-  ]
-
-
-
     const chartConfig = {
       backgroundGradientFrom: '#1E2923',
       backgroundGradientTo: '#08130D',
@@ -97,7 +94,7 @@ export default class Home extends Component {
               <Row>
                 <Col style={{backgroundColor:'white',height:'100%'}}>
                     <PieChart
-                      data={data}
+                      data={this.state.Data}
                       width={390}
                       height={220}
                       chartConfig={chartConfig}
@@ -111,7 +108,7 @@ export default class Home extends Component {
           <CardItem footer>
           <Row>
             <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Coin: 1000</Text>
+              <Text style={{paddingBottom:5}}>Total Coin: {this.getTotalCoins()}</Text>
               <Text style={{paddingBottom:5}}>Normal Coin: {this.state.System.Sold_coins}</Text>
               <Text style={{paddingBottom:5}}>Special Coin: {this.state.System.Sold_special_coins}</Text>
               <Text style={{paddingBottom:5}}>Expired Coin: {this.state.System.Expired_coins}</Text>

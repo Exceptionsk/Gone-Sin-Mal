@@ -8,7 +8,7 @@ export default class NNoti extends Component {
   componentDidMount() {
     let that = this;
     setInterval(() => {
-        that.setState({Notification: global.AdminNotification});
+        that.setState({Notification: global.RefundNotification});
     }, 1000);
   }
   state = {
