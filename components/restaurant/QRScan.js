@@ -16,7 +16,7 @@ export default class BarcodeScannerExample extends React.Component {
     }
 
 BeginTransaction(){
-    fetch(global.HostURL + '/api/resturant/qr', {
+    fetch(global.HostURL + '/api/restaurant/qr', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

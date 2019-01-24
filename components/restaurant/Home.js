@@ -38,7 +38,9 @@ export default class Home extends Component{
     modalVisible: false,
     phmodalVisible: false,
     emailmodalVisible: false,
-    resturant: [],
+    tempPh:'',
+    tempEmail:'',
+    restaurant: [],
     image: null,
     clicked:"",
   };
@@ -46,16 +48,41 @@ export default class Home extends Component{
     this.setState({ clicked: click });
     this._pickImage;
   }
+
+  updatephone(){
+    fetch(global.HostURL + '/api/updatephone?id='+ this.state.restaurant.Rest_id + "&phone="+ this.state.tempPh, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    let newrest = this.state.restaurant;
+    newrest.Rest_phno=this.state.tempPh;
+    this.setState({restaurant:newrest});
+ }
+ updateemail(){
+   fetch(global.HostURL + '/api/updateemail?id='+ this.state.restaurant.Rest_id + "&email="+ this.state.tempEmail, {
+     method: 'PUT',
+     headers: {
+       Accept: 'application/json',
+       'Content-Type': 'application/json',
+     }
+   });
+   let newrest = this.state.restaurant;
+   newrest.Rest_email=this.state.tempEmail;
+   this.setState({restaurant:newrest});
+}
   getInfo(){
     fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
-         resturant: responseJson,
+         restaurant: responseJson,
       });
       for (var i = 0; i < cards.length; i++) {
-        cards[i].image= global.HostURL + '/api/resturant/pic?id=' + responseJson.Rest_id+ "&gallery=" +(i+1);
+        cards[i].image= global.HostURL + '/api/restaurant/pic?id=' + responseJson.Rest_id+ "&gallery=" +(i+1);
       }
     })
     .catch((error) => {
@@ -79,8 +106,8 @@ export default class Home extends Component{
       <Container>
       <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
       <Button transparent full success style={{height:70, width:'100%', justifyContent: 'flex-start'}} onPress={()=>this._pickImage("profile")}>
-          <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id}} />
-          <Text style = {{color: 'white'}}>{this.state.resturant.Rest_name}</Text>
+          <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id}} />
+          <Text style = {{color: 'white'}}>{this.state.restaurant.Rest_name}</Text>
       </Button>
       </Header>
       <Content contentContainerStyle={{ flex: 1 }}>
@@ -120,7 +147,7 @@ export default class Home extends Component{
                  <CardItem>
                      <Left>
                       <Icon name="ios-compass"/>
-                      <Text>{this.state.resturant.Rest_location}</Text>
+                      <Text>{this.state.restaurant.Rest_location}</Text>
                      </Left>
                      <Right>
                       <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}/>
@@ -150,7 +177,7 @@ export default class Home extends Component{
                  <CardItem>
                    <Left>
                     <Icon name="ios-call"/>
-                    <Text>{this.state.resturant.Rest_phno}</Text>
+                    <Text>{this.state.restaurant.Rest_phno}</Text>
                    </Left>
                    <Right>
                     <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
@@ -169,9 +196,9 @@ export default class Home extends Component{
                               </Button>
                               </Right>
                             </Header>
-                            <Input keyboardType='number-pad' placeholder="Enter phone number"/>
+                            <Input onChangeText={(ph) => this.setState({tempPh:ph})} keyboardType='number-pad' placeholder="Enter phone number"/>
                             <View style={{alignSelf:'center'}}>
-                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
+                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);this.updatephone()}}/>
                             </View>
                         </View>
                       </View>
@@ -180,7 +207,7 @@ export default class Home extends Component{
                  <CardItem>
                    <Left>
                     <Icon name="md-mail"/>
-                    <Text>{this.state.resturant.Rest_email}</Text>
+                    <Text>{this.state.restaurant.Rest_email}</Text>
                    </Left>
                    <Right>
                     <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}} />
@@ -199,9 +226,9 @@ export default class Home extends Component{
                               </Button>
                               </Right>
                             </Header>
-                            <Input keyboardType='email-address' placeholder="Enter email address"/>
+                            <Input onChangeText={(email)=>this.setState({tempEmail:email})} keyboardType='email-address' placeholder="Enter email address"/>
                             <View style={{alignSelf:'center'}}>
-                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}/>
+                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);this.updateemail()}}/>
                             </View>
                         </View>
                       </View>
@@ -249,7 +276,7 @@ export default class Home extends Component{
         type: 'image/jpeg', // or photo.type
         name: "img",
       });
-      fetch(global.HostURL + '/api/resturant/pic?id='+ this.state.resturant.Rest_id+"&gallery="+click, {
+      fetch(global.HostURL + '/api/restaurant/pic?id='+ this.state.restaurant.Rest_id+"&gallery="+click, {
         method: 'post',
         body: data
       });
@@ -284,7 +311,7 @@ const styles= StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.5,
     flexDirection: 'column',
-    justifyContent: 'space-around' 
+    justifyContent: 'space-around'
   },
   responsiveBoxphnumber: {
     width: wp('84.5%'),
@@ -305,7 +332,7 @@ const styles= StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.5,
     flexDirection: 'column',
-    justifyContent: 'space-around' 
+    justifyContent: 'space-around'
   },
   image:{
     height: '100%',

@@ -8,22 +8,20 @@ import Home from "../components/admin/Home";
 import Admins from "../components/admin/Admins";
 
 export default class AdminHome extends Component{
-  getNoti(){
-    return fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=admin")
-    .then((response) => response.json())
-    .then((responseJson) => {
-      global.AdminNotification=responseJson;
-    })
-    .catch((error) => {
-      // console.log("Admin noti failed");
-    });
-  };
 
-  componentDidMount() {
-    // let that = this;
-    // setInterval(() => {
-    //   that.getNoti();
-    // }, 1000);
+  getSystemStatus(){
+    fetch(global.HostURL + '/api/Admin')
+   .then((response) => response.json())
+   .then((responseJson) => {
+     global.SystemStatus = responseJson;
+   })
+   .catch((error) => {
+     console.log("Admin status failed");
+   });
+  }
+
+  componentWillMount() {
+    this.getSystemStatus();
   }
 
   static navigationOptions = {
@@ -80,7 +78,18 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-home" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress:({navigation, defaultHandler})=>{
+        fetch(global.HostURL + '/api/Admin')
+       .then((response) => response.json())
+       .then((responseJson) => {
+         global.SystemStatus = responseJson;
+       })
+       .catch((error) => {
+         console.log("Admin status failed");
+       });
+       defaultHandler();
+      }
     }
   },
   Admins: {

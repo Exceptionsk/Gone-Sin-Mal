@@ -23,34 +23,23 @@ export default class Home extends Component {
     System:[],
     Data:[]
   };
- getTotalCoins(){
+
+  getTotalCoins(){
    return (this.state.System.Sold_coins+ this.state.System.Sold_special_coins+ this.state.System.Expired_coins);
- }
-  getStatus(){
-    return fetch(global.HostURL + '/api/Admin')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson);
-      let newdata = [
-        { name: 'Normal Coin', population: responseJson.Sold_coins, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Special Coin', population: responseJson.Sold_special_coins, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Expired Coin', population: responseJson.Expired_coins, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      ]
-      this.setState({
-        System: responseJson,
-        Data:newdata
-       });
-    })
-    .catch((error) => {
-      // console.error(error);
-      console.log("Admin status failed");
-    });
   }
 
 
-  componentWillMount(){
-    this.getStatus();
-    console.log(this.state.System);
+  componentDidMount(){
+    let that = this;
+    setInterval(() => {
+      let newdata=[
+        { name: 'Normal Coin', population: global.SystemStatus.Sold_coins, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Special Coin', population: global.SystemStatus.Sold_special_coins, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Expired Coin', population: global.SystemStatus.Expired_coins, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      ]
+        that.setState({System: global.SystemStatus});
+        that.setState({Data: newdata});
+    }, 1000);
   }
 
 
@@ -74,7 +63,7 @@ export default class Home extends Component {
     const screenWidth = Dimensions.get('window').width
     return (
       <Container>
-          <Header style = {{height: 110,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+          <Header style = {{height: 80,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
           <Button transparent style={{height:70}}>
               <Thumbnail style = {{ marginLeft:15, borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
               <Text style = {{color: 'white'}}>{global.Profile.name}</Text>
