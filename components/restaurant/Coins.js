@@ -7,27 +7,24 @@ import Buy from './Buy';
 import Refund from './Refund';
 
 export default class Coins extends Component{
-
-  constructor()
-  {
-    super();
-    this.items = [
-      {name:'KFC', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Sar Mal', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Gone Sin', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'YKKO', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-      {name:'Golden Pot', img:'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'},
-    ];
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+        that.setState({restaurant: global.Restaurant});
+    }, 1000);
+  }
+  state={
+    restaurant:{},
   }
   render(){
     return(
       <Container>
       <Header style = {{height: 60,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
         <Body style={{width:300}}>
-              <Text style = {{color: 'white'}}>Available Coins: 1023</Text>
+              <Text style = {{color: 'white'}}>Available Coins: {this.state.restaurant.Rest_coin}</Text>
         </Body>
         <Right>
-              <Text style = {{color: 'white'}}>Spicial Coins : 414</Text>
+              <Text style = {{color: 'white'}}>Spicial Coins : {this.state.restaurant.Rest_special_coin}</Text>
         </Right>
       </Header>
         <Tabs locked={true}>

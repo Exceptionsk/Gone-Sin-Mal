@@ -7,29 +7,6 @@ import { ImagePicker,Permissions } from 'expo';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
-const cards = [
-  {
-    name: 'Gallery 1',
-    gallery:1,
-    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
-  },
-  {
-    name: 'Gallery 2',
-    gallery:2,
-    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
-  },
-  {
-    name: 'Gallery 3',
-    gallery:3,
-    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
-  },
-  {
-    name: 'Gallery 4',
-    gallery:4,
-    image: 'https://myanimelist.cdn-dena.com/images/anime/3/51045.jpg',
-  },
-];
-
 export default class Home extends Component{
   componentWillMount(){
     this.getInfo();
@@ -68,6 +45,14 @@ export default class Home extends Component{
       },
     ],
   };
+
+  componentDidMount() {
+    let that = this;
+    setInterval(() => {
+        that.setState({restaurant: global.Restaurant});
+    }, 1000);
+  }
+
   uploadImage(click){
     this.setState({ clicked: click });
     this._pickImage;
@@ -101,21 +86,18 @@ export default class Home extends Component{
     fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
-      this.setState({
-         restaurant: responseJson,
-      });
-      let newcards=this.state.cards;
-      for (var i = 0; i < cards.length; i++) {
-        newcards[i].image= global.HostURL + '/api/restaurant/pic?id=' + responseJson.Rest_id+ "&gallery=" +(i+1);
-      }
-      console.log(newcards);
-      this.setState({cards:newcards});
-      console.log(this.state.cards);
+     global.Restaurant= responseJson
+     let newcards=this.state.cards;
+     for (var i = 0; i < this.state.cards.length; i++) {
+       newcards[i].image= global.HostURL + '/api/restaurant/pic?id=' + global.Restaurant.Rest_id+ "&gallery=" +(i+1);
+     }
+     console.log(newcards);
+     this.setState({cards:newcards});
+     console.log(this.state.cards);
     })
     .catch((error) => {
       console.error(error);
-      console.log("search failed");
+      console.log("Home failed");
     });
 
   }
@@ -298,7 +280,9 @@ export default class Home extends Component{
       if(click=="profile"){
         this.setState({profilepic:result.uri})
       }else{
-        cards[click-1].image=result.uri;
+        let newc = this.state.cards;
+        newc[click-1].image=result.uri;
+        this.setState({cards:newc});
       }
       this._deckSwiper._root.swipeRight();
       const data = new FormData();

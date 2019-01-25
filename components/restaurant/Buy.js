@@ -42,8 +42,6 @@ export default class Home extends Component{
     return fetch(global.HostURL + '/api/package')
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log("package pass");
-      console.log(responseJson);
       this.setState({
          Normal: responseJson.filter(function (item) {return item.Package_type === "normal";}),
          Special:responseJson.filter(function (item) {return item.Package_type === "special";}),

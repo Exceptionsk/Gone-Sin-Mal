@@ -25,7 +25,21 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-home" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log("gg");
+          console.log(responseJson);
+         global.Restaurant= responseJson
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log("Home failed");
+        });
+        defaultHandler();
+      }
     }
   },
   QR: {

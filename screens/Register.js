@@ -176,7 +176,7 @@ export default class Register extends Component{
             <Row>
               <Col style={{width:100}}>
                 <Button onPress={this._pickImage} transparent style={{alignSelf:'center',width:100, height:100, borderWidth: 1, borderColor:'black'}}>
-                  <Text style={{textAlign:'center'}}>Logo Here</Text>
+                  
                   <Image style={{ height: 100, width:100, flex: 1 }} source={{uri : this.state.profilepic}} />
                 </Button>
               </Col>

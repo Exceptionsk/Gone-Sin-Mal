@@ -40,7 +40,8 @@ export default class Start extends Component {
     global.AdminNotification=[],
     global.RestNotification=[],
     global.GoneSinList=[],
-    global.FavList=[]
+    global.FavList=[],
+    global.Restaurant={}
   }
   state = {
   fontLoaded: false
