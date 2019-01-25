@@ -17,6 +17,7 @@ import AdminHome from "./screens/AdminHome";
 import Register from "./screens/Register";
 import MapView from "./screens/MapView";
 import UserRegister from "./screens/UserRegister";
+import AccountType from "./screens/AccountTypeChooser";
 
 
 const TopLevelNavigator = createStackNavigator({
@@ -27,12 +28,13 @@ const TopLevelNavigator = createStackNavigator({
   Register: {screen: Register},
   MapView: {screen: MapView},
   UserRegister: {screen: UserRegister},
+  AccountType:{screen:AccountType},
 });
 
 export default class Start extends Component {
   constructor(){
     super();
-    global.HostURL = "http://192.168.1.4:2940",
+    global.HostURL = "http://192.168.8.104:2940",
     global.Profile={},
     global.CustNotification=[],
     global.AdminNotification=[],

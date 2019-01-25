@@ -34,7 +34,7 @@ export default class Login extends Component {
   };
   state = {
     modalVisible: false,
-    resturant:'',
+    restaurant:'',
     fav_status:'',
   };
   static navigationOptions = {
@@ -48,14 +48,14 @@ export default class Login extends Component {
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({
-         resturant: responseJson,
+         restaurant: responseJson,
        }, function(){
 
        });
     })
     .catch((error) => {
       console.error(error);
-      console.log("resturant info failed");
+      console.log("restaurant info failed");
     });
   }
 
@@ -68,7 +68,7 @@ export default class Login extends Component {
         },
         body:JSON.stringify({
           User_id:global.Profile.id,
-          Rest_id:this.state.resturant.Rest_id,
+          Rest_id:this.state.restaurant.Rest_id,
         }),
       }).then((response) => response.json())
       .then((responseJson) => {
@@ -155,11 +155,11 @@ export default class Login extends Component {
                             <CardItem header>
                             <Row>
                                 <Col style={{backgroundColor:'white',width:110}}>
-                                    <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id}} />
+                                    <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}} source={{uri : global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id}} />
                                 </Col>
                                 <Col style={{backgroundColor:'white'}}>
-                                    <H2>{this.state.resturant.Rest_name}</H2>
-                                    <H2 style={{color:'#404040'}}>Catagory: {this.state.resturant.Rest_id}</H2>
+                                    <H2>{this.state.restaurant.Rest_name}</H2>
+                                    <H2 style={{color:'#404040'}}>Catagory: {this.state.restaurant.Rest_id}</H2>
                                 </Col>
                             </Row>
                             </CardItem>
@@ -171,7 +171,7 @@ export default class Login extends Component {
                                       renderItem={item =>
                                         <Card style={{ elevation: 3 }}>
                                           <CardItem cardBody>
-                                            <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : global.HostURL + '/api/resturant/pic?id=' + this.state.resturant.Rest_id+ "&gallery=" +item.gallery}} />
+                                            <Image style={{ height: 300, width:'100%', flex: 1 }} source={{uri : global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id+ "&gallery=" +item.gallery}} />
                                           </CardItem>
                                           <CardItem>
                                             <Icon name="md-images" style={{ color: '#ED4A6A' }} />
@@ -203,9 +203,9 @@ export default class Login extends Component {
                             <CardItem footer>
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
-                                        <Text style={{paddingBottom:5}}>Detail Address: {this.state.resturant.Rest_location}</Text>
-                                        <Text style={{paddingBottom:5}}>Phone Number: {this.state.resturant.Rest_phno}</Text>
-                                        <Text style={{paddingBottom:5}}>Email: {this.state.resturant.Rest_email}</Text>
+                                        <Text style={{paddingBottom:5}}>Detail Address: {this.state.restaurant.Rest_location}</Text>
+                                        <Text style={{paddingBottom:5}}>Phone Number: {this.state.restaurant.Rest_phno}</Text>
+                                        <Text style={{paddingBottom:5}}>Email: {this.state.restaurant.Rest_email}</Text>
                                     </Col>
                                 </Row>
                             </CardItem>

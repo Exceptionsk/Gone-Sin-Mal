@@ -6,6 +6,9 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { MaterialCommunityIcons,Ionicons,MaterialIcons } from '@expo/vector-icons';
 
 export default class App extends Component {
+  static navigationOptions = {
+    header:null
+  }
   state = {
     mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
     locationResult: null,
@@ -14,6 +17,7 @@ export default class App extends Component {
     latitude: null,
     longitude: null,
     modalVisible: true,
+    apilocation:'',
   };
 
   componentDidMount() {
@@ -56,6 +60,7 @@ logAddress(lat, long){
   fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
   .then((response) => response.json())
   .then((responseJson) => {
+    this.setState({apilocation:responseJson});
     console.log(responseJson);
   })
   .catch((error) => {
@@ -63,9 +68,25 @@ logAddress(lat, long){
   });
 }
 
-setMapModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
+UpdateUserInfo(){
+  fetch(global.HostURL + '/api/User', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({
+      User_id : global.Profile.id,
+      User_type:'customer',
+    }),
+  }).then((response) => response.json())
+    .then((responsejson)=>{
+      console.log(responsejson);
+      this.props.navigation.navigate('CustHome')
+    }).catch((error)=>{
+       console.log(error);
+    });
+}
 
   render() {
     return (
@@ -78,50 +99,32 @@ setMapModalVisible(visible) {
             </View>
         </Header>
         <View style={styles.modalcontainer}>
+        <View style={styles.Mapmodalcontainer}>
+            <View style={styles.responsiveMapBox}>
+                <MapView
+                    style={{ flex: 1 }}
+                    region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+                    zoomEnabled={true}
+                >
+                <MapView.Marker
+                draggable
+                coordinate={this.state.location.coords}
+                title="My Location"
+                description="Location description"
+                onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
+                />
+                 </MapView>
+            </View>
+        </View>
             <View style={styles.responsiveBox}>
-                <Item style={{alignSelf:'center'}}>
-                    <Input disabled placeholder='Press the icon to choose your township'/>
-                    <Button onPress={()=>{this.setMapModalVisible(!this.state.modalVisible);}} transparent style={{height:70}}>
-                        <MaterialIcons name="add-location" size={40} color="#4cd58a"/>
-                    </Button>
-                </Item>
-                <View style={{alignSelf:'center'}}>
-                    <Button iconLeft bordered success>
-                        <Text>Choose</Text>
-                        <MaterialCommunityIcons name="check" size={30} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
+                    <Text style = {{width:'100%', fontWeight:'bold'}} >{this.state.apilocation.display_name}</Text>
+                <View>
+                    <Button iconLeft block success onPress={()=>this.UpdateUserInfo()}>
+                        <Text>Next</Text>
+                        <MaterialCommunityIcons name="check" size={30} color="#4cd58a" />
                     </Button>
                 </View>
             </View>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                onRequestClose={()=>{this.setMapModalVisible(!this.state.modalVisible);}}
-                visible={this.state.modalVisible}>
-                <View style={styles.Mapmodalcontainer}>
-                    <View style={styles.responsiveMapBox}>
-                        <Header style = {{height: hp('5%'),backgroundColor: '#4cd58a', paddingBottom: 0, paddingTop: 0, marginBottom: 8, borderBottomWidth:0}}>
-                            <Right>
-                              <Button transparent onPress={()=>{this.setMapModalVisible(!this.state.modalVisible);}}>
-                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                              </Button>
-                            </Right>
-                        </Header>
-                        <MapView
-                            style={{ flex: 1 }}
-                            region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
-                            zoomEnabled={true}
-                        >
-                        <MapView.Marker
-                        draggable
-                        coordinate={this.state.location.coords}
-                        title="My Location"
-                        description="Location description"
-                        onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
-                        />
-                         </MapView>
-                    </View>
-                </View>
-            </Modal>
          </View>
 
     </Container>
@@ -138,8 +141,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
       },
       responsiveBox: {
-        width: wp('84.5%'),
-        height: hp('23%'),
+        width: wp('95.5%'),
+        height: hp('30%'),
         backgroundColor: 'white',
         // borderWidth: 1,
         // borderTopLeftRadius: 5,
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
         // shadowRadius: 3,
         // shadowOpacity: 0.5,
         // flexDirection: 'column',
-        justifyContent: 'space-around' 
+        justifyContent: 'space-around'
       },
       Mapmodalcontainer:{
         flex: 1,
@@ -164,8 +167,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       responsiveMapBox: {
-        width: wp('84.5%'),
-        height: hp('43%'),
+        width: wp('95.5%'),
+        height: hp('70%'),
         backgroundColor: '#4cd58a',
         borderWidth: 1,
         borderTopLeftRadius: 5,
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         shadowOpacity: 0.5,
         flexDirection: 'column',
-        justifyContent: 'space-around' 
+        justifyContent: 'space-around'
       },
   container: {
     flex: 1,

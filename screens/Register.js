@@ -84,27 +84,34 @@ export default class Register extends Component{
             type: 'image/jpeg', // or photo.type
             name: this.state.name,
           });
-          fetch(global.HostURL + '/api/resturant/pic?id='+ responsejson.Rest_id + "&gallery=0", {
+          fetch(global.HostURL + '/api/restaurant/pic?id='+ responsejson.Rest_id + "&gallery=0", {
             method: 'post',
             body: data
-          }).then(res => {
-            console.log(res)
-          });
-          // if(responsejson.User_Type=="normal"){
-          //   this.props.navigation.navigate('CustHome')
-          // }else if (responsejson.User_Type=="admin") {
-          //   this.props.navigation.navigate('AdminHome')
-          // }else if (responsejson.User_Type=="owner"){
-          //   this.props.navigation.navigate('RestHome')
-          // };
-          // this.props.navigation.navigate('CustHome')
+          }).then((response) => response.json())
+            .then((responsejson)=>{
+              fetch(global.HostURL + '/api/User', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                  User_id : global.Profile.id,
+                  User_type:'owner',
+                }),
+              }).then((response) => response.json())
+                .then((responsejson)=>{
+                  console.log(responsejson);
+                  this.props.navigation.navigate('RestHome')
+                }).catch((error)=>{
+                   console.log(error);
+                });
+              });
         });
     } catch (e) {
       console.log(e);
     }
   }
-
-
 
   componentDidMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -302,6 +309,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.5,
     flexDirection: 'column',
-    justifyContent: 'space-around' 
+    justifyContent: 'space-around'
   },
 });
