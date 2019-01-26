@@ -32,7 +32,6 @@ export default class GoneSin extends Component {
     modalVisibleGoneSin: false,
     GoneSinList:[],
   };
-
   render() {
     return(
       <Container>
@@ -67,20 +66,24 @@ export default class GoneSin extends Component {
               this.state.GoneSinList.map((item, key)=>
               (
                 <View style={{flex: 1,flexDirection: 'row',paddingBottom:0,marginBottom:0}} key={key}>
-                  <View style={{width: '50%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
-                  <Card style={{flex: 0, marginLeft: 12}}>
+                  <View style={{width: '100%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
+                  <Card style={{flex: 0, marginLeft: 12, marginRight: 12, marginBottom:0}}>
                                 <CardItem>
                                 <Left>
-                                    <Thumbnail source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
+                                    <Thumbnail style={{borderWidth:1, borderColor: '#696969', borderRadius: 3}} square source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
                                     <Body>
-                                    <Text>{item.Rest_id}</Text>
-                                    <Text note>{item.User_id}</Text>
+                                    <Text>KFC</Text>
+                                    <Text note>Catagory-FastFood</Text>
                                     </Body>
                                 </Left>
-                                </CardItem>
-                                <CardItem>
-                                <Left>
-                                  <Modal
+                                <Right>
+                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
+                                    <Badge icon danger>
+                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.User_promotion_amount}Coins</Text>
+                                    </Badge>
+                                    <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
+                                    </Button>
+                                    <Modal
                                     animationType="slide"
                                     transparent={true}
                                     onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
@@ -119,40 +122,7 @@ export default class GoneSin extends Component {
                                       </View>
                                   </View>
                                   </Modal>
-                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
-                                    {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
-                                    <Badge style={{ backgroundColor: 'black' }}>
-                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.User_promotion_amount}</Text>
-                                    </Badge>
-                                    <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
-                                    </Button>
-                                </Left>
-
-                                </CardItem>
-                          </Card>
-                  </View>
-                  <View style={{width: '50%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
-                  <Card style={{flex: 0, marginRight: 12 }}>
-                                <CardItem>
-                                <Left>
-                                    <Thumbnail source={{uri : item.img}} />
-                                    <Body>
-                                    <Text>{item.name}</Text>
-                                    <Text note>{item.date}</Text>
-                                    </Body>
-                                </Left>
-                                </CardItem>
-                                <CardItem>
-                                <Left>
-                                    <Button transparent textStyle={{color: '#87838B'}}>
-                                    {/* <Ionicons name="ios-restaurant" size={30} color="black" />  */}
-                                    <Badge style={{ backgroundColor: 'black' }}>
-                                        <Text style={{ color: 'white', fontSize: 10 }}>{item.point}</Text>
-                                    </Badge>
-                                    <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
-                                    </Button>
-                                </Left>
-
+                                </Right>
                                 </CardItem>
                           </Card>
                   </View>

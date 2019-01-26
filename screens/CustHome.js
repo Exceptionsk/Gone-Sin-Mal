@@ -73,6 +73,7 @@ const Buttontab = createBottomTabNavigator({
         fetch(global.HostURL + '/api/Promotion/' + global.Profile.id)
         .then((response) => response.json())
         .then((responseJson) => {
+          console.log(responseJson);
           global.GoneSinList=responseJson;
         })
         .catch((error) => {

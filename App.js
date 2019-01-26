@@ -34,7 +34,7 @@ const TopLevelNavigator = createStackNavigator({
 export default class Start extends Component {
   constructor(){
     super();
-    global.HostURL = "http://192.168.8.104:2940",
+    global.HostURL = "http://192.168.1.3:2940",
     global.Profile={},
     global.CustNotification=[],
     global.AdminNotification=[],
