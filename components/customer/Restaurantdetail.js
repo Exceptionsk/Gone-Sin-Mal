@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image,StyleSheet, Modal, AsyncStorage } from 'react-native';
 import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Body, Right, DeckSwiper } from 'native-base';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import { Constants, MapView, Location, Permissions, Marker } from 'expo';
 import User from './Userprofile';
 
 const cards = [
@@ -32,8 +33,12 @@ export default class Login extends Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   };
+  setmapModalVisible(visible) {
+    this.setState({mapmodalVisible: visible});
+  };
   state = {
     modalVisible: false,
+    mapmodalVisible: false,
     restaurant:'',
     fav_status:'',
   };
@@ -160,6 +165,7 @@ export default class Login extends Component {
                                 <Col style={{backgroundColor:'white'}}>
                                     <H2>{this.state.restaurant.Rest_name}</H2>
                                     <H2 style={{color:'#404040'}}>Catagory: {this.state.restaurant.Rest_id}</H2>
+                                    <H2>{this.state.restaurant.Rest_long}</H2>
                                 </Col>
                             </Row>
                             </CardItem>
@@ -193,9 +199,9 @@ export default class Login extends Component {
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
                                         <MaterialCommunityIcons name="tag-heart" size={35} color={this.state.fav_status} onPress={()=> this.togglefav()} />
-                                        <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('RestHome')}>
+                                        <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => {this.setmapModalVisible(true);}}>
                                             <Ionicons name="md-map" size={30} color="white" />
-                                            <Text> Get Direction </Text>
+                                            <Text> View Restaurant Location </Text>
                                         </Button>
                                     </Col>
                                 </Row>
@@ -210,6 +216,31 @@ export default class Login extends Component {
                                 </Row>
                             </CardItem>
                         </Card>
+                        <Modal
+                          animationType="slide"
+                          transparent={false}
+                          onRequestClose={()=>{this.mapsetModalVisible(!this.state.mapmodalVisible);}}
+                          visible={this.state.mapmodalVisible}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
+                          <Right>
+                            <Button transparent onPress={()=>{this.setmapModalVisible(!this.state.mapmodalVisible);}}>
+                                <Icon name="close"/>
+                            </Button>
+                            </Right>
+                          </Header>
+                          <MapView
+                            style={{ flex: 1 }}
+                            region={{ latitude: this.state.restaurant.Rest_lat, longitude: this.state.restaurant.Rest_long, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+                            zoomEnabled={true}
+                          >
+                          <MapView.Marker
+                            coordinate={{latitude: this.state.restaurant.Rest_lat,
+                              longitude: this.state.restaurant.Rest_long}}
+                            title={this.state.restaurant.Rest_name}
+                            description="Location"
+                          />
+                          </MapView>
+                        </Modal>
                     </Content>
                 </Grid>
             </Container>

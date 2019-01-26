@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal,Platform} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Left, Right, Header, Icon, DeckSwiper, Thumbnail,Button, Content, Card, CardItem, Body, Text, Textarea, Input } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
-import { ImagePicker,Permissions } from 'expo';
+import { ImagePicker,Permissions, Constants, MapView, Location, Marker } from 'expo';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 
@@ -13,9 +13,20 @@ export default class Home extends Component{
     this.setState({profilepic:global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id});
   }
   state = {
+    mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+    locationResult: null,
+    location: {coords: { latitude: 37.78825, longitude: -122.4324}},
+    currentlocation: null,
+    latitude: null,
+    longitude: null,
+
     modalVisible: false,
     phmodalVisible: false,
     emailmodalVisible: false,
+    mapmodalVisible: false,
+
+    restaddress: '',
+
     tempCategory:'',
     tempPh:'',
     tempEmail:'',
@@ -52,6 +63,14 @@ export default class Home extends Component{
     setInterval(() => {
         that.setState({restaurant: global.Restaurant});
     }, 1000);
+
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
   }
 
   uploadImage(click){
@@ -114,6 +133,37 @@ export default class Home extends Component{
     });
 
   }
+
+  _handleMapRegionChange = mapRegion => {
+    this.setState({ mapRegion });
+  };
+
+  _getLocationAsync = async () => {
+   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+   if (status !== 'granted') {
+     this.setState({
+       locationResult: 'Permission to access location was denied',
+       location,
+     });
+   }
+
+   let location = await Location.getCurrentPositionAsync({});
+   this.setState({ locationResult: JSON.stringify(location), location, });
+ };
+
+logAddress(lat, long){
+  fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
+  .then((response) => response.json())
+  .then((responseJson) => {
+    this.setState({restaddress:responseJson.address});
+    console.log({responseJson});
+  })
+  .catch((error) => {
+    console.log("address failed");
+  });
+}
+
+
   setCategoryModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -122,6 +172,9 @@ export default class Home extends Component{
   }
   setemailModalVisible(visible) {
     this.setState({emailmodalVisible: visible});
+  }
+  setmapModalVisible(visible) {
+    this.setState({mapmodalVisible: visible});
   }
   render(){
     let { image } = this.state;
@@ -182,8 +235,9 @@ export default class Home extends Component{
                     visible={this.state.modalVisible}>
                     <View style={styles.modalcontainer}>
                       <View style={styles.responsiveBox}>
-                          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
                           <Right>
+                            <Text>{this.state.restaddress}</Text>
                             <Button transparent onPress={()=>{this.setCategoryModalVisible(!this.state.modalVisible);}}>
                               <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
                             </Button>
@@ -212,7 +266,7 @@ export default class Home extends Component{
                     visible={this.state.emailmodalVisible}>
                     <View style={styles.modalcontainer}>
                       <View style={styles.responsiveBoxphnumber}>
-                          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
                           <Right>
                             <Button transparent onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}>
                               <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
@@ -242,7 +296,7 @@ export default class Home extends Component{
                     visible={this.state.phmodalVisible}>
                     <View style={styles.modalcontainer}>
                       <View style={styles.responsiveBoxphnumber}>
-                          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
                           <Right>
                             <Button transparent onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}>
                               <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
@@ -263,8 +317,36 @@ export default class Home extends Component{
                   <Text>{this.state.restaurant.Rest_location}</Text>
                  </Left>
                  <Right>
-                  <Icon name="md-create" style={{ color: '#ED4A6A' }}  />
+                  <Icon name="md-create" style={{ color: '#ED4A6A' }}  onPress={()=>{this.setmapModalVisible(!this.state.mapmodalVisible);}}/>
                  </Right>
+                 <Modal
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={()=>{this.setmapModalVisible(!this.state.mapmodalVisible);}}
+                    visible={this.state.mapmodalVisible}>
+                          <View style={{flex:1, backgroundColor:'#a3080c'}}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c', borderBottomWidth:0, paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Right>
+                            <Button transparent onPress={()=>{this.setmapModalVisible(!this.state.mapmodalVisible);}}>
+                              <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                            </Button>
+                            </Right>
+                          </Header>
+                          <MapView
+                                  style={{ flex: 1 }}
+                                  region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+                                  zoomEnabled={true}
+                                >
+                            <MapView.Marker
+                              draggable
+                              coordinate={this.state.location.coords}
+                              title="My Marker"
+                              description="Some description"
+                              onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
+                            />
+                            </MapView>
+                          </View> 
+                  </Modal>
                </CardItem>
              </Card>
           </View>
