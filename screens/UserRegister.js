@@ -17,7 +17,7 @@ export default class App extends Component {
     latitude: null,
     longitude: null,
     modalVisible: true,
-    apilocation:'',
+    User_state:'',
   };
 
   componentDidMount() {
@@ -60,8 +60,9 @@ logAddress(lat, long){
   fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
   .then((response) => response.json())
   .then((responseJson) => {
-    this.setState({apilocation:responseJson});
+    this.setState({User_state:responseJson.address.state});
     console.log(responseJson);
+    console.log("ggwp" + responseJson.address.state);
   })
   .catch((error) => {
     console.log("address failed");
@@ -78,6 +79,7 @@ UpdateUserInfo(){
     body:JSON.stringify({
       User_id : global.Profile.id,
       User_type:'customer',
+      User_state: this.state.User_state,
     }),
   }).then((response) => response.json())
     .then((responsejson)=>{
@@ -117,7 +119,7 @@ UpdateUserInfo(){
             </View>
         </View>
             <View style={styles.responsiveBox}>
-                    <Text style = {{width:'100%', fontWeight:'bold'}} >{this.state.apilocation.display_name}</Text>
+                    <Text style = {{width:'100%', fontWeight:'bold'}} >{this.state.User_state}</Text>
                 <View>
                     <Button iconLeft block success onPress={()=>this.UpdateUserInfo()}>
                         <Text>Next</Text>

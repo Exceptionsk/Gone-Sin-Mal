@@ -71,7 +71,6 @@ export default class Register extends Component{
           Rest_email : this.state.email,
           Rest_phno : this.state.phone,
           Rest_state: this.state.state,
-          Rest_township : this.state.township,
           Rest_lat : this.state.lat,
           Rest_long : this.state.long,
           Rest_created_date : restdate,
@@ -150,7 +149,6 @@ export default class Register extends Component{
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
-      this.setState({township:responseJson.address.town});
       this.setState({state:responseJson.address.state});
       this.setState({display_name:responseJson.display_name});
       this.setState({lat:responseJson.lat});
