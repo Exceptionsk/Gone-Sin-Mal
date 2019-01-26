@@ -30,7 +30,10 @@ export default class Home extends Component{
               {text: 'OK', onPress: () => console.log('OK Pressed')},
             ]
           )
-        }else if (responsejson=="OK"){
+        }else{
+          global.Restaurant=responsejson;
+          this.input1._root.clear();
+          this.input2._root.clear();
           Alert.alert(
             'Request Success!',
             'You will get notification once Amount has been transfered.',
@@ -52,10 +55,10 @@ export default class Home extends Component{
       <Container>
         <Form>
             <Item>
-              <Input onChangeText={(refund) => this.setState({refund:refund})} placeholder="Enter refund amount"/>
+              <Input onChangeText={(refund) => this.setState({refund:refund})} ref={(ref) => { this.input1 = ref }} placeholder="Enter refund amount"/>
             </Item>
             <Item>
-              <Input onChangeText={(myan_pay) => this.setState({myan_pay:myan_pay})} placeholder="Enter Myan Pay User Account"/>
+              <Input onChangeText={(myan_pay) => this.setState({myan_pay:myan_pay})} ref={(ref) => { this.input2 = ref }} placeholder="Enter Myan Pay User Account"/>
             </Item>
             <Button block success onPress={()=> this.RequestRefund()}>
               <Text>Refund Now</Text>

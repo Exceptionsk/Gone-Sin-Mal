@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage, Modal, Platform} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage, Modal, Platform, TouchableOpacity} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { ImagePicker,Permissions,Constants, MapView, Location, Marker } from 'expo';
 import { Container,Textarea, Left, Right, Form, Label, Input, Header, H1,H2,H3, H4,Title, Item, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
@@ -16,12 +16,12 @@ export default class Register extends Component{
     password2:'',
     email:'',
     phone:'',
-    township:'',
+    category:'',
     lat:'4',
     long:'5',
     profilepic:'',
-    location:'',
-
+    display_name:'',
+    state:'',
     mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
     locationResult: null,
     location: {coords: { latitude: 37.78825, longitude: -122.4324}},
@@ -54,6 +54,9 @@ export default class Register extends Component{
     }
     try {
       var date = new Date();
+      console.log(date);
+      var restdate=date.getFullYear()+ '/'+ (date.getMonth()+1) + '/' + date.getDate();
+      console.log("gg" + restdate);
       fetch(global.HostURL + '/api/Restaurant', {
         method: 'POST',
         headers: {
@@ -63,17 +66,19 @@ export default class Register extends Component{
         body:JSON.stringify({
           User_id : item.id,
           Rest_name : this.state.name,
+          Rest_category: this.state.category,
           Rest_Password : this.state.password1,
           Rest_email : this.state.email,
           Rest_phno : this.state.phone,
+          Rest_state: this.state.state,
           Rest_township : this.state.township,
           Rest_lat : this.state.lat,
           Rest_long : this.state.long,
-          Rest_created_date : date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),
+          Rest_created_date : restdate,
           Rest_coin:0,
           Rest_special_coin:0,
           Rest_coin_purchased:0,
-          Rest_location: this.state.location
+          Rest_location: this.state.display_name
         }),
       }).then((response) => response.json())
         .then((responsejson)=>{
@@ -145,6 +150,11 @@ export default class Register extends Component{
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
+      this.setState({township:responseJson.address.town});
+      this.setState({state:responseJson.address.state});
+      this.setState({display_name:responseJson.display_name});
+      this.setState({lat:responseJson.lat});
+      this.setState({long:responseJson.lon});
     })
     .catch((error) => {
       console.log("address failed");
@@ -176,46 +186,50 @@ export default class Register extends Component{
             <Row>
               <Col style={{width:100}}>
                 <Button onPress={this._pickImage} transparent style={{alignSelf:'center',width:100, height:100, borderWidth: 1, borderColor:'black'}}>
-                  
                   <Image style={{ height: 100, width:100, flex: 1 }} source={{uri : this.state.profilepic}} />
                 </Button>
               </Col>
               <Col>
                 <Item  >
-                  <Icon active name='ios-contact' />
+                  <MaterialCommunityIcons size={30} name='account' />
                   <Input onChangeText={(value) => this.setState({name:value})} placeholder="Enter Name"/>
                 </Item>
                 <Item >
-                  <Icon active name='ios-compass' />
-                  <Input onChangeText={(value) => this.setState({township:value})} placeholder="Enter Township"/>
+                  <MaterialCommunityIcons size={30} name='food' />
+                  <Input onChangeText={(value) => this.setState({category:value})} placeholder="Enter Food Category"/>
                 </Item>
               </Col>
             </Row>
             <Row>
               <Col>
                 <Item>
-                  <Icon active name='md-key' />
+                  <MaterialCommunityIcons size={25}name='key-variant' />
                   <Input onChangeText={(value) => this.setState({password1:value})} placeholder="Enter password"/>
                 </Item>
                 <Item>
-                  <Icon active name='md-key' />
+                  <MaterialCommunityIcons size={25} name='key-variant' />
                   <Input onChangeText={(value) => this.setState({password2:value})} placeholder="Confirm passowrd"/>
                 </Item>
                 <Item >
-                  <Icon active name='ios-mail' />
+                  <MaterialCommunityIcons size={30} name='email-outline' />
                   <Input onChangeText={(value) => this.setState({email:value})} placeholder="Enter email address"/>
                 </Item>
                 <Item >
-                  <Icon active name='ios-call' />
-                  <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number"/>
+                  <MaterialCommunityIcons size={30} name='phone-in-talk' />
+                  <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number" />
                 </Item>
                 <Item>
-                  <Textarea rowSpan={3} onChangeText={(value) => this.setState({location:value})} placeholder="Press the icon to choose your address" style={{padding:10}} />
-                  <Right>
-                    <Button onPress={()=>{this.setMapModalVisible(!this.state.modalVisible);}} transparent style={{height:70}}>
-                      <MaterialIcons name="add-location" size={50} color="#4cd58a"/>
+                  <TouchableOpacity style={{width:'100%'}} onPress={() => this.setMapModalVisible(!this.state.modalVisible)}>
+                    <Textarea rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, marginBottom:10}} onChangeText={(value) => this.setState({location:value})}  placeholder="Address"  />
+                  </TouchableOpacity>
+                </Item>
+                <Item>
+                <View style={{width:'100%'}}>
+                    <Button iconLeft block success onPress={()=>this.signup()}>
+                        <Text>Next</Text>
+                        <Icon name="ios-arrow-forward" size={30} color="#4cd58a" />
                     </Button>
-                  </Right>
+                </View>
                 </Item>
                 <Modal
                 animationType="slide"
@@ -240,7 +254,7 @@ export default class Register extends Component{
                           draggable
                           coordinate={this.state.location.coords}
                           title="My Location"
-                          description="Location description"
+                          description="Hold and drag icon to move the location marker"
                           onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
                           />
                           </MapView>
@@ -249,19 +263,8 @@ export default class Register extends Component{
                 </Modal>
               </Col>
             </Row>
-            <Row>
-              <Col style={{padding:10}}>
-                <Button full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 150}} >
-                  <Text> Cancel </Text>
-                </Button>
-              </Col>
-              <Col style={{padding:10}}>
-              <Button full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 150}} onPress={this.signup.bind(this)}>
-                  <Text>Sign Up </Text>
-                </Button>
-              </Col>
-            </Row>
           </Form>
+
           </Card>
           </Content>
         </Grid>
@@ -293,7 +296,7 @@ const styles = StyleSheet.create({
   },
   responsiveMapBox: {
     width: wp('84.5%'),
-    height: hp('43%'),
+    height: hp('70%'),
     backgroundColor: '#4cd58a',
     borderWidth: 1,
     borderTopLeftRadius: 5,

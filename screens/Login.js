@@ -142,7 +142,7 @@ async DummyLogin(page){
     } catch (error) {
       console.log(error.message);
     }
-    if(item.id==null){
+    if(item==null){
       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
         "2071732326473547",
         {

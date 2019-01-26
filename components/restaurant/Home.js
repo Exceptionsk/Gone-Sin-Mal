@@ -16,6 +16,7 @@ export default class Home extends Component{
     modalVisible: false,
     phmodalVisible: false,
     emailmodalVisible: false,
+    tempCategory:'',
     tempPh:'',
     tempEmail:'',
     restaurant: [],
@@ -70,6 +71,18 @@ export default class Home extends Component{
     newrest.Rest_phno=this.state.tempPh;
     this.setState({restaurant:newrest});
  }
+ updatecategory(){
+   fetch(global.HostURL + '/api/updatecategory?id='+ this.state.restaurant.Rest_id + "&category="+ this.state.tempCategory, {
+     method: 'PUT',
+     headers: {
+       Accept: 'application/json',
+       'Content-Type': 'application/json',
+     }
+   });
+   let newrest = this.state.restaurant;
+   newrest.Rest_category=this.state.tempCategory;
+   this.setState({restaurant:newrest});
+}
  updateemail(){
    fetch(global.HostURL + '/api/updateemail?id='+ this.state.restaurant.Rest_id + "&email="+ this.state.tempEmail, {
      method: 'PUT',
@@ -101,7 +114,7 @@ export default class Home extends Component{
     });
 
   }
-  setaddressModalVisible(visible) {
+  setCategoryModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
   setphnumberModalVisible(visible) {
@@ -154,96 +167,105 @@ export default class Home extends Component{
           <Col>
           <View>
              <Card>
-                 <CardItem>
-                     <Left>
-                      <Icon name="ios-compass"/>
-                      <Text>{this.state.restaurant.Rest_location}</Text>
-                     </Left>
-                     <Right>
-                      <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}/>
-                     </Right>
-                     <Modal
-                      animationType="slide"
-                      transparent={true}
-                      onRequestClose={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}
-                      visible={this.state.modalVisible}>
-                      <View style={styles.modalcontainer}>
-                        <View style={styles.responsiveBox}>
-                            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
-                            <Right>
-                              <Button transparent onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}>
-                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                              </Button>
-                              </Right>
-                            </Header>
-                            <Textarea rowSpan={3} placeholder="Enter Address" style={{padding:10}} />
-                            <View style={{alignSelf:'center', paddingBottom: 5}}>
-                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setaddressModalVisible(!this.state.modalVisible);}}/>
-                            </View>
-                        </View>
-                      </View>
-                    </Modal>
-                 </CardItem>
-                 <CardItem>
+               <CardItem>
                    <Left>
-                    <Icon name="ios-call"/>
-                    <Text>{this.state.restaurant.Rest_phno}</Text>
+                    <MaterialCommunityIcons size={30} name='food' />
+                    <Text>{this.state.restaurant.Rest_category}</Text>
                    </Left>
                    <Right>
-                    <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
+                    <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setCategoryModalVisible(!this.state.modalVisible);}}/>
                    </Right>
                    <Modal
-                      animationType="slide"
-                      transparent={true}
-                      onRequestClose={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}
-                      visible={this.state.phmodalVisible}>
-                      <View style={styles.modalcontainer}>
-                        <View style={styles.responsiveBoxphnumber}>
-                            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
-                            <Right>
-                              <Button transparent onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}>
-                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                              </Button>
-                              </Right>
-                            </Header>
-                            <Input onChangeText={(ph) => this.setState({tempPh:ph})} keyboardType='number-pad' placeholder="Enter phone number"/>
-                            <View style={{alignSelf:'center'}}>
-                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);this.updatephone()}}/>
-                            </View>
-                        </View>
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={()=>{this.setCategoryModalVisible(!this.state.modalVisible);}}
+                    visible={this.state.modalVisible}>
+                    <View style={styles.modalcontainer}>
+                      <View style={styles.responsiveBox}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Right>
+                            <Button transparent onPress={()=>{this.setCategoryModalVisible(!this.state.modalVisible);}}>
+                              <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                            </Button>
+                            </Right>
+                          </Header>
+                          <Input onChangeText={(category)=>this.setState({tempCategory:category})} placeholder="Enter category"/>
+                          <View style={{alignSelf:'center', paddingBottom: 5}}>
+                            <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setCategoryModalVisible(!this.state.modalVisible);this.updatecategory();}}/>
+                          </View>
                       </View>
-                    </Modal>
-                 </CardItem>
-                 <CardItem>
-                   <Left>
-                    <Icon name="md-mail"/>
-                    <Text>{this.state.restaurant.Rest_email}</Text>
-                   </Left>
-                   <Right>
-                    <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}} />
-                   </Right>
-                   <Modal
-                      animationType="slide"
-                      transparent={true}
-                      onRequestClose={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}
-                      visible={this.state.emailmodalVisible}>
-                      <View style={styles.modalcontainer}>
-                        <View style={styles.responsiveBoxphnumber}>
-                            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
-                            <Right>
-                              <Button transparent onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}>
-                                <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                              </Button>
-                              </Right>
-                            </Header>
-                            <Input onChangeText={(email)=>this.setState({tempEmail:email})} keyboardType='email-address' placeholder="Enter email address"/>
-                            <View style={{alignSelf:'center'}}>
-                                <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);this.updateemail()}}/>
-                            </View>
-                        </View>
+                    </View>
+                  </Modal>
+               </CardItem>
+               <CardItem>
+                 <Left>
+                  <Icon name="md-mail"/>
+                  <Text>{this.state.restaurant.Rest_email}</Text>
+                 </Left>
+                 <Right>
+                  <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}} />
+                 </Right>
+                 <Modal
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}
+                    visible={this.state.emailmodalVisible}>
+                    <View style={styles.modalcontainer}>
+                      <View style={styles.responsiveBoxphnumber}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Right>
+                            <Button transparent onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);}}>
+                              <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                            </Button>
+                            </Right>
+                          </Header>
+                          <Input onChangeText={(email)=>this.setState({tempEmail:email})} keyboardType='email-address' placeholder="Enter email address"/>
+                          <View style={{alignSelf:'center'}}>
+                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);this.updateemail()}}/>
+                          </View>
                       </View>
-                    </Modal>
-                 </CardItem>
+                    </View>
+                  </Modal>
+               </CardItem>
+               <CardItem>
+                 <Left>
+                  <Icon name="ios-call"/>
+                  <Text>{this.state.restaurant.Rest_phno}</Text>
+                 </Left>
+                 <Right>
+                  <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}/>
+                 </Right>
+                 <Modal
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}
+                    visible={this.state.phmodalVisible}>
+                    <View style={styles.modalcontainer}>
+                      <View style={styles.responsiveBoxphnumber}>
+                          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0, marginBottom: 8}}>
+                          <Right>
+                            <Button transparent onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);}}>
+                              <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                            </Button>
+                            </Right>
+                          </Header>
+                          <Input onChangeText={(ph) => this.setState({tempPh:ph})} keyboardType='number-pad' placeholder="Enter phone number"/>
+                          <View style={{alignSelf:'center'}}>
+                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);this.updatephone()}}/>
+                          </View>
+                      </View>
+                    </View>
+                  </Modal>
+               </CardItem>
+               <CardItem>
+                 <Left>
+                  <Icon name="ios-compass"/>
+                  <Text>{this.state.restaurant.Rest_location}</Text>
+                 </Left>
+                 <Right>
+                  <Icon name="md-create" style={{ color: '#ED4A6A' }}  />
+                 </Right>
+               </CardItem>
              </Card>
           </View>
           </Col>

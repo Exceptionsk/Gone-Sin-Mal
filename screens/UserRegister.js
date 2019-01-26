@@ -121,7 +121,7 @@ UpdateUserInfo(){
                 <View>
                     <Button iconLeft block success onPress={()=>this.UpdateUserInfo()}>
                         <Text>Next</Text>
-                        <MaterialCommunityIcons name="check" size={30} color="#4cd58a" />
+                        <Icon name="ios-arrow-forward" size={30} color="#4cd58a" />
                     </Button>
                 </View>
             </View>
