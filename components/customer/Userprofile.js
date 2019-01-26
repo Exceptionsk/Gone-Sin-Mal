@@ -11,6 +11,35 @@ import { Ionicons } from '@expo/vector-icons';
 import NavigationService from '../../NavigationService'
 import { AsyncStorage } from "react-native";
   export default class HelloWorld extends Component {
+    state={
+      UserInfo:[],
+    }
+    async logout(){
+      const retrievedItem =  await AsyncStorage.getItem('token');
+      NavigationService.navigate('Login');
+      fetch('https://graph.facebook.com/'+ global.Profile.id+'/permissions', {
+        method: '‘DELETE’',
+
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+
+        }).catch((error)=>{
+           console.log(error);
+        });
+
+    }
+    componentDidMount(){
+      fetch(global.HostURL + '/api/User/' + global.Profile.id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({UserInfo:responseJson});
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.log("user failed");
+      });
+    }
+
     render() {
       return (
         <Container>
@@ -34,22 +63,13 @@ import { AsyncStorage } from "react-native";
                 <Row>
                   <Col style={{alignItems:'center', backgroundColor:'white'}}>
                   <Button transparent>
-                    <Text style={{ paddingBottom:5}}>User Location: San Chaung Township  </Text>
+                    <Text style={{ paddingBottom:5}}>User Location: {this.state.UserInfo.State}  </Text>
                       <Icon name='ios-create' />
                   </Button>
-                    <Text style={{paddingBottom:5}}>Avaliable Coin: 1,866</Text>
-                    <Text style={{paddingBottom:5}}>Coin Capacity: 1000</Text>
-                    <Text style={{paddingBottom:5}}>Exceeded Coin: 50 (expire in: 23:34:07)</Text>
-                  </Col>
-                </Row>
-            </CardItem>
-            <CardItem>
-                <Row>
-                  <Col style={{alignItems: 'center',backgroundColor:'white',paddingBottom:10}}>
-                    <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={()=>{NavigationService.navigate('Login')}}>
-                      <Ionicons name="ios-log-out" size={30} color="white" />
-                      <Text> Log Out! </Text>
-                    </Button>
+                    <Text style={{paddingBottom:5}}>Avaliable Coin: {this.state.UserInfo.Coin}</Text>
+                    <Text style={{paddingBottom:5}}>Coin Capacity: {this.state.UserInfo.Capacity}</Text>
+                    <Text style={{paddingBottom:5}}>Gone Sin Restaurant: {this.state.UserInfo.Visited}</Text>
+                    <Text style={{paddingBottom:5}}>Exceeded Coin: {this.state.UserInfo.Exceed} (expire in: {this.state.UserInfo.ExpireIn}) days</Text>
                   </Col>
                 </Row>
             </CardItem>

@@ -8,7 +8,8 @@ export default class BarcodeScannerExample extends React.Component {
   state = {
     hasCameraPermission: null,
     isSwitchOn: false,
-    amount:0
+    amount:0,
+    CurrentState:'Get Coin from Customer',
   }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -63,7 +64,14 @@ BeginTransaction(){
       )
     });
 }
-
+changeText(value){
+  this.setState({isSwitchOn: value});
+  if(value){
+    this.setState({CurrentState:'Give Coins to Customer'});
+  }else{
+    this.setState({CurrentState:'Get Coin from Customer'})
+  }
+}
 handleAmount(e){
   this.setState({amount:e.nativeEvent.text})
 }
@@ -79,15 +87,13 @@ handleAmount(e){
     return (
       <Container>
         <Header style = {{alignItems:'center',height: 70,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
-            <Body style={{paddingLeft:300}}>
-            {/* <Badge style={{ backgroundColor: 'black' }}>
-                  <Text style={{ color: 'white' }}>{String(this.state.isSwitchOn)}</Text>
-            </Badge> */}
-            </Body>
+            <Left>
+              <Text style={{color:'white', width:'100%'}}>{this.state.CurrentState}</Text>
+            </Left>
             <Right>
               <View style={{justifyContent: 'center'}}>
                 <Switch
-                  onValueChange={isSwitchOn => this.setState({isSwitchOn})}
+                  onValueChange={isSwitchOn => this.changeText(isSwitchOn)}
                   value={this.state.isSwitchOn}
                 />
               </View>

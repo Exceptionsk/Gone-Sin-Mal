@@ -135,7 +135,7 @@ async DummyLogin(page){
  }
 
   async logInFB() {
-    var item = "";
+    var item = null;
     try {
       const retrievedItem =  await AsyncStorage.getItem('profile');
       item = JSON.parse(retrievedItem);
@@ -150,6 +150,7 @@ async DummyLogin(page){
         }
       );
       if (type === 'success') {
+        console.log(type+"gg");
         const response = await fetch(
           `https://graph.facebook.com/me?access_token=${token}&fields=id,name` );
           const json = await response.json()
