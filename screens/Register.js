@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage, Modal, Platform, TouchableOpacity} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { ImagePicker,Permissions,Constants, MapView, Location, Marker } from 'expo';
-import { Container,Textarea, Left, Right, Form, Label, Input, Header, H1,H2,H3, H4,Title, Item, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
+import { Container,Textarea, Left, Right, Label, Input, Header, H1,H2,H3, H4,Title, Item, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import { MaterialCommunityIcons,Ionicons,MaterialIcons } from '@expo/vector-icons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 export default class Register extends Component{
   static navigationOptions = {
@@ -163,7 +164,63 @@ export default class Register extends Component{
     this.setState({modalVisible: visible});
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        user: {},
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+    this.handleRepeatPassword = this.handleRepeatPassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+}
+
+componentWillMount() {
+    // custom rule will have name 'isPasswordMatch'
+    Form.addValidationRule('isPasswordMatch', (value) => {
+        if (value !== this.state.user.password) {
+            return false;
+        }
+        return true;
+    });
+}
+handleChange(event) {
+  const name = event.nativeEvent.text;
+  this.setState({ name });
+}
+handleChange(event) {
+  const email = event.nativeEvent.text;
+  this.setState({ email });
+}
+
+handlePassword(event) {
+    const { user } = this.state;
+    user.password = event.nativeEvent.text;
+    this.setState({ user });
+}
+
+handleRepeatPassword(event) {
+    const { user } = this.state;
+    user.repeatPassword = event.nativeEvent.text;
+    this.setState({ user });
+}
+
+submit() {
+  alert(`Registered!`);
+}
+
+handleSubmit() {
+    this.refs.form.submit();
+}
+
+
   render(){
+    const { name } = this.state;
+    const { category } = this.state;
+    const { user } = this.state;
+    const { email } = this.state;
+    const { phone } = this.state;
     return(
       <Container>
         <Header style = {{height: 70,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
@@ -180,7 +237,7 @@ export default class Register extends Component{
         <Grid>
         <Content>
           <Card style={{padding:10}}>
-          <Form>
+          <Form ref="form" onSubmit={()=>this.signup()}>
             <Row>
               <Col style={{width:100}}>
                 <Button onPress={this._pickImage} transparent style={{alignSelf:'center',width:100, height:100, borderWidth: 1, borderColor:'black'}}>
@@ -190,11 +247,35 @@ export default class Register extends Component{
               <Col>
                 <Item  >
                   <MaterialCommunityIcons size={30} name='account' />
-                  <Input onChangeText={(value) => this.setState({name:value})} placeholder="Enter Name"/>
+                  <TextValidator
+                    name="name"
+                    label="name"
+                    validators={['required']}
+                    errorMessages={[ 'This field is required']}
+                    errorStyle={{ container: { top: 0, left: 100,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    placeholder="Enter the restaurant name"
+                    type="text"
+                    keyboardType="email-address"
+                    value={name}
+                    onChangeText={(value) => this.setState({name:value})}
+                />
+                  {/* <Input onChangeText={(value) => this.setState({name:value})} placeholder="Enter Name"/> */}
                 </Item>
                 <Item >
                   <MaterialCommunityIcons size={30} name='food' />
-                  <Input onChangeText={(value) => this.setState({category:value})} placeholder="Enter Food Category"/>
+                  <TextValidator
+                    name="category"
+                    label="category"
+                    validators={['required']}
+                    errorMessages={[ 'This field is required']}
+                    errorStyle={{ container: { top: 0, left: 100,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    placeholder="Enter the restaurant name"
+                    type="text"
+                    keyboardType="email-address"
+                    value={category}
+                    onChangeText={(value) => this.setState({category:value})}
+                />
+                  {/* <Input onChangeText={(value) => this.setState({category:value})} placeholder="Enter Food Category"/> */}
                 </Item>
               </Col>
             </Row>
@@ -202,19 +283,69 @@ export default class Register extends Component{
               <Col>
                 <Item>
                   <MaterialCommunityIcons size={25}name='key-variant' />
-                  <Input onChangeText={(value) => this.setState({password1:value})} placeholder="Enter password"/>
+                  <TextValidator
+                    name="password"
+                    label="text"
+                    validators={['required']}
+                    errorMessages={['This field is required']}
+                    errorStyle={{ container: { top: 0, left: 200,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    type="text"
+                    placeholder="Enter your password"
+                    value={user.password}
+                    onChange={this.handlePassword}
+                    style={{width:200}}
+                />
+                  {/* <Input onChangeText={(value) => this.setState({password1:value})} placeholder="Enter password"/> */}
                 </Item>
                 <Item>
                   <MaterialCommunityIcons size={25} name='key-variant' />
-                  <Input onChangeText={(value) => this.setState({password2:value})} placeholder="Confirm passowrd"/>
+                  <TextValidator
+                    name="repeatPassword"
+                    label="text"
+                    validators={['isPasswordMatch','required']}
+                    errorMessages={['Password mismatch','This field is required']}
+                    errorStyle={{ container: { top: 0, left: 200,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    type="text"
+                    placeholder="Confirm your password"
+                    value={user.repeatPassword}
+                    onChange={this.handleRepeatPassword}
+                    style={{width:200}}
+                />
+                  {/* <Input onChangeText={(value) => this.setState({password2:value})} placeholder="Confirm passowrd"/> */}
                 </Item>
                 <Item >
                   <MaterialCommunityIcons size={30} name='email-outline' />
-                  <Input onChangeText={(value) => this.setState({email:value})} placeholder="Enter email address"/>
+                  <TextValidator
+                    name="email"
+                    label="email"
+                    validators={['required', 'isEmail']}
+                    errorMessages={["This field is required", "Email invalid"]}
+                    errorStyle={{ container: { top: 0, left: 200,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    placeholder="Enter restaurant's email"
+                    type="text"
+                    keyboardType="email-address"
+                    value={email}
+                    onChange={this.handleChange}
+                    style={{width:200}}
+                />
+                  {/* <Input onChangeText={(value) => this.setState({email:value})} placeholder="Enter email address"/> */}
                 </Item>
                 <Item >
                   <MaterialCommunityIcons size={30} name='phone-in-talk' />
-                  <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number" />
+                  <TextValidator
+                    name="phone"
+                    label="phone"
+                    validators={['required','minNumber:25555555', 'maxNumber:255555555']}
+                    errorMessages={[ 'This field is required','min num exceeded', 'max num exceeded']}
+                    errorStyle={{ container: { top: 0, left: 200,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    placeholder="Enter the ph number"
+                    type="text"
+                    keyboardType="numeric"
+                    value={phone}
+                    onChangeText={(value) => this.setState({phone:value})}
+                    style={{width:200}}
+                />
+                  {/* <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number" /> */}
                 </Item>
                 <Item>
                   <TouchableOpacity style={{width:'100%'}} onPress={() => this.setMapModalVisible(!this.state.modalVisible)}>
@@ -223,7 +354,7 @@ export default class Register extends Component{
                 </Item>
                 <Item>
                 <View style={{width:'100%'}}>
-                    <Button iconLeft block success onPress={()=>this.signup()}>
+                    <Button iconLeft block success onPress={this.handleSubmit}>
                         <Text>Next</Text>
                         <Icon name="ios-arrow-forward" size={30} color="#4cd58a" />
                     </Button>
@@ -243,7 +374,7 @@ export default class Register extends Component{
                                 </Button>
                               </Right>
                           </Header>
-                          <MapView
+                          {/* <MapView
                               style={{ flex: 1 }}
                               region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
                               zoomEnabled={true}
@@ -255,7 +386,7 @@ export default class Register extends Component{
                           description="Hold and drag icon to move the location marker"
                           onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
                           />
-                          </MapView>
+                          </MapView> */}
                       </View>
                   </View>
                 </Modal>

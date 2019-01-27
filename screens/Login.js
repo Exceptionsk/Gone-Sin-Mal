@@ -128,7 +128,9 @@ async DummyLogin(page){
          this.props.navigation.navigate('RestHome')
        }else if(responsejson.User_type=="new"){
          this.props.navigation.navigate('AccountType')
-       }
+       }else if(responsejson.User_type==null){
+        this.props.navigation.navigate('AccountType')
+      }
      }).catch((error)=>{
         console.log(error);
      });
