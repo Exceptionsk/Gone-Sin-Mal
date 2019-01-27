@@ -97,7 +97,9 @@ export default class Login extends Component {
         console.log("toggle failed");
       });
     }
-
+    getcoordinate(){
+      return {}
+    }
   getfav(){
     const { navigation } = this.props;
     return fetch(global.HostURL + '/api/Favorite/?User_id='+ global.Profile.id+ '&Rest_id=' + navigation.getParam('Rest_id', '1'))
@@ -164,8 +166,7 @@ export default class Login extends Component {
                                 </Col>
                                 <Col style={{backgroundColor:'white'}}>
                                     <H2>{this.state.restaurant.Rest_name}</H2>
-                                    <H2 style={{color:'#404040'}}>Catagory: {this.state.restaurant.Rest_id}</H2>
-                                    <H2>{this.state.restaurant.Rest_long}</H2>
+                                    <H2 style={{color:'#404040'}}>Catagory: {this.state.restaurant.Rest_category}</H2>
                                 </Col>
                             </Row>
                             </CardItem>

@@ -70,7 +70,7 @@ export default class GoneSin extends Component {
                   <Card style={{flex: 0, marginLeft: 12, marginRight: 12, marginBottom:0}}>
                                 <CardItem>
                                 <Left>
-                                    <Thumbnail style={{borderWidth:1, borderColor: '#696969', borderRadius: 3}} square source={{uri : 'https://myanimelist.cdn-dena.com/images/anime/1536/93863l.jpg'}} />
+                                    <Thumbnail style={{borderWidth:1, borderColor: '#696969', borderRadius: 3}} square source={{uri : global.HostURL + '/api/restaurant/pic?id=' + item.Rest_id}} />
                                     <Body>
                                     <Text>KFC</Text>
                                     <Text note>Catagory-FastFood</Text>

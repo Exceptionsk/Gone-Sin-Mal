@@ -12,6 +12,19 @@ export default class Home extends Component{
     this.getInfo();
     this.setState({profilepic:global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id});
   }
+
+  updateState(state,location,lat,lon){
+    fetch(global.HostURL+ '/api/restaurant/state?user_id='+ this.state.restaurant.Rest_id+'&state='+ state + '&location=' + location + '&lat='+ lat + '&lon='+ lon, {
+      method: 'POST',
+
+    }).then((response) => response.json())
+      .then((responsejson)=>{
+
+    }).catch((error)=>{
+        console.log(error);
+    });
+  }
+
   state = {
     mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
     locationResult: null,
@@ -155,8 +168,11 @@ logAddress(lat, long){
   fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
   .then((response) => response.json())
   .then((responseJson) => {
-    this.setState({restaddress:responseJson.address});
+    let newrest = this.state.restaurant;
+    newrest.Rest_location=responseJson.display_name
+    this.setState({restaurant:newrest});
     console.log({responseJson});
+    this.updateState(responseJson.address.state,responseJson.display_name,lat,long);
   })
   .catch((error) => {
     console.log("address failed");
@@ -345,7 +361,7 @@ logAddress(lat, long){
                               onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
                             />
                             </MapView>
-                          </View> 
+                          </View>
                   </Modal>
                </CardItem>
              </Card>

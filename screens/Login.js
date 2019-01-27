@@ -189,7 +189,8 @@ async DummyLogin(page){
 
 
 handleType(e){
-  global.HostURL=e.nativeEvent.text;
+  global.HostURL='http://'+e.nativeEvent.text+':2940';
+  console.log(global.HostURL);
 }
 
   render(){

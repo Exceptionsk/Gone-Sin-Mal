@@ -13,6 +13,32 @@ import { Constants, MapView, Location, Permissions, Marker } from 'expo';
 import { AsyncStorage } from "react-native";
 
   export default class HelloWorld extends Component {
+    async logout(){
+      const retrievedItem =  await AsyncStorage.getItem('token');
+      NavigationService.navigate('Login');
+      fetch('https://graph.facebook.com/'+ global.Profile.id+'/permissions', {
+        method: 'DELETE',
+
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+
+        }).catch((error)=>{
+           console.log(error);
+        });
+
+    }
+
+    updateState(state){
+      fetch(global.HostURL+ '/api/user/state?user_id='+ global.Profile.id+'&state='+ state, {
+        method: 'POST',
+
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+
+      }).catch((error)=>{
+          console.log(error);
+      });
+    }
 
     state = {
       profilemapmodalVisible: false,
@@ -23,9 +49,18 @@ import { AsyncStorage } from "react-native";
       latitude: null,
       longitude: null,
 
-      User_state:'',
+      UserInfo:[],
     };
     componentDidMount() {
+      fetch(global.HostURL + '/api/User/' + global.Profile.id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({UserInfo:responseJson});
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.log("user failed");
+      });
       if (Platform.OS === 'android' && !Constants.isDevice) {
         this.setState({
           errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -64,8 +99,11 @@ import { AsyncStorage } from "react-native";
     fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
     .then((response) => response.json())
     .then((responseJson) => {
-      this.setState({User_state:responseJson.address.state});
-      console.log(this.state.User_state);
+      let newinfo = this.state.UserInfo;
+      newinfo.State=responseJson.address.state;
+      this.setState({UserInfo:newinfo});
+      console.log(this.state.UserInfo);
+      this.updateState(responseJson.address.state);
     })
     .catch((error) => {
       console.log("address failed");
@@ -88,7 +126,7 @@ import { AsyncStorage } from "react-native";
                 <Col style={{height:230}}>
                         <View style={styles.container}>
                           <QRCode
-                            value={global.Profile.id}
+                            value={global.Profile.id+";false;0"}
                             size={200}
                             bgColor='purple'
                             fgColor='white'/>
@@ -100,7 +138,7 @@ import { AsyncStorage } from "react-native";
                 <Row>
                   <Col style={{alignItems:'center', backgroundColor:'white'}}>
                   <Button transparent>
-                    <Text style={{ paddingBottom:5}}>User's State: San Chaung Township  </Text>
+                    <Text style={{ paddingBottom:5}}>User's State: {this.state.UserInfo.State}  </Text>
                       <Icon name='ios-create' onPress={() => {this.setprofilemapModalVisible(true);}}/>
                   </Button>
                     <Text style={{paddingBottom:5}}>Avaliable Coin: {this.state.UserInfo.Coin}</Text>

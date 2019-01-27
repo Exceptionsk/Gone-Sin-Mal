@@ -17,6 +17,11 @@ export default class BarcodeScannerExample extends React.Component {
     }
 
 BeginTransaction(){
+  var data=this.state.data.split(';')[0].trim();
+  var special=this.state.data.split(';')[1].trim();
+  var promo= this.state.data.split(';')[2].trim();
+  console.log(data);
+  console.log(special);
     fetch(global.HostURL + '/api/restaurant/qr', {
       method: 'POST',
       headers: {
@@ -25,9 +30,11 @@ BeginTransaction(){
       },
       body:JSON.stringify({
         Rest_id : global.Profile.id,
-        User_id: this.state.data,
+        User_id: data,
         Amount: this.state.amount,
         Take: this.state.isSwitchOn,
+        Special: special,
+        PromoId:promo,
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
