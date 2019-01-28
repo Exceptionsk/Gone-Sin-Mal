@@ -30,7 +30,7 @@ export default class Register extends Component{
     latitude: null,
     longitude: null,
 
-    modalVisible: false,
+    modalmapVisible: false,
   }
   _pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -68,7 +68,7 @@ export default class Register extends Component{
           User_id : item.id,
           Rest_name : this.state.name,
           Rest_category: this.state.category,
-          Rest_Password : this.state.password1,
+          Rest_Password : this.state.user.password,
           Rest_email : this.state.email,
           Rest_phno : this.state.phone,
           Rest_state: this.state.state,
@@ -128,6 +128,7 @@ export default class Register extends Component{
     }
   }
 
+
   _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
   };
@@ -145,6 +146,8 @@ export default class Register extends Component{
    this.setState({ locationResult: JSON.stringify(location), location, });
  };
 
+
+
   logAddress(lat, long){
     fetch('https://us1.locationiq.com/v1/reverse.php?key=84302eaf26a66d&lat='+ lat +'&lon='+ long +'&format=json')
     .then((response) => response.json())
@@ -160,8 +163,8 @@ export default class Register extends Component{
     });
   }
 
-  setMapModalVisible(visible) {
-    this.setState({modalVisible: visible});
+  setMapmapModalVisible(visible) {
+    this.setState({modalmapVisible: visible});
   }
 
   constructor(props) {
@@ -198,6 +201,7 @@ handlePassword(event) {
     const { user } = this.state;
     user.password = event.nativeEvent.text;
     this.setState({ user });
+    // alert('${user.password}`);
 }
 
 handleRepeatPassword(event) {
@@ -269,7 +273,7 @@ handleSubmit() {
                     validators={['required']}
                     errorMessages={[ 'This field is required']}
                     errorStyle={{ container: { top: 0, left: 100,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
-                    placeholder="Enter the restaurant name"
+                    placeholder="Enter the restaurant catagory"
                     type="text"
                     keyboardType="email-address"
                     value={category}
@@ -293,6 +297,7 @@ handleSubmit() {
                     placeholder="Enter your password"
                     value={user.password}
                     onChange={this.handlePassword}
+                    // onChangeText={(value) => this.setState({user:value})}
                     style={{width:200}}
                 />
                   {/* <Input onChangeText={(value) => this.setState({password1:value})} placeholder="Enter password"/> */}
@@ -335,8 +340,8 @@ handleSubmit() {
                   <TextValidator
                     name="phone"
                     label="phone"
-                    validators={['required','minNumber:25555555', 'maxNumber:255555555']}
-                    errorMessages={[ 'This field is required','min num exceeded', 'max num exceeded']}
+                    validators={['required','minNumber:25555555', 'maxNumber:255555555','isNumber']}
+                    errorMessages={[ 'This field is required','min num exceeded', 'max num exceeded','Input value must be number only']}
                     errorStyle={{ container: { top: 0, left: 200,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
                     placeholder="Enter the ph number"
                     type="text"
@@ -348,8 +353,8 @@ handleSubmit() {
                   {/* <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number" /> */}
                 </Item>
                 <Item>
-                  <TouchableOpacity style={{width:'100%'}} onPress={() => this.setMapModalVisible(!this.state.modalVisible)}>
-                    <Textarea rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, marginBottom:10}} onChangeText={(value) => this.setState({location:value})}  placeholder="Address"  />
+                  <TouchableOpacity style={{width:'100%'}} onPress={() => this.setMapmapModalVisible(!this.state.modalmapVisible)}>
+                    <Textarea pointerEvents="none" rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, marginBottom:10}} onChangeText={(value) => this.setState({location:value})}  placeholder="Address"  />
                   </TouchableOpacity>
                 </Item>
                 <Item>
@@ -363,30 +368,30 @@ handleSubmit() {
                 <Modal
                 animationType="slide"
                 transparent={true}
-                onRequestClose={()=>{this.setMapModalVisible(!this.state.modalVisible);}}
-                visible={this.state.modalVisible}>
+                onRequestClose={()=>{this.setMapmapModalVisible(!this.state.modalmapVisible);}}
+                visible={this.state.modalmapVisible}>
                   <View style={styles.Mapmodalcontainer}>
                       <View style={styles.responsiveMapBox}>
                           <Header style = {{height: hp('5%'),backgroundColor: '#4cd58a', paddingBottom: 0, paddingTop: 0, marginBottom: 8, borderBottomWidth:0}}>
                               <Right>
-                                <Button transparent onPress={()=>{this.setMapModalVisible(!this.state.modalVisible);}}>
+                                <Button transparent onPress={()=>{this.setMapmapModalVisible(!this.state.modalmapVisible);}}>
                                   <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
                                 </Button>
                               </Right>
                           </Header>
                           {/* <MapView
-                              style={{ flex: 1 }}
-                              region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
-                              zoomEnabled={true}
-                          >
-                          <MapView.Marker
-                          draggable
-                          coordinate={this.state.location.coords}
-                          title="My Location"
-                          description="Hold and drag icon to move the location marker"
-                          onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
-                          />
-                          </MapView> */}
+          style={{ flex: 1 }}
+          region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+          zoomEnabled={true}
+        >
+    <MapView.Marker
+      draggable
+      coordinate={this.state.location.coords}
+      title="My Marker"
+      description="Some description"
+      onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
+    />
+        </MapView> */}
                       </View>
                   </View>
                 </Modal>

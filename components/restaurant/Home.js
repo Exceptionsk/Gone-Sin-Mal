@@ -6,6 +6,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import { ImagePicker,Permissions, Constants, MapView, Location, Marker } from 'expo';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 export default class Home extends Component{
   componentWillMount(){
@@ -192,8 +193,34 @@ logAddress(lat, long){
   setmapModalVisible(visible) {
     this.setState({mapmodalVisible: visible});
   }
+
+
+
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+      const email = event.nativeEvent.text;
+      this.setState({ email });
+  }
+
+  submit() {
+      // your submit logic
+  }
+
+  handleSubmit() {
+      this.refs.form.submit();
+  }
   render(){
     let { image } = this.state;
+
+    const { tempCategory } = this.state;
+    const { tempEmail } = this.state;
+    const { tempPh } = this.state;
     return(
       <Container>
       <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
@@ -259,10 +286,24 @@ logAddress(lat, long){
                             </Button>
                             </Right>
                           </Header>
-                          <Input onChangeText={(category)=>this.setState({tempCategory:category})} placeholder="Enter category"/>
+                          <Form
+                              ref="form" style={{height: hp('16.5%')}}
+                              onSubmit={()=>{this.setCategoryModalVisible(!this.state.modalVisible);this.updatecategory();}}
+                          >
+                          <TextValidator style = {styles.input}
+                          name="tempCategory"
+                          label="tempCategory"
+                          validators={['required']}
+                          errorMessages={[ 'This field is required']}
+                          errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                          type="text"
+                          keyboardType="default"
+                          value={tempCategory} 
+                          onChangeText={(category)=>this.setState({tempCategory:category})} placeholder="Enter category"/>
                           <View style={{alignSelf:'center', paddingBottom: 5}}>
-                            <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setCategoryModalVisible(!this.state.modalVisible);this.updatecategory();}}/>
+                            <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={this.handleSubmit}/>
                           </View>
+                          </Form>
                       </View>
                     </View>
                   </Modal>
@@ -289,10 +330,24 @@ logAddress(lat, long){
                             </Button>
                             </Right>
                           </Header>
-                          <Input onChangeText={(email)=>this.setState({tempEmail:email})} keyboardType='email-address' placeholder="Enter email address"/>
+                          <Form
+                              ref="form" style={{height: hp('16.5%')}}
+                              onSubmit={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);this.updateemail()}}
+                          >
+                          <TextValidator style = {styles.input}
+                          name="tempEmail"
+                          label="tempEmail"
+                          validators={['required', 'isEmail']}
+                          errorMessages={[ 'This field is required', "Email invalid"]}
+                          errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                          type="text"
+                          keyboardType="email-address"
+                          value={tempEmail}  
+                          onChangeText={(email)=>this.setState({tempEmail:email})} placeholder="Enter email address"/>
                           <View style={{alignSelf:'center'}}>
-                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setemailModalVisible(!this.state.emailmodalVisible);this.updateemail()}}/>
+                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={this.handleSubmit}/>
                           </View>
+                          </Form>
                       </View>
                     </View>
                   </Modal>
@@ -319,10 +374,24 @@ logAddress(lat, long){
                             </Button>
                             </Right>
                           </Header>
-                          <Input onChangeText={(ph) => this.setState({tempPh:ph})} keyboardType='number-pad' placeholder="Enter phone number"/>
+                          <Form
+                              ref="form" style={{height: hp('16.5%')}}
+                              onSubmit={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);this.updatephone()}}
+                          >
+                          <TextValidator style = {styles.input}
+                          name="tempPh"
+                          label="tempPh"
+                          validators={['required','minNumber:25555550', 'maxNumber:255555550','isNumber']}
+                          errorMessages={[ 'This field is required','min num exceeded', 'max num exceeded','Input value must be number only']}
+                          errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                          type="text"
+                          keyboardType='number-pad'
+                          value={tempPh}   
+                          onChangeText={(ph) => this.setState({tempPh:ph})} placeholder="Enter phone number"/>
                           <View style={{alignSelf:'center'}}>
-                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.setphnumberModalVisible(!this.state.phmodalVisible);this.updatephone()}}/>
+                              <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={this.handleSubmit}/>
                           </View>
+                          </Form>
                       </View>
                     </View>
                   </Modal>
@@ -423,6 +492,14 @@ logAddress(lat, long){
 }
 
 const styles= StyleSheet.create({
+
+  input: {
+    // borderColor: '#ff7d21',
+    // borderRadius: 5,
+    // borderWidth: 1,
+    width:'100%',
+    height:40
+ },
   modalcontainer:{
     flex: 1,
     backgroundColor: 'transparent',

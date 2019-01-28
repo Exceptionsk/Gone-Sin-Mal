@@ -4,6 +4,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, List,Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import { BlurView } from 'expo';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 export default class Notification extends Component {
 
@@ -40,7 +41,7 @@ export default class Notification extends Component {
     Notification:[],
     Code:'',
     ID:'',
-    Cout:'',
+    Count:'',
   };
   componentWillMount(){
     this.retrieveItem('profile')
@@ -79,7 +80,16 @@ export default class Notification extends Component {
 
   TransactionBar(type){
     if(type=='transaction id'){
-      return <TextInput style = {styles.input}
+      return <TextValidator style = {{borderWidth:1, bordercolor:'black'}}
+            
+      name="Cout"
+      label="Cout"
+      validators={['required','isNumber']}
+      errorMessages={[ 'This field is required','Input value must be number only']}
+      errorStyle={{ container: { top: 0, left: 0,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+      type="text"
+      keyboardType="numeric"
+      value={Cout}
       underlineColorAndroid = "transparent"
       placeholder = " Enter transation ID"
       placeholderTextColor = "#3f3f3f"
@@ -101,8 +111,31 @@ export default class Notification extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+      const Cout = event.nativeEvent.text;
+      this.setState({ Cout });
+  }
+
+  submit() {
+      // your submit logic
+  }
+
+  handleSubmit() {
+      this.refs.form.submit();
+  }
+
   render() {
     let { image } = this.state;
+
+    const { Code } = this.state;
+    const { Count } = this.state;
     return(
     <Container>
       <Header style = {{ height: 60,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
@@ -140,15 +173,30 @@ export default class Notification extends Component {
           </Header>
           </View>
           <View style={{width: '80%', height: 150, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
-            <TextInput style = {styles.input}
+          <Form
+                ref="form"
+                onSubmit={this.sendTransactionID.bind(this)}
+            >
+            <TextValidator style = {styles.input}
+            
+            name="Code"
+            label="Code"
+            validators={['required','isNumber']}
+            errorMessages={[ 'This field is required','Input value must be number only']}
+            errorStyle={{ container: { top: 0, left: 80,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+            type="text"
+            keyboardType="number-pad"
+            value={Code}
+
             underlineColorAndroid = "transparent"
             placeholder = " Enter transation ID"
             placeholderTextColor = "#3f3f3f"
             autoCapitalize = "none"
             onChange = {this.handleCode.bind(this)}/>
              <Right style={{paddingTop:20}}>
-             <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this)} ><Text>{this.state.Code}</Text></Button>
+             <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>{this.state.Code}</Text></Button>
              </Right>
+          </Form>
           </View>
         </View>
       </Modal>
@@ -183,7 +231,20 @@ export default class Notification extends Component {
           </Header>
           </View>
           <View style={{width: '80%', height: 250, backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
-            <TextInput style = {styles.input}
+          <Form
+                ref="form"
+                onSubmit={this.sendTransactionID.bind(this)}
+            >
+            <TextValidator style = {styles.input}
+            name="Count"
+            label="Count"
+            validators={['required','isNumber']}
+            errorMessages={[ 'This field is required','Input value must be number only']}
+            errorStyle={{ container: { top: 0, left: 80,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+            type="text"
+            keyboardType="number-pad"
+            value={Count}
+
             underlineColorAndroid = "transparent"
             placeholder = " Enter number of users"
             placeholderTextColor = "#3f3f3f"
@@ -191,15 +252,25 @@ export default class Notification extends Component {
             onChange = {this.handleCount.bind(this)}
             />
             <Text style={{paddingTop:20,paddingBottom:20}}>{this.state.Count}</Text>
-            <TextInput style = {styles.input}
+            <TextValidator style = {styles.input}
+            name="Code"
+            label="Code"
+            validators={['required','isNumber']}
+            errorMessages={[ 'This field is required','Input value must be number only']}
+            errorStyle={{ container: { top: 0, left: 80,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+            type="text"
+            keyboardType="number-pad"
+            value={Code}
+
             underlineColorAndroid = "transparent"
             placeholder = " Enter transation ID"
             placeholderTextColor = "#3f3f3f"
             autoCapitalize = "none"
             onChange = {this.handleCode.bind(this)}/>
              <Right style={{paddingTop:20}}>
-             <Button danger style={{height:40}} onPress={this.sendTransactionID.bind(this)} ><Text>{this.state.Code}</Text></Button>
+             <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>{this.state.Code}</Text></Button>
              </Right>
+          </Form>
           </View>
         </View>
       </Modal>

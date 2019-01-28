@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View,Alert,TouchableOpacity,Switch,TextInput} from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import { Container, Footer, FooterTab, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Button, Icon, Body, Left, Right,Item,Form,Label,Input } from 'native-base';
-
+import { Container, Footer, FooterTab, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Button, Icon, Body, Left, Right,Item,Label,Input } from 'native-base';
+import { Form, TextValidator } from 'react-native-validator-form';
 
 export default class BarcodeScannerExample extends React.Component {
   state = {

@@ -103,19 +103,19 @@ UpdateUserInfo(){
         <View style={styles.modalcontainer}>
         <View style={styles.Mapmodalcontainer}>
             <View style={styles.responsiveMapBox}>
-                <MapView
-                    style={{ flex: 1 }}
-                    region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
-                    zoomEnabled={true}
-                >
-                <MapView.Marker
-                draggable
-                coordinate={this.state.location.coords}
-                title="My Location"
-                description="Location description"
-                onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
-                />
-                 </MapView>
+            <MapView
+                              style={{ flex: 1 }}
+                              region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+                              zoomEnabled={true}
+                          >
+                          <MapView.Marker
+                          draggable
+                          coordinate={this.state.location.coords}
+                          title="My Location"
+                          description="Location description"
+                          onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
+                          />
+                          </MapView>
             </View>
         </View>
             <View style={styles.responsiveBox}>
