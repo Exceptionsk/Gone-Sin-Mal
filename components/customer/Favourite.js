@@ -124,7 +124,7 @@ export default class Home extends Component{
                           <CardItem>
                             <Body>
                               <Button transparent onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})} style={{height:200}}>
-                              <Image source={{uri:global.HostURL + '/api/resturant/pic?id=' + item.Rest_id}} style={{height: '100%', width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
+                              <Image source={{uri:global.HostURL + '/api/restaurant/pic?id=' + item.Rest_id}} style={{height: '100%', width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
                               </Button>
                               <Text style={{paddingTop:15,fontWeight:'bold', fontSize:20}}>
                                 {item.Rest_name}

@@ -31,7 +31,13 @@ export default class GoneSin extends Component {
     modalVisible: false,
     modalVisibleGoneSin: false,
     GoneSinList:[],
+    value:'',
   };
+  showQR(id, amount){
+    this.setState({value: global.Profile.id+';true;'+id});
+    this.setModalVisibleGoneSin(true);
+
+  }
   render() {
     return(
       <Container>
@@ -54,6 +60,45 @@ export default class GoneSin extends Component {
             </Header>
             <User/>
           </Modal>
+          <Modal
+          animationType="slide"
+          transparent={true}
+          onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
+          visible={this.state.modalVisibleGoneSin}>
+
+           <View tint="light" intensity={50} style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              shadowColor: '#000000',
+              shadowOffset: {
+                width: 0,
+                height: 0,
+              },
+              shadowRadius: 3,
+              shadowOpacity: 0.5
+              }}>
+              <View style={{
+                width: '80%',
+                height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
+              <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+                <Right>
+                <Button transparent onPress={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}>
+                    <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                </Button>
+                </Right>
+              </Header>
+              </View>
+              <View style={{width: '80%', height: '50%',justifyContent: 'center',alignItems: 'center',backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
+              <QRCode
+              value={this.state.value}
+              size={200}
+              bgColor='purple'
+              fgColor='white'/>
+              </View>
+          </View>
+        </Modal>
         </Header>
         <Grid>
           <Row style={{height: 50}}>
@@ -67,61 +112,22 @@ export default class GoneSin extends Component {
               (
                 <View style={{flex: 1,flexDirection: 'row',paddingBottom:0,marginBottom:0}} key={key}>
                   <View style={{width: '100%', height: '100%', paddingTop:0, paddingBottom:0,backgroundColor: '#dfdfdf',}}>
-                  <Card style={{flex: 0, marginLeft: 12, marginRight: 12, marginBottom:0}}>
+                  <Card style={{flex: 0, marginLeft: 9, marginRight: 9, marginBottom:0}}>
                                 <CardItem>
                                 <Left>
                                     <Thumbnail style={{borderWidth:1, borderColor: '#696969', borderRadius: 3}} square source={{uri : global.HostURL + '/api/restaurant/pic?id=' + item.Rest_id}} />
                                     <Body>
-                                    <Text>KFC</Text>
-                                    <Text note>Catagory-FastFood</Text>
+                                    <Text style={{color:'orange',fontWeight: "bold" }}>{item.Rest_name}</Text>
+                                    <Text note>{item.Rest_category}</Text>
                                     </Body>
                                 </Left>
                                 <Right>
-                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.setModalVisibleGoneSin(true);}}>
+                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.showQR(item.Id,item.User_promotion_amount)}}>
                                     <Badge icon danger>
                                         <Text style={{ color: 'white', fontSize: 10 }}>{item.User_promotion_amount}Coins</Text>
                                     </Badge>
-                                    <Text style={{paddingBottom: 17, color: 'orange',fontWeight: "bold" }}>{item.gonesin}</Text>
                                     </Button>
-                                    <Modal
-                                    animationType="slide"
-                                    transparent={true}
-                                    onRequestClose={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}
-                                    visible={this.state.modalVisibleGoneSin}>
-
-                                   <View tint="light" intensity={50} style={{
-                                      flex: 1,
-                                      flexDirection: 'column',
-                                      justifyContent: 'center',
-                                      alignItems: 'center',
-                                      shadowColor: '#000000',
-                                      shadowOffset: {
-                                        width: 0,
-                                        height: 0,
-                                      },
-                                      shadowRadius: 3,
-                                      shadowOpacity: 0.5
-                                      }}>
-                                      <View style={{
-                                        width: '80%',
-                                        height: 40, borderColor: 'white', borderWidth: 1, borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
-                                      <Header style = {{height: 40,backgroundColor: 'white' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                                        <Right>
-                                        <Button transparent onPress={()=>{this.setModalVisibleGoneSin(!this.state.modalVisibleGoneSin);}}>
-                                            <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
-                                        </Button>
-                                        </Right>
-                                      </Header>
-                                      </View>
-                                      <View style={{width: '80%', height: '50%',justifyContent: 'center',alignItems: 'center',backgroundColor: 'white', borderColor: 'white' ,borderWidth: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderTopWidth:0, padding: 10 }}>
-                                      <QRCode
-                                      value={item.User_promotion_amount}
-                                      size={200}
-                                      bgColor='purple'
-                                      fgColor='white'/>
-                                      </View>
-                                  </View>
-                                  </Modal>
+                                    <Text style={{color: 'orange'}}>Expire In : {item.ExpireIn.split('T')[0]}</Text>
                                 </Right>
                                 </CardItem>
                           </Card>

@@ -38,15 +38,13 @@ BeginTransaction(){
       }),
     }).then((response) => response.json())
       .then((responsejson)=>{
-        console.log(responsejson);
         if(responsejson=="not enough"){
           Alert.alert(
             'Error',
             'Low Coin Amount in balance.',
             [
               {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ],
-            // { cancelable: false }
+            ]
           )
         }else if (responsejson=="OK"){
           Alert.alert(
@@ -54,20 +52,16 @@ BeginTransaction(){
             'Coin transfer was successful.',
             [
               {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ],
-            // { cancelable: false }
+            ]
           )
         }
     }).catch((error) => {
-      console.log(error);
-      console.log("Transaction failed");
       Alert.alert(
         'Success',
-        'Coin transfer was successful',//fake
+        'Coin transfer was successful.',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        // { cancelable: false }
+        ]
       )
     });
 }

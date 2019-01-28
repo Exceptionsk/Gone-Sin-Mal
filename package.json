@@ -21,6 +21,7 @@
     "react-native-responsive-screen": "^1.1.10",
     "react-native-router-flux": "^4.0.5",
     "react-native-switch-pro": "^1.0.1-beta",
+    "react-native-validator-form": "^0.2.0",
     "react-navigation-material-bottom-tabs": "^0.4.0",
     "react-router-native": "^4.3.0",
     "toggle-switch-react-native": "^2.0.2"

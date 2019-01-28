@@ -23,7 +23,15 @@ export default class Home extends Component{
     }).then((response) => response.json())
       .then((responsejson)=>{
         console.log(responsejson);
-        if(responsejson!=null){
+        if(responsejson=="Not Enough"){
+          Alert.alert(
+            'Low Balance!',
+            'Your balance is lower then amount you entered.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+        }else if(responsejson!=null){
           global.Restaurant=responsejson;
           this.input1._root.clear();
           this.input2._root.clear();
@@ -34,17 +42,7 @@ export default class Home extends Component{
               {text: 'OK', onPress: () => console.log('OK Pressed')},
             ]
           )
-        }else if(responsejson=="Not Enough"){
-          Alert.alert(
-            'Low Balance!',
-            'Your balance is lower then amount you entered.',
-            [
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ]
-          )
         }
-
-        console.log(responsejson);
     }).catch((error) => {
       console.log(error);
       console.log("Transaction failed");
