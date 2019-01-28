@@ -41,6 +41,7 @@ export default class Start extends Component {
     global.RestNotification=[],
     global.GoneSinList=[],
     global.FavList=[],
+    global.RefundNotification=[],
     global.Restaurant={}
   }
   state = {

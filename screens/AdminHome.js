@@ -42,7 +42,7 @@ const Buttontab = createBottomTabNavigator({
         <Ionicons name="ios-notifications" color={tintColor} size={24} />
       ),
       tabBarOnPress: ({navigation, defaultHandler})=> {
-        fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=admin")
+        fetch(global.HostURL + '/api/notification/12?type=admin')
         .then((response) => response.json())
         .then((responseJson) => {
           global.AdminNotification=responseJson;

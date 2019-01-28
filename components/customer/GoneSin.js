@@ -33,8 +33,8 @@ export default class GoneSin extends Component {
     GoneSinList:[],
     value:'',
   };
-  showQR(id, amount){
-    this.setState({value: global.Profile.id+';true;'+id});
+  showQR(id, amount, rest){
+    this.setState({value: global.Profile.id+';true;'+id+ ';' +rest});
     this.setModalVisibleGoneSin(true);
 
   }
@@ -122,7 +122,7 @@ export default class GoneSin extends Component {
                                     </Body>
                                 </Left>
                                 <Right>
-                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.showQR(item.Id,item.User_promotion_amount)}}>
+                                    <Button transparent textStyle={{color: '#87838B'}} onPress={() => {this.showQR(item.Id,item.User_promotion_amount,item.Rest_id)}}>
                                     <Badge icon danger>
                                         <Text style={{ color: 'white', fontSize: 10 }}>{item.User_promotion_amount}Coins</Text>
                                     </Badge>

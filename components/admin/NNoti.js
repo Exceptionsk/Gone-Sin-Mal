@@ -8,7 +8,7 @@ export default class NNoti extends Component {
   componentDidMount() {
     let that = this;
     setInterval(() => {
-        that.setState({Notification: global.RefundNotification});
+        that.setState({Notification: global.AdminNotification});
     }, 1000);
   }
   state = {
@@ -34,8 +34,8 @@ export default class NNoti extends Component {
                             <Left>
                                 <Thumbnail source={{uri : item.img}} />
                                 <Body>
-                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.name}</Text>
-                                <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.description}</Text>
+                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_text}</Text>
+                                <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>
                                 </Body>
                             </Left>
                             </CardItem>

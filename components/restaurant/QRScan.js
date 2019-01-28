@@ -17,11 +17,22 @@ export default class BarcodeScannerExample extends React.Component {
     }
 
 BeginTransaction(){
+  console.log(this.state.data);
   var data=this.state.data.split(';')[0].trim();
   var special=this.state.data.split(';')[1].trim();
   var promo= this.state.data.split(';')[2].trim();
+  var restaurant_id =this.state.data.split(';')[3].trim();
   console.log(data);
   console.log(special);
+  if(restaurant_id!=global.Restaurant.Rest_id){
+    Alert.alert(
+      'Wrong Restaurant!',
+      'Please choose correct restaurant.',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]
+    )
+  }else{
     fetch(global.HostURL + '/api/restaurant/qr', {
       method: 'POST',
       headers: {
@@ -29,7 +40,7 @@ BeginTransaction(){
         'Content-Type': 'application/json'
       },
       body:JSON.stringify({
-        Rest_id : global.Profile.id,
+        Rest_id : global.Restaurant.Rest_id,
         User_id: data,
         Amount: this.state.amount,
         Take: this.state.isSwitchOn,
@@ -64,6 +75,7 @@ BeginTransaction(){
         ]
       )
     });
+  }
 }
 changeText(value){
   this.setState({isSwitchOn: value});

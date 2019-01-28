@@ -126,7 +126,7 @@ import { AsyncStorage } from "react-native";
                 <Col style={{height:230}}>
                         <View style={styles.container}>
                           <QRCode
-                            value={global.Profile.id+";false;0"}
+                            value={global.Profile.id+";false;0;0"}
                             size={200}
                             bgColor='purple'
                             fgColor='white'/>
