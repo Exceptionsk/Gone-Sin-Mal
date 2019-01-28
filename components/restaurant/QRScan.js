@@ -9,7 +9,7 @@ export default class BarcodeScannerExample extends React.Component {
     hasCameraPermission: null,
     isSwitchOn: false,
     amount:0,
-    CurrentState:'Get Coin from Customer',
+    CurrentState:'Give Coins to Customer',
   }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -80,9 +80,9 @@ BeginTransaction(){
 changeText(value){
   this.setState({isSwitchOn: value});
   if(value){
-    this.setState({CurrentState:'Give Coins to Customer'});
+    this.setState({CurrentState:'Get Coin from Customer'});
   }else{
-    this.setState({CurrentState:'Get Coin from Customer'})
+    this.setState({CurrentState:'Give Coins to Customer'})
   }
 }
 handleAmount(e){
@@ -109,8 +109,10 @@ handleAmount(e){
                   onValueChange={isSwitchOn => this.changeText(isSwitchOn)}
                   value={this.state.isSwitchOn}
                 />
+                <Button onPress={() => this.props.navigation.navigate('Search')}><Text>gg</Text></Button>
               </View>
             </Right>
+
         </Header>
         <Content contentContainerStyle={{ flex: 1 }}>
           <Grid>

@@ -38,6 +38,13 @@ const Buttontab = createBottomTabNavigator({
           console.error(error);
           console.log("Home failed");
         });
+        fetch(global.HostURL + '/api/Promotion/' + global.Restaurant.Rest_id, {
+          method: 'DELETE'
+        }).then((response) => response.json())
+          .then((responsejson)=>{
+          }).catch((error)=>{
+             console.log(error);
+          });
         defaultHandler();
       }
     }

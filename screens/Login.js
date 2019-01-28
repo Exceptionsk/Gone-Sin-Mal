@@ -105,6 +105,14 @@ async DummyLogin(page){
 }
  LogInApp(json){
    fetch(global.HostURL + '/api/User', {
+     method: 'DELETE',
+   }).then((response) => response.json())
+     .then((responsejson)=>{
+   }).catch((error)=>{
+        console.log(error);
+   });
+
+   fetch(global.HostURL + '/api/User', {
      method: 'POST',
      headers: {
        'Accept': 'application/json',
@@ -128,9 +136,7 @@ async DummyLogin(page){
          this.props.navigation.navigate('RestHome')
        }else if(responsejson.User_type=="new"){
          this.props.navigation.navigate('AccountType')
-       }else if(responsejson.User_type==null){
-        this.props.navigation.navigate('AccountType')
-      }
+       }
      }).catch((error)=>{
         console.log(error);
      });
@@ -138,12 +144,12 @@ async DummyLogin(page){
 
   async logInFB() {
     var item = null;
-    try {
-      const retrievedItem =  await AsyncStorage.getItem('profile');
-      item = JSON.parse(retrievedItem);
-    } catch (error) {
-      console.log(error.message);
-    }
+    // try {
+    //   const retrievedItem =  await AsyncStorage.getItem('profile');
+    //   item = JSON.parse(retrievedItem);
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
     if(item==null){
       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
         "2071732326473547",
@@ -216,25 +222,9 @@ handleType(e){
                   value={this.state.value}
                   style={{alignSelf:'center', width: 250, backgroundColor:'white'}}
                   />
-                  <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={()=>this.DummyLogin('CustHome')}>
+                  <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={this.logInFB.bind(this)}>
                     <Icon name='logo-facebook' />
-                    <Text> Login with Facebook </Text>
-                  </Button>
-                  <Button iconLeft full success textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.DummyLogin('RestHome')}>
-                    <Icon name='logo-facebook' />
-                    <Text> Sign Up for Restaurant </Text>
-                  </Button>
-                  <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.DummyLogin('AdminHome')}>
-                    <Icon name='logo-facebook' />
-                    <Text> Admin Login </Text>
-                  </Button>
-                  <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('Register')}>
-                    <Icon name='logo-facebook' />
-                    <Text> Register </Text>
-                  </Button>
-                  <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={this.logInFB.bind(this)}>
-                    <Icon name='logo-facebook' />
-                    <Text> Real Login </Text>
+                    <Text>Login</Text>
                   </Button>
                 </View>
               </Col>
@@ -245,3 +235,20 @@ handleType(e){
     )
   }
 };
+
+// <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={()=>this.DummyLogin('CustHome')}>
+//   <Icon name='logo-facebook' />
+//   <Text> Login with Facebook </Text>
+// </Button>
+// <Button iconLeft full success textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.DummyLogin('RestHome')}>
+//   <Icon name='logo-facebook' />
+//   <Text> Sign Up for Restaurant </Text>
+// </Button>
+// <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.DummyLogin('AdminHome')}>
+//   <Icon name='logo-facebook' />
+//   <Text> Admin Login </Text>
+// </Button>
+// <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('Register')}>
+//   <Icon name='logo-facebook' />
+//   <Text> Register </Text>
+// </Button>
