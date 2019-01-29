@@ -285,7 +285,7 @@ export default class Notification extends Component {
                         <Col style={{ backgroundColor: '#dfdfdf', height: '100%', width: '100%'}}>
                             <CardItem>
                               <Left>
-                                  <Thumbnail source={{uri : item.img}} />
+                                  <Thumbnail source={{uri : 'https://cdn.myanimelist.net/images/anime/1232/93334l.jpg'}} />
                                   <Body>
                                   <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_text}</Text>
                                   <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>

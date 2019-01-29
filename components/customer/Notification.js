@@ -4,6 +4,8 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import User from './Userprofile';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 export default class Notification extends Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -52,14 +54,14 @@ export default class Notification extends Component {
             {
                 this.state.Notification.map((item, key)=>
                   (
-                <Row key={key}>
-                  <Col style={{ backgroundColor: '#dfdfdf', height: 105, width: '100%'}}>
-                    <Card style={{flex: 0, marginLeft: 0, width: '100%' }}>
+                <Row key={key} style={{ paddingBottom:0, marginBottom:0}}>
+                  <Col style={{ backgroundColor: '#dfdfdf', height: '100%', width: '100%', paddingBottom:0, marginBottom:0}}>
+                    <Card style={{flex: 0, marginLeft: 0, width: '100%'}}>
                             <CardItem>
                             <Left>
-                                <Thumbnail source={{uri : item.img}} />
+                            <Thumbnail source={{uri : 'https://cdn.myanimelist.net/images/anime/1232/93334l.jpg'}} />
                                 <Body>
-                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_text}</Text>
+                                <Text style={{fontWeight:'bold',fontSize:20,color:'#484848'}}>{item.Noti_text}</Text>
                                 <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>
                                 </Body>
                             </Left>
