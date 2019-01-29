@@ -128,7 +128,6 @@ export default class Register extends Component{
     }
   }
 
-
   _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
   };
@@ -180,6 +179,7 @@ export default class Register extends Component{
 }
 
 componentWillMount() {
+  this.setMapmapModalVisible(false);
     // custom rule will have name 'isPasswordMatch'
     Form.addValidationRule('isPasswordMatch', (value) => {
         if (value !== this.state.user.password) {
@@ -354,7 +354,7 @@ handleSubmit() {
                 </Item>
                 <Item>
                   <TouchableOpacity style={{width:'100%'}} onPress={() => this.setMapmapModalVisible(!this.state.modalmapVisible)}>
-                    <Textarea pointerEvents="none" rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, marginBottom:10}} onChangeText={(value) => this.setState({location:value})}  placeholder="Address"  />
+                    <Textarea pointerEvents="none" rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, marginBottom:10}} onChangeText={(value) => this.setState({display_name:value})}  placeholder="Address"  />
                   </TouchableOpacity>
                 </Item>
                 <Item>
@@ -380,18 +380,18 @@ handleSubmit() {
                               </Right>
                           </Header>
                           {/* <MapView
-          style={{ flex: 1 }}
-          region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
-          zoomEnabled={true}
-        >
-    <MapView.Marker
-      draggable
-      coordinate={this.state.location.coords}
-      title="My Marker"
-      description="Some description"
-      onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
-    />
-        </MapView> */}
+                            style={{ flex: 1 }}
+                            region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+                            zoomEnabled={true}
+                          >
+                      <MapView.Marker
+                        draggable
+                        coordinate={this.state.location.coords}
+                        title="My Marker"
+                        description="Some description"
+                        onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
+                      />
+                          </MapView> */}
                       </View>
                   </View>
                 </Modal>

@@ -105,14 +105,6 @@ async DummyLogin(page){
 }
  LogInApp(json){
    fetch(global.HostURL + '/api/User', {
-     method: 'DELETE',
-   }).then((response) => response.json())
-     .then((responsejson)=>{
-   }).catch((error)=>{
-        console.log(error);
-   });
-
-   fetch(global.HostURL + '/api/User', {
      method: 'POST',
      headers: {
        'Accept': 'application/json',
@@ -124,6 +116,7 @@ async DummyLogin(page){
        User_available_coin:0,
        User_noti_token: this.state.token,
        User_visited_restaurant:0,
+       User_type:'new',
      }),
    }).then((response) => response.json())
      .then((responsejson)=>{
@@ -144,12 +137,12 @@ async DummyLogin(page){
 
   async logInFB() {
     var item = null;
-    // try {
-    //   const retrievedItem =  await AsyncStorage.getItem('profile');
-    //   item = JSON.parse(retrievedItem);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+    try {
+      const retrievedItem =  await AsyncStorage.getItem('profile');
+      item = JSON.parse(retrievedItem);
+    } catch (error) {
+      console.log(error.message);
+    }
     if(item==null){
       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
         "2071732326473547",

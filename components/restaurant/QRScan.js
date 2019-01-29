@@ -109,7 +109,6 @@ handleAmount(e){
                   onValueChange={isSwitchOn => this.changeText(isSwitchOn)}
                   value={this.state.isSwitchOn}
                 />
-                <Button onPress={() => this.props.navigation.navigate('Search')}><Text>gg</Text></Button>
               </View>
             </Right>
 
