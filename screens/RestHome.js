@@ -62,7 +62,12 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="logo-bitcoin" color={tintColor} size={24} />
-      )
+      ),
+      tabBarOnPress: ({navigation, defaultHandler})=> {
+        global.authorized=false;
+        global.adminModel=true;
+        defaultHandler();
+      }
     }
   },
   Notification: {
@@ -81,6 +86,8 @@ const Buttontab = createBottomTabNavigator({
         .catch((error) => {
           // console.log("Restaurant noti failed");
         });
+        global.authorized=false;
+        global.adminModel=true;
         defaultHandler();
       }
     }

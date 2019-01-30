@@ -28,26 +28,6 @@ export default class AdminHome extends Component{
    });
   }
 
-  // checkAuth(){
-  //  fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.input)
-  //  .then((response) => response.json())
-  //  .then((responseJson) => {
-  //    if(responseJson="Yes"){
-  //      defaultHandler();
-  //    }else{
-  //      Alert.alert(
-  //        'Wrong Key',
-  //        'The Key you entered is Incorrect',
-  //        [
-  //          {text: 'OK', onPress: () => console.log('OK Pressed')},
-  //        ]
-  //      )
-  //    }
-  //  })
-  //  .catch((error) => {
-  //    console.log("Admin status failed");
-  //  });
-  // }
   componentWillMount() {
     this.getSystemStatus();
   }
@@ -57,28 +37,7 @@ export default class AdminHome extends Component{
   }
   render(){
     return(
-      // <Content>
-      // <Modal
-      //   animationType="slide"
-      //   transparent={false}
-      //   onRequestClose={()=>{this.setState({modalVisible:true})}}
-      //   visible={this.state.modalVisible}>
-      //   <View>
-      //   <TextInput style = {styles.input}
-      //   underlineColorAndroid = "transparent"
-      //   placeholder = " Enter transation ID"
-      //   placeholderTextColor = "#3f3f3f"
-      //   autoCapitalize = "none"
-      //   onChange = {(key)=>{this.setState({input:key})}}/>
-      //   <Right>
-      //     <Button transparent onPress={()=>{this.checkAuth()}}>
-      //       <Text>OK</Text>
-      //     </Button>
-      //     </Right>
-      //   </View>
-      // </Modal>
       <Buttontab/>
-      // </Content>
     )
   }
 }
@@ -118,6 +77,7 @@ const Buttontab = createBottomTabNavigator({
         .catch((error) => {
           // console.log("admin noti failed");
         });
+        global.adminModel=true;
         defaultHandler();
       }
     }
@@ -146,11 +106,11 @@ const Buttontab = createBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="md-people" color={tintColor} size={24} />
-      )
-      // ,
-      // tabBarOnPress:({navigation, defaultHandler})=>{
-      //   this.setState({modalVisible:true});
-      // }
+      ),
+      tabBarOnPress:({navigation, defaultHandler})=>{
+        global.adminModel=true;
+        defaultHandler();
+      }
     }
   },
 

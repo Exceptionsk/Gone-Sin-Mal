@@ -22,16 +22,49 @@ BeginTransaction(){
   var special=this.state.data.split(';')[1].trim();
   var promo= this.state.data.split(';')[2].trim();
   var restaurant_id =this.state.data.split(';')[3].trim();
-  console.log(data);
   console.log(special);
-  if(restaurant_id!=global.Restaurant.Rest_id){
-    Alert.alert(
-      'Wrong Restaurant!',
-      'Please choose correct restaurant.',
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]
-    )
+  if(special==true){
+    if(restaurant_id!=global.Restaurant.Rest_id){
+      Alert.alert(
+        'Wrong Restaurant!',
+        'Please choose correct restaurant.',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
+    }else{
+      fetch(global.HostURL + '/api/restaurant/qr', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          Rest_id : global.Restaurant.Rest_id,
+          User_id: data,
+          Amount: this.state.amount,
+          Take: this.state.isSwitchOn,
+          Special: special,
+          PromoId:promo,
+        }),
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+          if(responsejson=="OK"){
+            Alert.alert(
+              'Error',
+              'Low Coin Amount in balance.',
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]
+            )
+          }else{
+            console.log(responsejson);
+            console.log("special error");
+          }
+      }).catch((error) => {
+        console.log("error");
+      });
+    }
   }else{
     fetch(global.HostURL + '/api/restaurant/qr', {
       method: 'POST',
@@ -47,34 +80,28 @@ BeginTransaction(){
         Special: special,
         PromoId:promo,
       }),
-    }).then((response) => response.json())
-      .then((responsejson)=>{
-        if(responsejson=="not enough"){
-          Alert.alert(
-            'Error',
-            'Low Coin Amount in balance.',
-            [
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ]
-          )
-        }else if (responsejson=="OK"){
-          Alert.alert(
-            'Success',
-            'Coin transfer was successful.',
-            [
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ]
-          )
-        }
-    }).catch((error) => {
-      Alert.alert(
-        'Success',
-        'Coin transfer was successful.',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]
-      )
-    });
+    })
+    .then((response)=>response.json())
+    .then((responsejson) => {
+      console.log(responsejson);
+      if(responsejson=="Not Enough"){
+        Alert.alert(
+          'Error',
+          'Low Coin Amount in balance.',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+        )
+      }else if(responsejson=="OK"){
+        Alert.alert(
+          'Success',
+          'Coin transfer Complete!',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+        )
+      }
+    })
   }
 }
 changeText(value){

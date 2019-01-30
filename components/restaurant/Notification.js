@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, ImageBackground, ScrollView, Modal, AsyncStorage,TextInput } from 'react-native';
+import { View, Image, StyleSheet, ImageBackground, ScrollView, Modal, AsyncStorage,TextInput,Alert } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, List,Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import { BlurView } from 'expo';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import { Form, TextValidator } from 'react-native-validator-form';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class Notification extends Component {
 
@@ -42,33 +43,48 @@ export default class Notification extends Component {
     Code:'',
     ID:'',
     Count:'',
+    key:'',
   };
   componentWillMount(){
     this.retrieveItem('profile')
   }
   sendTransactionID(){
-    fetch(global.HostURL + '/api/transaction/comfirm', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        Rest_id : global.Profile.id,
-        Tran_id : this.state.Code,
-        ID: this.state.ID,
-        Count: this.state.Count
-      }),
-    }).then((response) => response.json())
-      .then((responsejson)=>{
-        console.log(responsejson);
-        this.setState({transactionmodalVisibleSpecialCoin:false})
+      fetch(global.HostURL + '/api/transaction/comfirm', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          Rest_id : global.Profile.id,
+          Tran_id : this.state.Code,
+          ID: this.state.ID,
+          Count: this.state.Count
+        }),
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+          console.log("gg");
+          console.log(responsejson);
+          if(responsejson=="Failed"){
+            Alert.alert(
+              'Wrong Transaction ID',
+              'Please make sure you entered correct ID',
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]
+            )
+          }else{
+            this.setState({transactionmodalVisibleSpecialCoin:false});
+            this.setState({ Code: '' });
+            this.setState({ Count: '' });
+          }
+        }).catch((error)=>{
+          console.log(error);
+          this.setState({transactionmodalVisibleSpecialCoin:false})
+          this.setState({transactionmodalVisible:false})
           this.setState({ Code: '' });
-      }).catch((error)=>{
-        console.log('Transaction failed');
-        console.log(error);
-        this.setState({ Code: '' });
-      });
+          this.setState({ Count: '' });
+        });
   }
   componentDidMount() {
     let that = this;
@@ -77,11 +93,37 @@ export default class Notification extends Component {
     }, 1000);
   }
 
+  cancelModal(){
+    global.authorized=false;
+    global.adminModel=false;
+  }
+
+  checkKey(){
+    fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.key)
+     .then((response) => response.json())
+     .then((responseJson) => {
+       console.log(responseJson);
+       if(responseJson=="Yes"){
+         global.adminModel=false;
+         global.authorized=true;
+       }else{
+         Alert.alert(
+           'Wrong Key',
+           'The Key you entered is Incorrect',
+           [
+             {text: 'OK', onPress: () => console.log('OK Pressed')},
+           ]
+         )
+       }
+     })
+     .catch((error) => {
+       console.log(error);
+     });
+  }
 
   TransactionBar(type){
     if(type=='transaction id'){
       return <TextValidator style = {{borderWidth:1, bordercolor:'black'}}
-            
       name="Cout"
       label="Cout"
       validators={['required','isNumber']}
@@ -96,19 +138,47 @@ export default class Notification extends Component {
       autoCapitalize = "none"
       onChangeText = {this.handleCode}/>
     }
-    else{
 
+  }
+
+  specialclick(id){
+    console.log(global.authorized);
+    if(global.authorized){
+      this.setState({transactionmodalVisibleSpecialCoin: true});
+      this.setState({ID: id});
+    }else{
+      Alert.alert(
+        'Access Denied',
+        'Enter correct key to do transation!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
     }
-
+  }
+  normalclick(id){
+    console.log(global.authorized);
+    if(global.authorized){
+      this.setState({transactionmodalVisible: true});
+      this.setState({ID: id});
+    }else{
+      Alert.alert(
+        'Access Denied',
+        'Enter correct key to do transation!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
+    }
   }
   TransactionModelTest(id,type,text){
       if(text!="Comfirmation completed!"){
         if(type=="special"){
-            return <Button danger style={{height:40}} onPress={() => {this.setState({transactionmodalVisibleSpecialCoin: true});this.setState({ID: id});}}><Text>{type}</Text></Button>
+            return <Button danger style={{height:40}} onPress={() => {this.specialclick(id)}}><Text>{type}</Text></Button>
         }else{
-            return <Button danger style={{height:40}} onPress={() => {this.setState({transactionmodalVisible: true});this.setState({ID: id});}}><Text>normal Coin</Text></Button>
+            return <Button danger style={{height:40}} onPress={() => {this.normalclick(id)}}><Text>normal Coin</Text></Button>
         }
-    }
+     }
   }
 
   constructor(props) {
@@ -178,7 +248,7 @@ export default class Notification extends Component {
                 onSubmit={this.sendTransactionID.bind(this)}
             >
             <TextValidator style = {styles.input}
-            
+
             name="Code"
             label="Code"
             validators={['required','isNumber']}
@@ -194,7 +264,7 @@ export default class Notification extends Component {
             autoCapitalize = "none"
             onChange = {this.handleCode.bind(this)}/>
              <Right style={{paddingTop:20}}>
-             <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>{this.state.Code}</Text></Button>
+             <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>Send</Text></Button>
              </Right>
           </Form>
           </View>
@@ -251,7 +321,6 @@ export default class Notification extends Component {
             autoCapitalize = "none"
             onChange = {this.handleCount.bind(this)}
             />
-            <Text style={{paddingTop:20,paddingBottom:20}}>{this.state.Count}</Text>
             <TextValidator style = {styles.input}
             name="Code"
             label="Code"
@@ -268,12 +337,34 @@ export default class Notification extends Component {
             autoCapitalize = "none"
             onChange = {this.handleCode.bind(this)}/>
              <Right style={{paddingTop:20}}>
-             <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>{this.state.Code}</Text></Button>
+             <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>Send</Text></Button>
              </Right>
           </Form>
           </View>
         </View>
       </Modal>
+      <Modal
+       animationType="slide"
+       transparent={true}
+       visible={global.adminModel}>
+       <View style={styles.modalcontainer}>
+         <View style={styles.responsiveBox}>
+             <TextInput style = {styles.input}
+             underlineColorAndroid = "transparent"
+             placeholder = " Enter Key"
+             placeholderTextColor = "#3f3f3f"
+             autoCapitalize = "none"
+             onChangeText={(text) => this.setState({key:text})}
+             />
+             <View style={{alignSelf:'center', paddingBottom: 5}}>
+               <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/>
+             </View>
+             <View style={{alignSelf:'center', paddingBottom: 5}}>
+               <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
+             </View>
+         </View>
+       </View>
+     </Modal>
         <Grid>
             <Content style = {{backgroundColor:'#dfdfdf'}}>
             {
@@ -318,5 +409,52 @@ const styles= StyleSheet.create({
         borderWidth: 1,
         width:'100%',
         height:40
+     },
+     modalcontainer:{
+       flex: 1,
+       backgroundColor: 'transparent',
+       alignItems: 'center',
+       justifyContent: 'center',
+     },
+     responsiveBox: {
+       width: wp('84.5%'),
+       height: hp('23%'),
+       backgroundColor: 'white',
+       borderWidth: 1,
+       borderTopLeftRadius: 5,
+       borderTopRightRadius: 5,
+       borderBottomLeftRadius: 5,
+       borderBottomRightRadius: 5,
+       borderColor: 'grey',
+       shadowColor: '#000000',
+       shadowOffset: {
+         width: 0,
+         height: 3
+       },
+       shadowRadius: 3,
+       shadowOpacity: 0.5,
+       flexDirection: 'column',
+       justifyContent: 'space-around'
+     },
+     responsiveBoxphnumber: {
+       width: wp('84.5%'),
+       height: hp('22%'),
+       paddingBottom: 8,
+       backgroundColor: 'white',
+       borderWidth: 1,
+       borderTopLeftRadius: 5,
+       borderTopRightRadius: 5,
+       borderBottomLeftRadius: 5,
+       borderBottomRightRadius: 5,
+       borderColor: 'grey',
+       shadowColor: '#000000',
+       shadowOffset: {
+         width: 0,
+         height: 3
+       },
+       shadowRadius: 3,
+       shadowOpacity: 0.5,
+       flexDirection: 'column',
+       justifyContent: 'space-around'
      },
   })

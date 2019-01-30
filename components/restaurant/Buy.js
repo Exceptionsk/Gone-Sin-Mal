@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, WebView, Modal} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, WebView, Modal,Alert, TextInput} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Ionicons } from '@expo/vector-icons';
 import { Container, Header,Right, H1,H2,H3, H4,Title, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
-import ToggleSwitch from 'toggle-switch-react-native';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class Home extends Component{
   state = {
     modalVisible: false,
@@ -16,27 +16,38 @@ export default class Home extends Component{
     this.setState({modalVisible: visible});
   }
   newTransaction(type, package_id, url){
-    this.setModalVisible(true);
-    this.setState({Payment_Link:url});
-    fetch(global.HostURL + '/api/transaction/request', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        User_id : global.Profile.id,
-        Tran_type: type,
-        Pending: true,
-        Package_id: package_id,
-      }),
-    }).then((response) => response.json())
-      .then((responsejson)=>{
-        console.log(responsejson);
-    }).catch((error) => {
-      console.log(error);
-      console.log("Transaction failed");
-    });
+    if(global.authorized){
+      this.setModalVisible(true);
+      this.setState({Payment_Link:url});
+      fetch(global.HostURL + '/api/transaction/request', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          User_id : global.Profile.id,
+          Tran_type: type,
+          Pending: true,
+          Package_id: package_id,
+        }),
+      }).then((response) => response.json())
+        .then((responsejson)=>{
+          console.log(responsejson);
+      }).catch((error) => {
+        console.log(error);
+        console.log("Transaction failed");
+      });
+    }else{
+      Alert.alert(
+        'Access Denied',
+        'Enter correct key to Buy Coins!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
+    }
+
   }
   getPackage(){
     return fetch(global.HostURL + '/api/package')
@@ -150,6 +161,60 @@ export default class Home extends Component{
   }
 }
 const styles= StyleSheet.create({
+  input: {
+      borderColor: '#ff7d21',
+      borderRadius: 5,
+      borderWidth: 1,
+      width:'100%',
+      height:40
+   },
+  modalcontainer:{
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  responsiveBox: {
+    width: wp('84.5%'),
+    height: hp('23%'),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'grey',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
+  responsiveBoxphnumber: {
+    width: wp('84.5%'),
+    height: hp('22%'),
+    paddingBottom: 8,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'grey',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
   image:{
     height: '100%',
     width: '100%',
