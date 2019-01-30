@@ -175,10 +175,10 @@ export default class Notification extends Component {
   TransactionModelTest(id,type,text){
       if(text!="Comfirmation completed!"){
         if(type=="special"){
-            return <Button danger style={{height:40}} onPress={() => {this.specialclick(id)}}><Text>{type}</Text></Button>
-        }else{
-            return <Button danger style={{height:40}} onPress={() => {this.normalclick(id)}}><Text>normal Coin</Text></Button>
-        }
+          return <Button full danger style={{height:40, borderWidth:1, bordercolor:'white',borderRadius:4}} onPress={() => {this.specialclick(id)}}><Text>{type}</Text></Button>
+      }else{
+          return <Button full danger style={{height:40,borderWidth:1, bordercolor:'white',borderRadius:4}} onPress={() => {this.normalclick(id)}}><Text>normal Coin</Text></Button>
+      }
      }
   }
 
@@ -264,9 +264,12 @@ export default class Notification extends Component {
             placeholderTextColor = "#3f3f3f"
             autoCapitalize = "none"
             onChange = {this.handleCode.bind(this)}/>
-             <Right style={{paddingTop:20}}>
+            <View  style={{flex:1,flexDirection: 'column',justifyContent: 'center', alignItems: 'stretch',paddingTop:40}}>
+            <Button full danger style={{height:40, borderWidth:1, bordercolor:'transparent',borderRadius:4}} onPress={this.handleSubmit} ><Text>Send</Text></Button>
+            </View>
+             {/* <Right style={{paddingTop:20}}>
              <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>Send</Text></Button>
-             </Right>
+             </Right> */}
           </Form>
           </View>
         </View>
@@ -337,9 +340,12 @@ export default class Notification extends Component {
             placeholderTextColor = "#3f3f3f"
             autoCapitalize = "none"
             onChange = {this.handleCode.bind(this)}/>
-             <Right style={{paddingTop:20}}>
+            <View  style={{flex:1,flexDirection: 'column',justifyContent: 'center', alignItems: 'stretch',paddingTop:40}}>
+            <Button full danger style={{height:40, borderWidth:1, bordercolor:'transparent',borderRadius:4}} onPress={this.handleSubmit} ><Text>Send</Text></Button>
+            </View>
+             {/* <Right style={{paddingTop:20}}>
              <Button danger style={{height:40}} onPress={this.handleSubmit} ><Text>Send</Text></Button>
-             </Right>
+             </Right> */}
           </Form>
           </View>
         </View>
@@ -386,8 +392,8 @@ export default class Notification extends Component {
                             </CardItem>
                         </Col>
                       </Row>
-                      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <View style={{padding:20}}>
+                      <View style={{ flex: 1 }}>
+                        <View  style={{flex:1,flexDirection: 'column',justifyContent: 'center', alignItems: 'stretch',paddingBottom:10}}>
                           {this.TransactionModelTest(item.ID,item.Tran_type, item.Noti_text)}
                         </View>
                       </View>

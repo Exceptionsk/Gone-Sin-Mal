@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Image,StyleSheet, Modal, AsyncStorage } from 'react-native';
+import { Image,StyleSheet, Modal, AsyncStorage, View } from 'react-native';
 import { Container, Badge, H2, H3, Header, Content, Row,Grid, Col, Card, CardItem, Thumbnail, Text, Button, Icon, Body, Right, DeckSwiper } from 'native-base';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import { Constants, MapView, Location, Permissions, Marker } from 'expo';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import User from './Userprofile';
 
 const cards = [
@@ -156,20 +157,19 @@ export default class Login extends Component {
                 <Grid>
                     <Content style={{ backgroundColor: '#dfdfdf'}}>
                         <Card style={{width:'99%'}}>
-                            <CardItem header>
+                            {/* <CardItem>
                             <Row>
                                 <Col style={{backgroundColor:'white',width:110}}>
                                     <Thumbnail large style = {{ marginLeft:15, borderColor: '#404040', borderWidth: 2}} source={{uri : global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id}} />
                                 </Col>
                                 <Col style={{backgroundColor:'white'}}>
-                                    <H2>{this.state.restaurant.Rest_name}</H2>
-                                    <H2 style={{color:'#404040'}}>Catagory: {this.state.restaurant.Rest_category}</H2>
+
                                 </Col>
                             </Row>
-                            </CardItem>
-                            <CardItem>
+                            </CardItem> */}
+                            <CardItem header>
                                 <Row>
-                                    <Col style={{backgroundColor:'white', height:400}}>
+                                    <Col style={{backgroundColor:'white', height: hp('48%')}}>
                                     <DeckSwiper
                                       dataSource={cards}
                                       renderItem={item =>
@@ -180,12 +180,6 @@ export default class Login extends Component {
                                           <CardItem>
                                             <Icon name="md-images" style={{ color: '#ED4A6A' }} />
                                             <Text>{item.name}</Text>
-                                            <Body>
-
-                                            </Body>
-                                            <Right>
-                                             <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={()=>this._pickImage(item.gallery)} />
-                                            </Right>
                                           </CardItem>
                                         </Card>
                                       }
@@ -196,20 +190,28 @@ export default class Login extends Component {
                             <CardItem>
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
-                                        <MaterialCommunityIcons name="tag-heart" size={35} color={this.state.fav_status} onPress={()=> this.togglefav()} />
-                                        <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => {this.setmapModalVisible(true);}}>
-                                            <Ionicons name="md-map" size={30} color="white" />
-                                            <Text> View Restaurant Location </Text>
-                                        </Button>
+                                      <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', paddingBottom:10}}>
+                                        <H2 style={{color:'#404040'}}>{this.state.restaurant.Rest_name}</H2>
+                                        <MaterialCommunityIcons name="heart-multiple" size={35} color={this.state.fav_status} onPress={()=> this.togglefav()} />
+                                      </View>
+                                      <View style={{flex: 1, flexDirection: 'column',justifyContent: 'space-between',height: hp('25%'),paddingBottom:10}}>
+                                        <H3 style={{color:'#404040'}}>Catagory: {this.state.restaurant.Rest_category}</H3>
+                                        <Text style={{paddingBottom:5}}>Detail Address: {this.state.restaurant.Rest_location}</Text>
+                                        <Text style={{paddingBottom:5}}>Phone Number: {this.state.restaurant.Rest_phno}</Text>
+                                        <Text style={{paddingBottom:5}}>Email: {this.state.restaurant.Rest_email}</Text>
+                                      </View>
                                     </Col>
                                 </Row>
                             </CardItem>
                             <CardItem footer>
                                 <Row>
                                     <Col style={{backgroundColor:'white'}}>
-                                        <Text style={{paddingBottom:5}}>Detail Address: {this.state.restaurant.Rest_location}</Text>
-                                        <Text style={{paddingBottom:5}}>Phone Number: {this.state.restaurant.Rest_phno}</Text>
-                                        <Text style={{paddingBottom:5}}>Email: {this.state.restaurant.Rest_email}</Text>
+                                      <View style={{flex: 1, flexDirection: 'row', alignSelf:'center' ,paddingBottom:10}}>
+                                        <Button iconLeft full warning textStyle={{color:'white'}} style={{alignSelf:'center',width: wp('70.5%')}} onPress={() => {this.setmapModalVisible(true);}}>
+                                            <Ionicons name="md-map" size={30} color="white" />
+                                            <Text> View Restaurant Location </Text>
+                                        </Button>
+                                      </View>
                                     </Col>
                                 </Row>
                             </CardItem>
@@ -224,7 +226,7 @@ export default class Login extends Component {
                             <Button transparent onPress={()=>{this.setmapModalVisible(!this.state.mapmodalVisible);}}>
                                 <Icon name="close"/>
                             </Button>
-                            </Right>
+                          </Right>
                           </Header>
                           <MapView
                             style={{ flex: 1 }}

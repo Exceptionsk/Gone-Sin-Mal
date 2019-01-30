@@ -5,6 +5,8 @@ import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import { Right, Container, Header, H1,H2,H3, H4,Title, Left, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
 import User from './Userprofile';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 export default class Home extends Component{
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -111,7 +113,7 @@ export default class Home extends Component{
                   (
                     <Row key={key}>
                       <Col>
-                        <Card style={{flex: 0, paddingTop:0}}>
+                        <Card style={{flex: 1, paddingBottom:10}}>
                           {/* <CardItem>
                             <Left>
                               <Thumbnail source={{uri: 'Image URL'}} />
@@ -121,46 +123,24 @@ export default class Home extends Component{
                               </Body>
                             </Left>
                           </CardItem> */}
-                          <CardItem>
-                            <Body>
+                          <View>
                               <Button transparent onPress={() => this.props.navigation.navigate('Restaurantdetail',{Rest_id: item.Rest_id})} style={{height:200}}>
-                              <Image source={{uri:global.HostURL + '/api/restaurant/pic?id=' + item.Rest_id}} style={{height: '100%', width: '100%', flex: 1, borderWidth:0.5,borderColor:'#727272', borderRadius:4}}/>
+                              <Image source={{uri:global.HostURL + '/api/restaurant/pic?id=' + item.Rest_id}} style={{height: '100%', width: '100%', borderWidth:0.5,borderColor:'#727272', borderRadius:0}}/>
                               </Button>
-                              <Text style={{paddingTop:15,fontWeight:'bold', fontSize:20}}>
-                                {item.Rest_name}
-                              </Text>
-                            </Body>
-                          </CardItem>
-                          <CardItem>
-                            <Left>
-                              <Button transparent>
-                                <MaterialCommunityIcons name="tag-heart" size={35} color="red" onPress={()=> this.togglefav(item.Rest_id)} />
-                                <Text style={{color: '#87838B',fontSize:15}}>{item.catagory}</Text>
-                              </Button>
-                            </Left>
-                          </CardItem>
+                              <View style={{flex:1,flexDirection: 'row', paddingLeft:10}}>
+                                <View>
+                                  <Text style={{paddingTop:15,fontWeight:'bold', fontSize:20}}>
+                                    {item.Rest_name}
+                                  </Text>
+                                  <Text style={{color: '#87838B',fontSize:15}}>{item.Rest_category}</Text>
+                                </View>
+                                <View>
+                                <MaterialCommunityIcons name="heart-multiple" size={35} color="red" onPress={()=> this.togglefav(item.Rest_id)} />
+                                </View>
+                              </View>
+                          </View>
                         </Card>
                       </Col>
-                      {/* <Col style={{ backgroundColor: 'white', height: 150, width: 170 }}>
-                        <View style = {styles.imgcol}>
-                          <Button transparent style={{height: '100%', width: '100%'}}>
-                            <Thumbnail style={styles.image} square large source={{uri : item.img}} />
-                          </Button>
-                        </View>
-                      </Col>
-                      <Col style={{ backgroundColor: 'white', height: 150 }}>
-                        <View style = {styles.imgcoltwo}>
-                          <Text style={{color: 'black',paddingBottom: 10}}>{item.name}</Text>
-                          <Button style={{backgroundColor:'orange'}}>
-                          <Text>Get Direction</Text>
-                          </Button>
-                        </View>
-                      </Col>
-                      <Col style={{ backgroundColor: 'white', height: 150, width: 70 }}>
-                        <View style = {styles.imgcolthree}>
-                          <Ionicons name="md-heart" size={30} color="red" />
-                        </View>
-                      </Col> */}
                   </Row>
                   )
                 )
