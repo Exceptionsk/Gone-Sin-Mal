@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage } from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Header, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text, Left } from 'native-base';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import User from './Userprofile';
 
 
@@ -84,25 +86,29 @@ export default class Home extends Component{
   render(){
     return(
       <Container>
-      <Header style = {{height: 70,backgroundColor: '#a3080c'}}>
+      <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
           <Button transparent style={{height:55, width:'100%', backgroundColor: '#a3080c', justifyContent: 'flex-start'}} onPress={() => {this.setModalVisible(true);}}>
-            <Thumbnail style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+            <Thumbnail small style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
             <Text >{global.Profile.name}</Text>
           </Button>
       </Header>
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
           visible={this.state.modalVisible}>
-          <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-          <Right>
-            <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-              <Icon name="md-close-circle-outline" size={24} />
-            </Button>
-            </Right>
-          </Header>
-          <User/>
+            <View style={styles.modalcontainer}>
+              <View style={styles.responsiveBox}>
+                <Header style = {{height: 40,backgroundColor: 'white', borderBottomWidth:0,paddingBottom: 0, paddingTop: 0}}>
+                  <Right>
+                    <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                      <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                    </Button>
+                  </Right>
+                </Header>
+                <User/>
+              </View>
+            </View>
         </Modal>
       <Header onSubmitEditing={this.handleSearch.bind(this)} onChange={this.handleChange.bind(this)} searchBar rounded style = {{backgroundColor:'white', height: 60, paddingBottom: 10, paddingTop: 10}}>
           <Item style = {{backgroundColor: 'white' ,borderColor: 'orange', borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1}}>
@@ -223,5 +229,31 @@ const styles= StyleSheet.create({
     flex:1,
     width:'100%',
     height:'100%',
-  }
+  },
+  modalcontainer:{
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  responsiveBox: {
+    width: wp('84.5%'),
+    height: hp('73%'),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'white',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 0
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
 })

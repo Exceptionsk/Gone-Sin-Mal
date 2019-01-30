@@ -4,11 +4,12 @@ import {
     StyleSheet, View, TextInput,TouchableWithoutFeedback,Modal,Platform
   } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Container,Card,CardItem,Body, Header, H1,H2,H3, H4,Left, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Text } from 'native-base';
+import { Container,Card,CardItem,Body, Header, H1,H2,H3, H4,Left, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Text,Right } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import QRCode from 'react-native-qrcode';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import NavigationService from '../../NavigationService'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Constants, MapView, Location, Permissions, Marker } from 'expo';
 import { AsyncStorage } from "react-native";
 
@@ -120,7 +121,7 @@ import { AsyncStorage } from "react-native";
         <Container>
           <Content>
           <Grid>
-          <Card style={{width:'99%',height:'98%'}}>
+          <View style={{width:'99%',height:'98%'}}>
             <CardItem header>
             <Row>
                 <Col style={{height:230}}>
@@ -137,20 +138,40 @@ import { AsyncStorage } from "react-native";
             <CardItem>
                 <Row>
                   <Col style={{alignItems:'center', backgroundColor:'white'}}>
-                  <Button transparent>
-                    <Text style={{ paddingBottom:5}}>User's State: {this.state.UserInfo.State}  </Text>
-                      <Icon name='ios-create' onPress={() => {this.setprofilemapModalVisible(true);}}/>
-                  </Button>
-                    <Text style={{paddingBottom:5}}>Avaliable Coin: {this.state.UserInfo.Coin}</Text>
-                    <Text style={{paddingBottom:5}}>Coin Capacity: {this.state.UserInfo.Capacity}</Text>
-                    <Text style={{paddingBottom:5}}>Gone Sin Restaurant: {this.state.UserInfo.Visited}</Text>
-                    <Text style={{paddingBottom:5}}>Exceeded Coin: {this.state.UserInfo.Exceed} (expire in: {this.state.UserInfo.ExpireIn}) days</Text>
+                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
+                      <Text style={{ paddingBottom:5}}>User's State:{this.state.UserInfo.State}</Text>
+                      <Right>
+                      <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={() => {this.setprofilemapModalVisible(true);}}/> />
+                      </Right>
+                      
+                      {/* <Icon name='ios-create' onPress={() => {this.setprofilemapModalVisible(true);}}/>          */}
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
+                      <Text style={{paddingBottom:5}}>Avaliable Coin:</Text>
+                      <Text style={{paddingBottom:5}}>{this.state.UserInfo.Coin}</Text>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
+                      <Text style={{paddingBottom:5}}>Coin Capacity:</Text>
+                      <Text style={{paddingBottom:5}}>{this.state.UserInfo.Capacity}</Text>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
+                      <Text style={{paddingBottom:5}}>Gone Sin Restaurant:</Text>
+                      <Text style={{paddingBottom:5}}>{this.state.UserInfo.Visited}</Text>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
+                      <Text style={{paddingBottom:5}}>Exceeded Coin:</Text>
+                      <Text style={{paddingBottom:5}}>{this.state.UserInfo.Exceed}(expire in: {this.state.UserInfo.ExpireIn}) days</Text>
+                    </View>
+                    {/* <Text style={{paddingBottom:5}}>Avaliable Coin: {this.state.UserInfo.Coin}</Text> */}
+                    {/* <Text style={{paddingBottom:5}}>Coin Capacity: {this.state.UserInfo.Capacity}</Text> */}
+                    {/* <Text style={{paddingBottom:5}}>Gone Sin Restaurant: {this.state.UserInfo.Visited}</Text> */}
+                    {/* <Text style={{paddingBottom:5}}>Exceeded Coin: {this.state.UserInfo.Exceed} (expire in: {this.state.UserInfo.ExpireIn}) days</Text> */}
                   </Col>
                 </Row>
             </CardItem>
             <CardItem footer>
             </CardItem>
-          </Card>
+          </View>
           </Grid>
           <Modal
                           animationType="slide"

@@ -65,9 +65,14 @@ export default class PNoti extends Component {
                                   <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Rest_name} has requested you to refund {item.Amount} Coins. Transfer amount to this Myan Pay Account : {item.Myan_pay}.</Text>
                                   </Body>
                               </Left>
-                              <Button warning  style={{alignSelf:'center', width: 90,height:35,marginLeft:8}} onPress={() => this.DoRefund(item.ID)}>
+                              {/* <Button warning  style={{alignSelf:'center', width: 90,height:35,marginLeft:8}} onPress={() => this.DoRefund(item.ID)}>
                                   <Text style={{fontWeight:'bold',fontSize:13 }}>Complete</Text>
-                                </Button>
+                                </Button> */}
+                            </CardItem>
+                            <CardItem style={{flex:1,flexDirection: 'column',justifyContent: 'center', alignItems: 'stretch',}}>
+                            <Button full warning style={{borderWidth:1, borderColor:'white', borderRadius:4}} onPress={() => this.DoRefund(item.ID)}>
+                                  <Text style={{fontWeight:'bold',fontSize:13 }}>Complete</Text>
+                              </Button>
                             </CardItem>
                         </Col>
                       </Row>

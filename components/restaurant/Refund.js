@@ -68,7 +68,7 @@ submit() {
 }
 
 handleSubmit() {
-  if(global.authorizedCoin){
+  if(global.authorized){
     this.refs.form.submit();
   }else {
     Alert.alert(
