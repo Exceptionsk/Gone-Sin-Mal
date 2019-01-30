@@ -103,6 +103,7 @@ export default class Notification extends Component {
      .then((response) => response.json())
      .then((responseJson) => {
        console.log(responseJson);
+       this.setState({key:''});
        if(responseJson=="Yes"){
          global.adminModel=false;
          global.authorized=true;

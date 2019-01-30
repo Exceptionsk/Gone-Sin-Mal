@@ -30,6 +30,7 @@ export default class Coins extends Component{
      .then((response) => response.json())
      .then((responseJson) => {
        console.log(responseJson);
+       this.setState({key:''});
        if(responseJson=="Yes"){
          global.adminModel=false;
          global.authorized=true;

@@ -13,7 +13,6 @@ export default class AdminHome extends Component{
 
   state={
     input:'',
-    modalVisible:false,
   }
 
 
@@ -80,6 +79,7 @@ const Buttontab = createBottomTabNavigator({
         global.authorized=false;
         global.adminModel=true;
         defaultHandler();
+        console.log("global is " + global.adminModel);
       }
     }
   },
@@ -99,6 +99,7 @@ const Buttontab = createBottomTabNavigator({
          console.log("Admin status failed");
        });
        defaultHandler();
+       console.log("global is " + global.adminModel);
       }
     }
   },
@@ -108,14 +109,14 @@ const Buttontab = createBottomTabNavigator({
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="md-people" color={tintColor} size={24} />
       ),
-      tabBarOnPress:({navigation, defaultHandler})=>{
+      tabBarOnPress: ({navigation, defaultHandler})=> {
         global.authorized=false;
         global.adminModel=true;
         defaultHandler();
+        console.log("global is " + global.adminModel);
       }
     }
-  },
-
+  }
 }, {//router config
     initialRouteName: 'Home',
     order: ['Notification','Refund','Home','Admins'],

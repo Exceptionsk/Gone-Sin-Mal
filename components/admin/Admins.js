@@ -1,43 +1,16 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal, AsyncStorage, TextInput, Alert } from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, AsyncStorage,TextInput, Alert} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container,List, Left, Header, ListItem, H1,H2,H3, H4,Title,Right, Item, Input, Icon, Thumbnail, Content, Button, Footer, FooterTab, Badge, Card, CardItem, Body, Text } from 'native-base';
-import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+
 export default class Admins extends Component {
   state = {
     value:'',
     Users:[],
     key:'',
   };
-
-  cancelModal(){
-    global.adminModel=false;
-    global.authorized=false;
-  }
-
-  checkKey(){
-    fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.key)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       console.log(responseJson);
-       if(responseJson=="Yes"){
-         global.adminModel=false;
-         global.authorized=true;
-       }else{
-         Alert.alert(
-           'Wrong Key',
-           'The Key you entered is Incorrect',
-           [
-             {text: 'OK', onPress: () => console.log('OK Pressed')},
-           ]
-         )
-       }
-     })
-     .catch((error) => {
-       console.log(error);
-     });
-  }
 
   handleChange(e) {
        this.setState({
@@ -124,28 +97,6 @@ export default class Admins extends Component {
   render() {
     return (
       <Container>
-      <Modal
-       animationType="slide"
-       transparent={true}
-       visible={global.adminModel}>
-       <View style={styles.modalcontainer}>
-         <View style={styles.responsiveBox}>
-             <TextInput style = {styles.input}
-             underlineColorAndroid = "transparent"
-             placeholder = " Enter Key"
-             placeholderTextColor = "#3f3f3f"
-             autoCapitalize = "none"
-             onChangeText={(text) => this.setState({key:text})}
-             />
-             <View style={{alignSelf:'center', paddingBottom: 5}}>
-               <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/>
-             </View>
-             <View style={{alignSelf:'center', paddingBottom: 5}}>
-               <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
-             </View>
-         </View>
-       </View>
-     </Modal>
       <Header style = {{height: 50,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
       <Body>
         <Text style = {{color: 'white'}}>Add or remove Admin</Text>

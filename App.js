@@ -43,7 +43,7 @@ export default class Start extends Component {
     global.FavList=[],
     global.RefundNotification=[],
     global.Restaurant={},
-    global.adminModel=true,
+    global.adminModel=false,
     global.authorized=false
   }
   state = {

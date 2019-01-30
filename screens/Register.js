@@ -114,6 +114,8 @@ export default class Register extends Component{
                    console.log(error);
                 });
               });
+        }).catch((error)=>{
+           console.log(error);
         });
     } catch (e) {
       console.log(e);

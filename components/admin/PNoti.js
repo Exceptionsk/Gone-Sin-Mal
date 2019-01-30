@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, ImageBackground, ScrollView, Alert, Modal, TextInput  } from 'react-native';
+import { View, Image, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import { Container, Badge, H3, Header, Content, Card, CardItem,Grid,Row,Col, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
@@ -13,37 +13,7 @@ export default class PNoti extends Component {
 
   state = {
     Notification:[],
-    key:'',
   };
-
-  cancelModal(){
-    global.adminModel=false;
-    global.authorized=false;
-  }
-
-  checkKey(){
-    fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.key)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       console.log(responseJson);
-       if(responseJson=="Yes"){
-         global.adminModel=false;
-         global.authorized=true;
-       }else{
-         Alert.alert(
-           'Wrong Key',
-           'The Key you entered is Incorrect',
-           [
-             {text: 'OK', onPress: () => console.log('OK Pressed')},
-           ]
-         )
-       }
-     })
-     .catch((error) => {
-       console.log(error);
-     });
-  }
-
   DoRefund(id){
     if(global.authorized){
       fetch(global.HostURL + '/api/Refund/' + id,{
@@ -72,28 +42,7 @@ export default class PNoti extends Component {
   render() {
     return(
     <Container>
-      <Modal
-       animationType="slide"
-       transparent={true}
-       visible={global.adminModel}>
-       <View style={styles.modalcontainer}>
-         <View style={styles.responsiveBox}>
-             <TextInput style = {styles.input}
-             underlineColorAndroid = "transparent"
-             placeholder = " Enter Key"
-             placeholderTextColor = "#3f3f3f"
-             autoCapitalize = "none"
-             onChangeText={(text) => this.setState({key:text})}
-             />
-             <View style={{alignSelf:'center', paddingBottom: 5}}>
-               <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/>
-             </View>
-             <View style={{alignSelf:'center', paddingBottom: 5}}>
-               <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
-             </View>
-         </View>
-       </View>
-     </Modal>
+
     <Header style = {{ height: 60,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
     <Body>
       <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Refund Request</H3>
