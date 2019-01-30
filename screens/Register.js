@@ -30,6 +30,8 @@ export default class Register extends Component{
     latitude: null,
     longitude: null,
 
+    user: {},
+
     modalmapVisible: false,
   }
   _pickImage = async () => {
@@ -169,9 +171,6 @@ export default class Register extends Component{
   constructor(props) {
     super(props);
 
-    this.state = {
-        user: {},
-    };
     this.handleChange = this.handleChange.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleRepeatPassword = this.handleRepeatPassword.bind(this);
@@ -379,7 +378,7 @@ handleSubmit() {
                                 </Button>
                               </Right>
                           </Header>
-                          {/* <MapView
+                          <MapView
                             style={{ flex: 1 }}
                             region={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
                             zoomEnabled={true}
@@ -391,7 +390,7 @@ handleSubmit() {
                         description="Some description"
                         onDragEnd={e => this.logAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)}
                       />
-                          </MapView> */}
+                          </MapView>
                       </View>
                   </View>
                 </Modal>
