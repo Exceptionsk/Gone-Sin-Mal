@@ -77,6 +77,7 @@ const Buttontab = createBottomTabNavigator({
         .catch((error) => {
           // console.log("admin noti failed");
         });
+        global.authorized=false;
         global.adminModel=true;
         defaultHandler();
       }
@@ -108,6 +109,7 @@ const Buttontab = createBottomTabNavigator({
         <Ionicons name="md-people" color={tintColor} size={24} />
       ),
       tabBarOnPress:({navigation, defaultHandler})=>{
+        global.authorized=false;
         global.adminModel=true;
         defaultHandler();
       }

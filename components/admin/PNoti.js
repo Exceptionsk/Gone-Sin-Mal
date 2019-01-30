@@ -8,21 +8,17 @@ export default class PNoti extends Component {
     let that = this;
     setInterval(() => {
         that.setState({Notification: global.RefundNotification});
-        that.setState({modalVisible: global.adminModel});
     }, 1000);
   }
 
   state = {
     Notification:[],
-    modalVisible:false,
-    authorized: false,
     key:'',
   };
 
   cancelModal(){
     global.adminModel=false;
-    this.setState({authorized:false });
-
+    global.authorized=false;
   }
 
   checkKey(){
@@ -31,9 +27,8 @@ export default class PNoti extends Component {
      .then((responseJson) => {
        console.log(responseJson);
        if(responseJson=="Yes"){
-         this.setState({modalVisible:false});
-         that.setState({authorized:true });
          global.adminModel=false;
+         global.authorized=true;
        }else{
          Alert.alert(
            'Wrong Key',
@@ -50,7 +45,7 @@ export default class PNoti extends Component {
   }
 
   DoRefund(id){
-    if(this.state.authorized){
+    if(global.authorized){
       fetch(global.HostURL + '/api/Refund/' + id,{
         method:'DELETE',
         headers:{
@@ -80,8 +75,7 @@ export default class PNoti extends Component {
       <Modal
        animationType="slide"
        transparent={true}
-       onRequestClose={()=>{this.setState({modalVisible:false});}}
-       visible={this.state.modalVisible}>
+       visible={global.adminModel}>
        <View style={styles.modalcontainer}>
          <View style={styles.responsiveBox}>
              <TextInput style = {styles.input}

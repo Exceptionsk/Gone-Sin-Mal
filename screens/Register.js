@@ -128,6 +128,7 @@ export default class Register extends Component{
     } else {
       this._getLocationAsync();
     }
+    console.log(this.state.errorMessage);
   }
 
   _handleMapRegionChange = mapRegion => {
@@ -142,7 +143,7 @@ export default class Register extends Component{
        location,
      });
    }
-
+   console.log(this.state.locationResult);
    let location = await Location.getCurrentPositionAsync({});
    this.setState({ locationResult: JSON.stringify(location), location, });
  };

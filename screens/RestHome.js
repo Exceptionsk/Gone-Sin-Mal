@@ -30,7 +30,6 @@ const Buttontab = createBottomTabNavigator({
         fetch(global.HostURL + '/api/restaurant?id=' + global.Profile.id + "&profile=true")
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log("gg");
           console.log(responseJson);
          global.Restaurant= responseJson
         })

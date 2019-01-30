@@ -9,22 +9,11 @@ export default class Admins extends Component {
     value:'',
     Users:[],
     key:'',
-    modalVisible:false,
-    authorized: false,
   };
-
-  componentDidMount(){
-    let that = this;
-    setInterval(() => {
-        that.setState({modalVisible: global.adminModel});
-        that.setState({authorized: global.adminAuthorized});
-    }, 1000);
-  }
 
   cancelModal(){
     global.adminModel=false;
-    this.setState({authorized:false });
-
+    global.authorized=false;
   }
 
   checkKey(){
@@ -33,9 +22,8 @@ export default class Admins extends Component {
      .then((responseJson) => {
        console.log(responseJson);
        if(responseJson=="Yes"){
-         this.setState({modalVisible:false});
-         that.setState({authorized:true });
          global.adminModel=false;
+         global.authorized=true;
        }else{
          Alert.alert(
            'Wrong Key',
@@ -59,7 +47,7 @@ export default class Admins extends Component {
      }
 
   handleSearch(){
-    if(this.state.authorized){
+    if(global.authorized){
       return fetch(global.HostURL + '/api/User/search?name=' + this.state.value)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -136,29 +124,28 @@ export default class Admins extends Component {
   render() {
     return (
       <Container>
-        <Modal
-         animationType="slide"
-         transparent={true}
-         onRequestClose={()=>{this.setState({modalVisible:false});}}
-         visible={this.state.modalVisible}>
-         <View style={styles.modalcontainer}>
-           <View style={styles.responsiveBox}>
-               <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               placeholder = " Enter Key"
-               placeholderTextColor = "#3f3f3f"
-               autoCapitalize = "none"
-               onChangeText={(text) => this.setState({key:text})}
-               />
-               <View style={{alignSelf:'center', paddingBottom: 5}}>
-                 <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/>
-               </View>
-               <View style={{alignSelf:'center', paddingBottom: 5}}>
-                 <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
-               </View>
-           </View>
+      <Modal
+       animationType="slide"
+       transparent={true}
+       visible={global.adminModel}>
+       <View style={styles.modalcontainer}>
+         <View style={styles.responsiveBox}>
+             <TextInput style = {styles.input}
+             underlineColorAndroid = "transparent"
+             placeholder = " Enter Key"
+             placeholderTextColor = "#3f3f3f"
+             autoCapitalize = "none"
+             onChangeText={(text) => this.setState({key:text})}
+             />
+             <View style={{alignSelf:'center', paddingBottom: 5}}>
+               <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/>
+             </View>
+             <View style={{alignSelf:'center', paddingBottom: 5}}>
+               <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
+             </View>
          </View>
-       </Modal>
+       </View>
+     </Modal>
       <Header style = {{height: 50,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
       <Body>
         <Text style = {{color: 'white'}}>Add or remove Admin</Text>

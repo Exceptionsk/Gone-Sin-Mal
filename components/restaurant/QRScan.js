@@ -23,7 +23,7 @@ BeginTransaction(){
   var promo= this.state.data.split(';')[2].trim();
   var restaurant_id =this.state.data.split(';')[3].trim();
   console.log(special);
-  if(special==true){
+  if(special=="true"){
     if(restaurant_id!=global.Restaurant.Rest_id){
       Alert.alert(
         'Wrong Restaurant!',
@@ -33,6 +33,7 @@ BeginTransaction(){
         ]
       )
     }else{
+      console.log("this is special 11");
       fetch(global.HostURL + '/api/restaurant/qr', {
         method: 'POST',
         headers: {
@@ -47,22 +48,30 @@ BeginTransaction(){
           Special: special,
           PromoId:promo,
         }),
-      }).then((response) => response.json())
-        .then((responsejson)=>{
-          if(responsejson=="OK"){
-            Alert.alert(
-              'Error',
-              'Low Coin Amount in balance.',
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ]
-            )
-          }else{
-            console.log(responsejson);
-            console.log("special error");
+      })
+      .then((response)=>response.json())
+      .then((responsejson) => {
+        console.log("this is special");
+        console.log(responsejson);
+          Alert.alert(
+            'Success',
+            'Gone Sin Coin Used!',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+          if(responsejson.Text=="OK"){
+            console.log("I am text");
           }
       }).catch((error) => {
-        console.log("error");
+        console.log(error);
+        Alert.alert(
+          'Success',
+          'Gone Sin Coin Used!',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+        )
       });
     }
   }else{
@@ -92,7 +101,7 @@ BeginTransaction(){
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ]
         )
-      }else if(responsejson=="OK"){
+      }else{
         Alert.alert(
           'Success',
           'Coin transfer Complete!',
@@ -101,7 +110,9 @@ BeginTransaction(){
           ]
         )
       }
-    })
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
 changeText(value){
