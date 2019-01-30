@@ -28,6 +28,7 @@ export default class App extends Component {
     } else {
       this._getLocationAsync();
     }
+    this.logAddress(this.state.location.coords.latitude,this.state.location.coords.longitude)
   }
 
   _handleMapRegionChange = mapRegion => {
@@ -45,6 +46,7 @@ export default class App extends Component {
 
    let location = await Location.getCurrentPositionAsync({});
    this.setState({ locationResult: JSON.stringify(location), location, });
+
  };
 
 //  _getcurrentlocation () {
@@ -93,15 +95,13 @@ UpdateUserInfo(){
   render() {
     return (
     <Container>
-        <Header style = {{height: 70,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
+        <Header style = {{height: 60,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
             <View style={{flex:1, alignItems: 'flex-start', justifyContent: 'center'}}>
                 <View>
-                    <Text style = {{color: 'white', width:'100%', fontWeight:'bold'}} >User Township Registeration</Text>
+                    <Text style = {{color: 'white', width:'100%', fontWeight:'bold', paddingLeft:10}} > User Township Registeration</Text>
                 </View>
             </View>
         </Header>
-        <View style={styles.modalcontainer}>
-        <View style={styles.Mapmodalcontainer}>
             <View style={styles.responsiveMapBox}>
                 <MapView
                     style={{ flex: 1 }}
@@ -117,18 +117,16 @@ UpdateUserInfo(){
                 />
                  </MapView>
             </View>
-        </View>
-            <View style={styles.responsiveBox}>
-                    <Text style = {{width:'100%', fontWeight:'bold'}} >{this.state.User_state}</Text>
-                <View>
-                    <Button iconLeft block success onPress={()=>this.UpdateUserInfo()}>
-                        <Text>Next</Text>
-                        <Icon name="ios-arrow-forward" size={30} color="#4cd58a" />
-                    </Button>
-                </View>
-            </View>
-         </View>
+            <View>
+            <Text style = {{width:'100%', fontWeight:'bold', textAlign:'center', height:20}} >{this.state.User_state}</Text>
+              <View>
+                  <Button iconLeft block success onPress={()=>this.UpdateUserInfo()}>
+                      <Text>Next</Text>
+                      <Icon name="ios-arrow-forward" size={30} color="#4cd58a" />
+                  </Button>
+              </View>
 
+            </View>
     </Container>
     );
   }
@@ -144,7 +142,7 @@ const styles = StyleSheet.create({
       },
       responsiveBox: {
         width: wp('95.5%'),
-        height: hp('30%'),
+        height: hp('60%'),
         backgroundColor: 'white',
         // borderWidth: 1,
         // borderTopLeftRadius: 5,
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       responsiveMapBox: {
-        width: wp('95.5%'),
+        width: wp('100%'),
         height: hp('70%'),
         backgroundColor: '#4cd58a',
         borderWidth: 1,

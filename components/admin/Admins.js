@@ -99,7 +99,7 @@ export default class Admins extends Component {
       <Container>
       <Header style = {{height: 50,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
       <Body>
-        <Text style = {{color: 'white'}}>Add or remove Admin</Text>
+        <Text style = {{color: 'white', paddingLeft:10}}>Manage Administrator</Text>
       </Body>
       </Header>
         <View style={styles.searchBar}>
@@ -114,11 +114,12 @@ export default class Admins extends Component {
           onSubmitEditing={this.handleSearch.bind(this)}
           />
         </View>
-        <Content>
+        <Content style={{backgroundColor:'#dfdfdf'}}>
           {
             this.state.Users.map((item, key)=>
               (
                 <List key={key}>
+                <Card>
                   <ListItem thumbnail>
                     <Left>
                       <Thumbnail source={{ uri: 'https://graph.facebook.com/'+ item.User_id + '/picture?type=normal' }} />
@@ -131,6 +132,7 @@ export default class Admins extends Component {
                       {this.Userbar(item.User_id, item.User_type)}
                     </Right>
                   </ListItem>
+                  </Card>
                 </List>
               )
             )

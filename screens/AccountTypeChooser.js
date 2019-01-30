@@ -72,6 +72,9 @@ export default class Login extends Component {
                  <View style={{alignSelf:'center', paddingBottom: 5}}>
                    <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
                  </View>
+                 <View style={{alignSelf:'center', paddingBottom: 5}}>
+                   <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.setState({modalVisible:false})}}/>
+                 </View>
              </View>
            </View>
          </Modal>

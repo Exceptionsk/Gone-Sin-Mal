@@ -130,7 +130,7 @@ export default class Register extends Component{
     } else {
       this._getLocationAsync();
     }
-    console.log(this.state.errorMessage);
+    this.logAddress(this.state.location.coords.latitude,this.state.location.coords.longitude)
   }
 
   _handleMapRegionChange = mapRegion => {
@@ -138,6 +138,7 @@ export default class Register extends Component{
   };
 
   _getLocationAsync = async () => {
+    console.log("start");
    let { status } = await Permissions.askAsync(Permissions.LOCATION);
    if (status !== 'granted') {
      this.setState({
@@ -220,7 +221,6 @@ handleSubmit() {
     this.refs.form.submit();
 }
 
-
   render(){
     const { name } = this.state;
     const { category } = this.state;
@@ -232,7 +232,7 @@ handleSubmit() {
         <Header style = {{height: 70,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
           <Body>
             <Button transparent >
-              <Icon style = {{color: 'white', paddingLeft:20}} name='ios-business' />
+              <Icon style = {{color: 'white', paddingLeft:20}} name='ios-restaurant' />
               <Text style = {{color: 'white', width:'100%'}} >Register</Text>
             </Button>
           </Body>
@@ -242,7 +242,7 @@ handleSubmit() {
 
         <Grid>
         <Content>
-          <Card style={{padding:10}}>
+          <Card style={{padding:10, height:'100%'}}>
           <Form ref="form" onSubmit={()=>this.signup()}>
             <Row>
               <Col style={{width:100}}>
@@ -250,8 +250,8 @@ handleSubmit() {
                   <Image style={{ height: 100, width:100, flex: 1 }} source={{uri : this.state.profilepic}} />
                 </Button>
               </Col>
-              <Col>
-                <Item  >
+              <Col style={{padding:5}}>
+                <Item style={{padding:5}}>
                   <MaterialCommunityIcons size={30} name='account' />
                   <TextValidator
                     name="name"
@@ -264,10 +264,11 @@ handleSubmit() {
                     keyboardType="email-address"
                     value={name}
                     onChangeText={(value) => this.setState({name:value})}
+                    style={{width:2000, paddingBottom:5}}
                 />
                   {/* <Input onChangeText={(value) => this.setState({name:value})} placeholder="Enter Name"/> */}
                 </Item>
-                <Item >
+                <Item style={{padding:5}}>
                   <MaterialCommunityIcons size={30} name='food' />
                   <TextValidator
                     name="category"
@@ -279,6 +280,7 @@ handleSubmit() {
                     type="text"
                     keyboardType="email-address"
                     value={category}
+                    style={{width:200, paddingBottom:5}}
                     onChangeText={(value) => this.setState({category:value})}
                 />
                   {/* <Input onChangeText={(value) => this.setState({category:value})} placeholder="Enter Food Category"/> */}
@@ -287,7 +289,7 @@ handleSubmit() {
             </Row>
             <Row>
               <Col>
-                <Item>
+                <Item style={{padding:5}}>
                   <MaterialCommunityIcons size={25}name='key-variant' />
                   <TextValidator
                     name="password"
@@ -300,11 +302,11 @@ handleSubmit() {
                     value={user.password}
                     onChange={this.handlePassword}
                     // onChangeText={(value) => this.setState({user:value})}
-                    style={{width:200}}
+                    style={{width:2000, paddingBottom:5}}
                 />
                   {/* <Input onChangeText={(value) => this.setState({password1:value})} placeholder="Enter password"/> */}
                 </Item>
-                <Item>
+                <Item style={{padding:5}}>
                   <MaterialCommunityIcons size={25} name='key-variant' />
                   <TextValidator
                     name="repeatPassword"
@@ -316,11 +318,11 @@ handleSubmit() {
                     placeholder="Confirm your password"
                     value={user.repeatPassword}
                     onChange={this.handleRepeatPassword}
-                    style={{width:200}}
+                    style={{width:2000, paddingBottom:5}}
                 />
                   {/* <Input onChangeText={(value) => this.setState({password2:value})} placeholder="Confirm passowrd"/> */}
                 </Item>
-                <Item >
+                <Item style={{padding:5}}>
                   <MaterialCommunityIcons size={30} name='email-outline' />
                   <TextValidator
                     name="email"
@@ -333,11 +335,11 @@ handleSubmit() {
                     keyboardType="email-address"
                     value={email}
                     onChange={this.handleChange}
-                    style={{width:200}}
+                    style={{width:2000, paddingBottom:5}}
                 />
                   {/* <Input onChangeText={(value) => this.setState({email:value})} placeholder="Enter email address"/> */}
                 </Item>
-                <Item >
+                <Item style={{padding:5}}>
                   <MaterialCommunityIcons size={30} name='phone-in-talk' />
                   <TextValidator
                     name="phone"
@@ -350,13 +352,13 @@ handleSubmit() {
                     keyboardType="numeric"
                     value={phone}
                     onChangeText={(value) => this.setState({phone:value})}
-                    style={{width:200}}
+                    style={{width:2000, paddingBottom:5}}
                 />
                   {/* <Input onChangeText={(value) => this.setState({phone:value})} placeholder="Enter phone number" /> */}
                 </Item>
                 <Item>
-                  <TouchableOpacity style={{width:'100%'}} onPress={() => this.setMapmapModalVisible(!this.state.modalmapVisible)}>
-                    <Textarea pointerEvents="none" rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, marginBottom:10}} onChangeText={(value) => this.setState({display_name:value})}  placeholder="Address"  />
+                  <TouchableOpacity style={{width:'100%'}} onPress={() => {this.setMapmapModalVisible(!this.state.modalmapVisible);}}>
+                    <Textarea pointerEvents="none" rowSpan={3} value={this.state.display_name} disabled style={{width:'100%', borderWidth:1, borderColor:'grey', marginTop:10, borderRadius: 5, marginBottom:10}} onChangeText={(value) => this.setState({display_name:value})}  placeholder="Address"  />
                   </TouchableOpacity>
                 </Item>
                 <Item>
