@@ -135,7 +135,6 @@ export default class Home extends Component {
                       chartConfig={chartConfig}
                       accessor="population"
                       backgroundColor="transparent"
-                      paddingLeft="15"
                     />
                   </Col>
               </Row>

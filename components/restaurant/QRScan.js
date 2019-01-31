@@ -112,6 +112,13 @@ BeginTransaction(){
       }
     }).catch((error) => {
       console.log(error);
+      Alert.alert(
+        'Success',
+        'Coin transfer Complete!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
     });
   }
 }

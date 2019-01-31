@@ -38,6 +38,7 @@ export default class Login extends Component {
  }
 
  handleNotification = notification => {
+   console.log(notification);
    fetch(global.HostURL + '/api/notification/' + global.Profile.id+"?type=customer")
    .then((response) => response.json())
    .then((responseJson) => {

@@ -135,24 +135,28 @@ export default class Login extends Component {
         return(
             <Container>
               <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
-              <Button transparent full success style={{height:70, width:'100%', justifyContent: 'flex-start'}} onPress={()=>this._pickImage("profile")}>
+              <Button transparent full success style={{height:70, width:'100%', justifyContent: 'flex-start'}} onPress={() => {this.setModalVisible(true);}} >
                   <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id }} />
                   <Text style = {{color: 'white'}}>{this.state.restaurant.Rest_name}</Text>
               </Button>
-                  <Modal
-                    animationType="slide"
-                    transparent={false}
-                    onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
-                    visible={this.state.modalVisible}>
-                    <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-                    <Right>
-                      <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                          <Icon name="close"/>
-                      </Button>
-                      </Right>
-                    </Header>
-                    <User/>
-                  </Modal>
+              <Modal
+                animationType="slide"
+                transparent={true}
+                onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+                visible={this.state.modalVisible}>
+                  <View style={styles.modalcontainer}>
+                    <View style={styles.responsiveBox}>
+                      <Header style = {{height: 40,backgroundColor: 'white', borderBottomWidth:0,paddingBottom: 0, paddingTop: 0}}>
+                        <Right>
+                          <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                            <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                          </Button>
+                        </Right>
+                      </Header>
+                      <User/>
+                    </View>
+                  </View>
+              </Modal>
                 </Header>
                 <Grid>
                     <Content style={{ backgroundColor: '#dfdfdf'}}>
@@ -169,7 +173,7 @@ export default class Login extends Component {
                             </CardItem> */}
                             <CardItem header>
                                 <Row>
-                                    <Col style={{backgroundColor:'white', height: hp('48%')}}>
+                                    <Col style={{backgroundColor:'white', height: 360}}>
                                     <DeckSwiper
                                       dataSource={cards}
                                       renderItem={item =>
@@ -247,3 +251,31 @@ export default class Login extends Component {
         )
     }
   };
+  const styles = StyleSheet.create({
+    modalcontainer:{
+      flex: 1,
+      backgroundColor: 'transparent',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    responsiveBox: {
+      width: wp('84.5%'),
+      height: hp('73%'),
+      backgroundColor: 'white',
+      borderWidth: 1,
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5,
+      borderBottomLeftRadius: 5,
+      borderBottomRightRadius: 5,
+      borderColor: 'grey',
+      shadowColor: '#000000',
+      shadowOffset: {
+        width: 0,
+        height: 0
+      },
+      shadowRadius: 3,
+      shadowOpacity: 0.5,
+      flexDirection: 'column',
+      justifyContent: 'space-around'
+    },
+  });

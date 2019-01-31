@@ -88,17 +88,21 @@ export default class Home extends Component{
             </Button>
             <Modal
               animationType="slide"
-              transparent={false}
+              transparent={true}
               onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
               visible={this.state.modalVisible}>
-              <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-              <Right>
-                <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                    <Icon name="close"/>
-                </Button>
-                </Right>
-              </Header>
-              <User/>
+                <View style={styles.modalcontainer}>
+                  <View style={styles.responsiveBox}>
+                    <Header style = {{height: 40,backgroundColor: 'white', borderBottomWidth:0,paddingBottom: 0, paddingTop: 0}}>
+                      <Right>
+                        <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                          <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                        </Button>
+                      </Right>
+                    </Header>
+                    <User/>
+                  </View>
+                </View>
             </Modal>
           </Header>
         <Grid>
@@ -150,6 +154,32 @@ export default class Home extends Component{
   }
 }
 const styles= StyleSheet.create({
+  modalcontainer:{
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  responsiveBox: {
+    width: wp('84.5%'),
+    height: hp('73%'),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'grey',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 0
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
   image:{
     height: '100%',
     width: '100%',

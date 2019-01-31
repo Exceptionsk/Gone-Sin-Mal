@@ -31,7 +31,7 @@ export default class Home extends Component{
   }
 
   checkKey(){
-    fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.key)
+    fetch(global.HostURL + '/api/Restaurant/authenticate?key='+ this.state.key + '&id='+ this.state.restaurant.Rest_id)
      .then((response) => response.json())
      .then((responseJson) => {
        console.log(responseJson);

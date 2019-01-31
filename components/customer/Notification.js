@@ -4,6 +4,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Badge, H3, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import User from './Userprofile';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class Notification extends Component {
@@ -29,20 +30,24 @@ export default class Notification extends Component {
           <Thumbnail style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
           <Text >{global.Profile.name}</Text>
         </Button>
-          <Modal
-            animationType="slide"
-            transparent={false}
-            onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
-            visible={this.state.modalVisible}>
-            <Header style = {{height: 40,backgroundColor: '#a3080c' , color: 'orange', paddingBottom: 0, paddingTop: 0}}>
-            <Right>
-              <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
-                  <Icon name="close"/>
-              </Button>
-              </Right>
-            </Header>
-            <User/>
-          </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          onRequestClose={()=>{this.setModalVisible(!this.state.modalVisible);}}
+          visible={this.state.modalVisible}>
+            <View style={styles.modalcontainer}>
+              <View style={styles.responsiveBox}>
+                <Header style = {{height: 40,backgroundColor: 'white', borderBottomWidth:0,paddingBottom: 0, paddingTop: 0}}>
+                  <Right>
+                    <Button transparent onPress={()=>{this.setModalVisible(!this.state.modalVisible);}}>
+                      <MaterialCommunityIcons name="window-close" size={20} color="#959595" />
+                    </Button>
+                  </Right>
+                </Header>
+                <User/>
+              </View>
+            </View>
+        </Modal>
         </Header>
         <Grid>
           <Row style={{height: 50}}>
@@ -59,7 +64,7 @@ export default class Notification extends Component {
                     <Card style={{flex: 0, marginLeft: 0, width: '100%'}}>
                             <CardItem>
                             <Left>
-                            <Thumbnail source={{uri : 'https://cdn.myanimelist.net/images/anime/1232/93334l.jpg'}} />
+                            <Thumbnail style = {{ borderColor: 'grey', borderWidth: 1}}  source={require('../../assets/Gonesinlogo2.png')} />
                                 <Body>
                                 <Text style={{fontWeight:'bold',fontSize:20,color:'#484848'}}>{item.Noti_text}</Text>
                                 <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>
@@ -79,6 +84,32 @@ export default class Notification extends Component {
 }
 }
 const styles= StyleSheet.create({
+  modalcontainer:{
+    flex: 1,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  responsiveBox: {
+    width: wp('84.5%'),
+    height: hp('73%'),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: 'grey',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 0
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
     image:{
       height: '100%',
       width: '100%',
