@@ -20,7 +20,7 @@ BeginTransaction(){
   console.log(this.state.data);
   if(data==null){
     Alert.alert(
-      'Gone Sin Mal Qr code isnt scanned',
+      'Gone Sin Mal Qr code is not scanned',
     )
   }else{
     var data=this.state.data.split(';')[0].trim();
@@ -119,54 +119,7 @@ BeginTransaction(){
         console.log(error);
       });
     }
-  }else{
-    fetch(global.HostURL + '/api/restaurant/qr', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        Rest_id : global.Restaurant.Rest_id,
-        User_id: data,
-        Amount: this.state.amount,
-        Take: this.state.isSwitchOn,
-        Special: special,
-        PromoId:promo,
-      }),
-    })
-    .then((response)=>response.json())
-    .then((responsejson) => {
-      console.log(responsejson);
-      if(responsejson=="Not Enough"){
-        Alert.alert(
-          'Error',
-          'Low Coin Amount in balance.',
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ]
-        )
-      }else{
-        Alert.alert(
-          'Success',
-          'Coin transfer Complete!',
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ]
-        )
-      }
-    }).catch((error) => {
-      console.log(error);
-      Alert.alert(
-        'Success',
-        'Coin transfer Complete!',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]
-      )
-    });
   }
-
 }
 changeText(value){
   this.setState({isSwitchOn: value});
