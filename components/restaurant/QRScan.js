@@ -8,7 +8,7 @@ export default class BarcodeScannerExample extends React.Component {
   state = {
     hasCameraPermission: null,
     isSwitchOn: false,
-    amount:0,
+    amount:'',
     CurrentState:'Give Coins to Customer',
   }
   async componentWillMount() {
@@ -18,22 +18,68 @@ export default class BarcodeScannerExample extends React.Component {
 
 BeginTransaction(){
   console.log(this.state.data);
-  var data=this.state.data.split(';')[0].trim();
-  var special=this.state.data.split(';')[1].trim();
-  var promo= this.state.data.split(';')[2].trim();
-  var restaurant_id =this.state.data.split(';')[3].trim();
-  console.log(special);
-  if(special=="true"){
-    if(restaurant_id!=global.Restaurant.Rest_id){
-      Alert.alert(
-        'Wrong Restaurant!',
-        'Please choose correct restaurant.',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]
-      )
+  if(data==null){
+    Alert.alert(
+      'Gone Sin Mal Qr code isnt scanned',
+    )
+  }else{
+    var data=this.state.data.split(';')[0].trim();
+    var special=this.state.data.split(';')[1].trim();
+    var promo= this.state.data.split(';')[2].trim();
+    var restaurant_id =this.state.data.split(';')[3].trim();
+    console.log(special);
+    if(special=="true"){
+      if(restaurant_id!=global.Restaurant.Rest_id){
+        Alert.alert(
+          'Wrong Restaurant!',
+          'Please choose correct restaurant.',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+        )
+      }else{
+        console.log("this is special 11");
+        fetch(global.HostURL + '/api/restaurant/qr', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({
+            Rest_id : global.Restaurant.Rest_id,
+            User_id: data,
+            Amount: this.state.amount,
+            Take: this.state.isSwitchOn,
+            Special: special,
+            PromoId:promo,
+          }),
+        })
+        .then((response)=>response.json())
+        .then((responsejson) => {
+          console.log("this is special");
+          console.log(responsejson);
+            Alert.alert(
+              'Success',
+              'Gone Sin Coin Used!',
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]
+            )
+            if(responsejson.Text=="OK"){
+              console.log("I am text");
+            }
+        }).catch((error) => {
+          console.log(error);
+          Alert.alert(
+            'Success',
+            'Gone Sin Coin Used!',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+        });
+      }
     }else{
-      console.log("this is special 11");
       fetch(global.HostURL + '/api/restaurant/qr', {
         method: 'POST',
         headers: {
@@ -51,69 +97,30 @@ BeginTransaction(){
       })
       .then((response)=>response.json())
       .then((responsejson) => {
-        console.log("this is special");
         console.log(responsejson);
+        if(responsejson=="Not Enough"){
           Alert.alert(
-            'Success',
-            'Gone Sin Coin Used!',
+            'Error',
+            'Low Coin Amount in balance.',
             [
               {text: 'OK', onPress: () => console.log('OK Pressed')},
             ]
           )
-          if(responsejson.Text=="OK"){
-            console.log("I am text");
-          }
+        }else{
+          Alert.alert(
+            'Success',
+            'Coin transfer Complete!',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+        }
       }).catch((error) => {
         console.log(error);
-        Alert.alert(
-          'Success',
-          'Gone Sin Coin Used!',
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ]
-        )
       });
     }
-  }else{
-    fetch(global.HostURL + '/api/restaurant/qr', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        Rest_id : global.Restaurant.Rest_id,
-        User_id: data,
-        Amount: this.state.amount,
-        Take: this.state.isSwitchOn,
-        Special: special,
-        PromoId:promo,
-      }),
-    })
-    .then((response)=>response.json())
-    .then((responsejson) => {
-      console.log(responsejson);
-      if(responsejson=="Not Enough"){
-        Alert.alert(
-          'Error',
-          'Low Coin Amount in balance.',
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ]
-        )
-      }else{
-        Alert.alert(
-          'Success',
-          'Coin transfer Complete!',
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ]
-        )
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
   }
+
 }
 changeText(value){
   this.setState({isSwitchOn: value});
@@ -126,8 +133,31 @@ changeText(value){
 handleAmount(e){
   this.setState({amount:e.nativeEvent.text})
 }
+
+constructor(props) {
+  super(props);
+
+  this.handleChange = this.handleChange.bind(this);
+  this.handleSubmit = this.handleSubmit.bind(this);
+}
+handleChange(event) {
+  const email = event.nativeEvent.text;
+  this.setState({ email });
+}
+
+submit() {
+  // your submit logic
+}
+
+handleSubmit() {
+  this.refs.form.submit();
+}
+
+
   render() {
     const { hasCameraPermission } = this.state;
+
+    const { amount } = this.state;
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>;
@@ -170,19 +200,36 @@ handleAmount(e){
               <Grid style={{backgroundColor:'white'}}>
                 <Row style={{padding:10}}>
                     <Col>
-                      <TextInput style = {styles.input}
+                    <Form
+                        ref="form"
+                        onSubmit={this.BeginTransaction.bind(this)}
+                    >
+                      <TextValidator style = {styles.input}
+                      name="amount"
+                      label="amount"
+                      validators={['required']}
+                      errorMessages={['This field is required']}
+                      errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                      placeholder="Enter coin amount"
+                      type="text"
+                      keyboardType="number-pad"
+                      value={amount}
+                      onChangeText={(text) => this.setState({amount:text})}
+                      />
+                      {/* <TextInput style = {styles.input}
                       underlineColorAndroid = "transparent"
                       placeholder = " Enter coin amount"
                       placeholderTextColor = "#3f3f3f"
                       autoCapitalize = "none"
                       keyboardType="numeric"
                       onChangeText={(text) => this.setState({amount:text})}
-                    />
+                    /> */}
+                    </Form>
                    </Col>
                 </Row>
                 <Row>
                   <Col style={{height:60}}>
-                    <Button full warning onPress={this.BeginTransaction.bind(this)}>
+                    <Button full warning onPress={this.handleSubmit}>
                       <Text style={{paddingBottom:10, color:'white', fontWeight:'bold'}}>Scan Now!</Text>
                     </Button>
                   </Col>

@@ -35,9 +35,9 @@ export default class Home extends Component {
     let that = this;
     setInterval(() => {
       let newdata=[
-        { name: 'Normal Coin', population: global.SystemStatus.Sold_coins, color: '#ff9d0a', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Special Coin', population: global.SystemStatus.Sold_special_coins, color: 'blue', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Expired Coin', population: global.SystemStatus.Expired_coins, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Normal Coin', population: global.SystemStatus.Sold_coins, color: '#84f8bd', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Special Coin', population: global.SystemStatus.Sold_special_coins, color: '#84bdf8', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Expired Coin', population: global.SystemStatus.Expired_coins, color: '#f8d184', legendFontColor: '#7F7F7F', legendFontSize: 15 },
       ]
         that.setState({System: global.SystemStatus});
         that.setState({Data: newdata});
@@ -135,7 +135,7 @@ export default class Home extends Component {
                       chartConfig={chartConfig}
                       accessor="population"
                       backgroundColor="transparent"
-                      paddingLeft="15"
+                      paddingLeft="0"
                     />
                   </Col>
               </Row>
@@ -143,10 +143,12 @@ export default class Home extends Component {
           <CardItem footer>
           <Row>
             <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Coin: {this.getTotalCoins()}</Text>
-              <Text style={{paddingBottom:5}}>Normal Coin: {this.state.System.Sold_coins}</Text>
-              <Text style={{paddingBottom:5}}>Special Coin: {this.state.System.Sold_special_coins}</Text>
-              <Text style={{paddingBottom:5}}>Expired Coin: {this.state.System.Expired_coins}</Text>
+              <View style={{flex:1,justifyContent: 'space-between',height: hp('23%')}}>
+                <Text style={{paddingBottom:5,fontSize:18}}>Total Coin: {this.getTotalCoins()}</Text>
+                <Text style={{paddingBottom:5,fontSize:18}}>Normal Coin: {this.state.System.Sold_coins}</Text>
+                <Text style={{paddingBottom:5,fontSize:18}}>Special Coin: {this.state.System.Sold_special_coins}</Text>
+                <Text style={{paddingBottom:5,fontSize:18}}>Expired Coin: {this.state.System.Expired_coins}</Text>
+              </View>
             </Col>
           </Row>
           </CardItem>
