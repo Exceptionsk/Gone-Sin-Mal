@@ -48,6 +48,13 @@ export default class Home extends Component{
     }).catch((error) => {
       console.log(error);
       console.log("Transaction failed");
+      Alert.alert(
+        'Request Success!',
+        'You will get notification once Amount has been transfered.',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
     });
 
   }

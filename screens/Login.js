@@ -138,12 +138,12 @@ async DummyLogin(page){
 
   async logInFB() {
     var item = null;
-    try {
-      const retrievedItem =  await AsyncStorage.getItem('profile');
-      item = JSON.parse(retrievedItem);
-    } catch (error) {
-      console.log(error.message);
-    }
+    // try {
+    //   const retrievedItem =  await AsyncStorage.getItem('profile');
+    //   item = JSON.parse(retrievedItem);
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
     if(item==null){
       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
         "2071732326473547",

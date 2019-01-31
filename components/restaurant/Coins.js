@@ -27,7 +27,7 @@ export default class Coins extends Component{
               <Text style = {{color: 'white', fontWeight: 'bold'}}>Available Coins: {this.state.restaurant.Rest_coin}</Text>
         </Body>
         <Right>
-              <Text style = {{color: 'white', fontWeight: 'bold'}}>Spicial Coins : {this.state.restaurant.Rest_special_coin}</Text>
+              <Text style = {{color: 'white', fontWeight: 'bold'}}>Special Coins : {this.state.restaurant.Rest_special_coin}</Text>
         </Right>
       </Header>
         <Tabs locked={true}>
