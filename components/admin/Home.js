@@ -79,18 +79,6 @@ export default class Home extends Component {
       backgroundGradientTo: '#08130D',
       color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`
     }
-    const rcdata = {
-      labels: ['Jan', 'Feb', 'Mar', 'April', 'May', 'June','July','Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-        data: [ 20, 45, 28, 80, 99, 43, 70, 57, 30, 80, 70, 80 ]
-      }]
-    }
-    const rcchartConfig = {
-      backgroundGradientFrom: '#357edd',
-      backgroundGradientTo: '#8956ff',
-      color: (opacity = 1) => `rgba(225, 225, 225, ${opacity})`
-    }
-    const screenWidth = Dimensions.get('window').width
     return (
       <Container>
         <Modal
@@ -106,19 +94,17 @@ export default class Home extends Component {
                autoCapitalize = "none"
                onChangeText={(text) => this.setState({key:text})}
                />
-              <View style={{flex:1,flexDirection: 'row',alignSelf:'center'}}>
-              <View style={{alignSelf:'center', paddingRight:15}}>
-                <Button success style={{width: wp('21.5%'),justifyContent: 'center'}} onPress={()=>{this.checkKey()}}>
-                  <Text style={{textAlign:'center'}}>Enter</Text>
-                </Button>
-                {/* <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/> */}
-              </View>
-              <View style={{alignSelf:'center', paddingLeft:15}}>
-                <Button danger onPress={()=>{this.cancelModal()}}>
-                  <Text>Cancel</Text>
-                </Button>
-                {/* <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/> */}
-              </View>
+               <View style={{flex:1,flexDirection: 'row',alignSelf:'center'}}>
+                 <View style={{alignSelf:'center', paddingRight:15}}>
+                   <Button success style={{width: wp('25%'), height:35,justifyContent: 'center'}} onPress={()=>{this.checkKey()}}>
+                     <Text style={{textAlign:'center'}}>Enter</Text>
+                   </Button>
+                 </View>
+                 <View style={{alignSelf:'center', paddingLeft:15}}>
+                   <Button danger style={{width: wp('25%'), height:35,justifyContent: 'center'}} onPress={()=>{this.cancelModal()}}>
+                     <Text>Cancel</Text>
+                   </Button>
+                 </View>
             </View>
              </View>
            </View>
@@ -131,7 +117,7 @@ export default class Home extends Component {
         </Header>
         <Grid>
         <Content>
-        <Card style={{width:'99%',height:450}}>
+        <Card style={{width:'99%',height:'100%'}}>
           <CardItem header>
           <Row>
             <Col style={{height:30, alignItems:'center'}}>
@@ -165,74 +151,6 @@ export default class Home extends Component {
           </Row>
           </CardItem>
         </Card>
-        <Card style={{width:'99%',height:350}}>
-          <CardItem header>
-          <Row>
-            <Col style={{height:30, alignItems:'center'}}>
-              <H2>Restaurants Status</H2>
-            </Col>
-          </Row>
-          </CardItem>
-          <CardItem>
-              <Row style={{width:378}}>
-                <Col style={{backgroundColor:'white'}}>
-                <ScrollView horizontal={true}>
-                <BarChart
-                  data={rcdata}
-                  width={1000}
-                  height={220}
-                  chartConfig={rcchartConfig}
-                />
-                </ScrollView>
-                </Col>
-              </Row>
-          </CardItem>
-          <CardItem footer>
-          <Row>
-            <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Restaurants: 57</Text>
-              {/* <Text style={{paddingBottom:5}}>Total Customers: 275</Text> */}
-            </Col>
-          </Row>
-          </CardItem>
-        </Card>
-        <Card style={{width:'99%',height:350}}>
-          <CardItem header>
-          <Row>
-            <Col style={{height:30, alignItems:'center'}}>
-              <H2>Customers Status</H2>
-            </Col>
-          </Row>
-          </CardItem>
-          <CardItem>
-              <Row style={{width:378}}>
-                <Col style={{backgroundColor:'white'}}>
-                <ScrollView horizontal={true}>
-                {/* <BarChart
-                  data={rcdata}
-                  width={1000}
-                  height={220}
-                  chartConfig={rcchartConfig}
-                /> */}
-                <LineChart
-                  data={rcdata}
-                  width={1000}
-                  height={220}
-                  chartConfig={rcchartConfig}
-                  bezier
-                />
-                </ScrollView>
-                </Col>
-              </Row>
-          </CardItem>
-          <CardItem footer>
-          <Row>
-            <Col style={{backgroundColor:'white'}}>
-              <Text style={{paddingBottom:5}}>Total Number of Customer: 789</Text>
-            </Col>
-          </Row>
-          </CardItem>
-        </Card>
         </Content>
         </Grid>
       </Container>
@@ -253,21 +171,23 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   input: {
-      borderColor: '#ff7d21',
-      borderRadius: 5,
-      borderWidth: 1,
-      width:'100%',
-      height:40
-   },
+    borderColor: '#ff7d21',
+    borderRadius: 5,
+    borderWidth: 1,
+    width:'100%',
+    height:40
+ },
   modalcontainer:{
     flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
+    margin:10,
   },
   responsiveBox: {
+    padding :10,
     width: wp('84.5%'),
-    height: hp('23%'),
+    height: 130,
     backgroundColor: 'white',
     borderWidth: 1,
     borderTopLeftRadius: 5,

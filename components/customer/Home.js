@@ -88,7 +88,7 @@ export default class Home extends Component{
       <Container>
       <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
           <Button transparent style={{height:55, width:'100%', backgroundColor: '#a3080c', justifyContent: 'flex-start'}} onPress={() => {this.setModalVisible(true);}}>
-            <Thumbnail small style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
+            <Thumbnail style = {{  borderColor: 'white', borderWidth: 2}}  source={{uri: 'https://graph.facebook.com/'+ global.Profile.id + '/picture?type=normal'}} />
             <Text >{global.Profile.name}</Text>
           </Button>
       </Header>
@@ -175,7 +175,7 @@ export default class Home extends Component{
                                             <Thumbnail style={styles.imagetwo} square source={{uri : global.HostURL + '/api/restaurant/pic?id=' + item.Rest_id}} />
                                           </Button>
                                           <Button transparent textStyle={{color: '#87838B'}}>
-                                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_Name}</Text>
+                                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Rest_name}</Text>
                                           </Button>
                                         </View>
                                     </Col>
@@ -245,7 +245,7 @@ const styles= StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    borderColor: 'white',
+    borderColor: 'grey',
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,

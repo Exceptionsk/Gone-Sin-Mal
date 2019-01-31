@@ -139,7 +139,7 @@ handleAmount(e){
       <Container>
         <Header style = {{alignItems:'center',height: 70,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
             <Left>
-              <Text style={{color:'white', width:'100%'}}>{this.state.CurrentState}</Text>
+              <Text style={{color:'white', width:'100%', fontWeight:'bold'}}>{this.state.CurrentState}</Text>
             </Left>
             <Right>
               <View style={{justifyContent: 'center'}}>
@@ -183,7 +183,7 @@ handleAmount(e){
                 <Row>
                   <Col style={{height:60}}>
                     <Button full warning onPress={this.BeginTransaction.bind(this)}>
-                      <Text style={{paddingBottom:10}}>Scan Now!</Text>
+                      <Text style={{paddingBottom:10, color:'white', fontWeight:'bold'}}>Scan Now!</Text>
                     </Button>
                   </Col>
                 </Row>

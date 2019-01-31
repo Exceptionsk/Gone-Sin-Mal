@@ -97,9 +97,9 @@ export default class Admins extends Component {
   render() {
     return (
       <Container>
-      <Header style = {{height: 50,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
+      <Header style = {{height: 70,backgroundColor: '#a3080c', color: 'orange', paddingBottom: 0, paddingTop: 0}}>
       <Body>
-        <Text style = {{color: 'white', paddingLeft:10}}>Manage Administrator</Text>
+        <H3 style={{ color: 'white', fontWeight: "bold", paddingTop: 0, paddingLeft: 8 }}>Manage Administrators</H3>
       </Body>
       </Header>
         <View style={styles.searchBar}>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ff7d21',
-    height: 40,
+    height: 35,
     borderRadius: 5,
     margin: 10,
   },

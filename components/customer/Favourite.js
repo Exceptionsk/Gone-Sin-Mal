@@ -130,13 +130,10 @@ export default class Home extends Component{
                               <View style={{flex:1,flexDirection: 'row', paddingLeft:10}}>
                                 <View>
                                   <Text style={{paddingTop:15,fontWeight:'bold', fontSize:20}}>
-                                    {item.Rest_name}
-                                  </Text>
-                                  <Text style={{color: '#87838B',fontSize:15}}>{item.Rest_category}</Text>
+                                    <MaterialCommunityIcons name="heart-multiple" size={25} color="red" style={{paddingTop:54}} onPress={()=> this.togglefav(item.Rest_id)} /> {item.Rest_name}</Text>
+                                  <Text style={{color: '#87838B',fontSize:15}}><MaterialCommunityIcons name="heart" size={25} color="white" /> {item.Rest_category}</Text>
                                 </View>
-                                <View>
-                                <MaterialCommunityIcons name="heart-multiple" size={35} color="red" onPress={()=> this.togglefav(item.Rest_id)} />
-                                </View>
+
                               </View>
                           </View>
                         </Card>

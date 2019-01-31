@@ -110,7 +110,7 @@ handleSubmit() {
               keyboardType="default"
               value={myan_pay}
               onChangeText={(myan_pay) => this.setState({myan_pay:myan_pay})} ref={(ref) => { this.input2 = ref }} placeholder="Enter Myan Pay User Account"/>
-            <Button block success onPress={this.handleSubmit}>
+            <Button full warning style={{borderWidth:1, borderColor:'white', borderRadius:4, padding:10}} onPress={this.handleSubmit}>
               <Text>Refund Now</Text>
             </Button>
           </Form>
@@ -121,8 +121,10 @@ handleSubmit() {
 
 const styles= StyleSheet.create({
   inputRefund:{
-    borderColor: 'black',
-    borderBottomWidth: 1,
+    margin:5,
+    borderBottomWidth:1,
+    borderColor: 'grey',
+    paddingBottom:10,
   },
   input: {
       borderColor: '#ff7d21',

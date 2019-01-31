@@ -24,7 +24,7 @@ export default class PNoti extends Component {
         }
       }).then((response) => response.json())
         .then((responseJson) => {
-          global.AdminNotification=responseJson;
+          global.RefundNotification=responseJson;
       }).catch((error) => {
           // console.log("admin noti failed");
       });

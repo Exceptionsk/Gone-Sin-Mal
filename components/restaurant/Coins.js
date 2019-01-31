@@ -17,84 +17,24 @@ export default class Coins extends Component{
   }
   state={
     restaurant:{},
-    key:'',
-  }
-
-  cancelModal(){
-    global.adminModel=false;
-    global.authorized=false;
-  }
-
-  checkKey(){
-    fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.key)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       console.log(responseJson);
-       this.setState({key:''});
-       if(responseJson=="Yes"){
-         global.adminModel=false;
-         global.authorized=true;
-       }else{
-         Alert.alert(
-           'Wrong Key',
-           'The Key you entered is Incorrect',
-           [
-             {text: 'OK', onPress: () => console.log('OK Pressed')},
-           ]
-         )
-       }
-     })
-     .catch((error) => {
-       console.log(error);
-     });
   }
 
   render(){
     return(
       <Container>
-      <Modal
-       animationType="slide"
-       transparent={true}
-       visible={global.adminModel}>
-       <View style={styles.modalcontainer}>
-         <View style={styles.responsiveBox}>
-             <TextInput style = {styles.input}
-             underlineColorAndroid = "transparent"
-             placeholder = " Enter Key"
-             placeholderTextColor = "#3f3f3f"
-             autoCapitalize = "none"
-             onChangeText={(text) => this.setState({key:text})}
-             />
-            <View style={{flex:1,flexDirection: 'row',alignSelf:'center'}}>
-              <View style={{alignSelf:'center', paddingRight:15}}>
-                <Button success style={{width: wp('21.5%'),justifyContent: 'center'}} onPress={()=>{this.checkKey()}}>
-                  <Text style={{textAlign:'center'}}>Enter</Text>
-                </Button>
-                {/* <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/> */}
-              </View>
-              <View style={{alignSelf:'center', paddingLeft:15}}>
-                <Button danger onPress={()=>{this.cancelModal()}}>
-                  <Text>Cancel</Text>
-                </Button>
-                {/* <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.cancelModal()}}/> */}
-              </View>
-            </View>
-         </View>
-       </View>
-     </Modal>
       <Header style = {{height: 60,backgroundColor: '#a3080c' , paddingBottom: 0, paddingTop: 0}}>
         <Body style={{width:300}}>
-              <Text style = {{color: 'white'}}>Available Coins: {this.state.restaurant.Rest_coin}</Text>
+              <Text style = {{color: 'white', fontWeight: 'bold'}}>Available Coins: {this.state.restaurant.Rest_coin}</Text>
         </Body>
         <Right>
-              <Text style = {{color: 'white'}}>Spicial Coins : {this.state.restaurant.Rest_special_coin}</Text>
+              <Text style = {{color: 'white', fontWeight: 'bold'}}>Spicial Coins : {this.state.restaurant.Rest_special_coin}</Text>
         </Right>
       </Header>
         <Tabs locked={true}>
-          <Tab heading="Buy Coin" tabStyle={{ backgroundColor: "#ffbf00"}} textStyle={{color:'white'}} activeTabStyle={{ backgroundColor: "#ffbf00" }}>
+          <Tab heading="Buy Coin" tabStyle={{ backgroundColor: '#5cb85c'}} textStyle={{color:'white'}} activeTabStyle={{ backgroundColor: "#5cb85c" }}>
               <Buy />
           </Tab>
-          <Tab heading="Refund" tabStyle={{ backgroundColor: "#ffbf00"}} textStyle={{color:'white'}} activeTabStyle={{ backgroundColor: "#ffbf00" }}>
+          <Tab heading="Refund" tabStyle={{ backgroundColor: '#5cb85c'}} textStyle={{color:'white'}} activeTabStyle={{ backgroundColor: "#5cb85c" }}>
               <Refund />
           </Tab>
         </Tabs>

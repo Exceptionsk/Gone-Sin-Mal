@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal,Platform} from "react-native";
+import {View, Image, StyleSheet, ImageBackground, ScrollView, Switch, Modal,Platform,TextInput,Alert} from "react-native";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Container, Left, Right, Header, Icon, DeckSwiper, Thumbnail,Button, Content, Card, CardItem, Body, Text, Textarea, Input } from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -25,6 +25,34 @@ export default class Home extends Component{
         console.log(error);
     });
   }
+  cancelModal(){
+    global.adminModel=false;
+    global.authorized=false;
+  }
+
+  checkKey(){
+    fetch(global.HostURL + '/api/Admin/authenticate?key='+ this.state.key)
+     .then((response) => response.json())
+     .then((responseJson) => {
+       console.log(responseJson);
+       this.setState({key:''});
+       if(responseJson=="Yes"){
+         global.adminModel=false;
+         global.authorized=true;
+       }else{
+         Alert.alert(
+           'Wrong Key',
+           'The Key you entered is Incorrect',
+           [
+             {text: 'OK', onPress: () => console.log('OK Pressed')},
+           ]
+         )
+       }
+     })
+     .catch((error) => {
+       console.log(error);
+     });
+  }
 
   state = {
     mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
@@ -48,6 +76,7 @@ export default class Home extends Component{
     image: null,
     clicked:"",
     profilepic:'',
+    key:'',
     cards:[
       {
         name: 'Gallery 1',
@@ -223,6 +252,34 @@ logAddress(lat, long){
     const { tempPh } = this.state;
     return(
       <Container>
+      <Modal
+       animationType="slide"
+       transparent={true}
+       visible={global.adminModel}>
+       <View style={styles.modalcontainer}>
+         <View style={styles.responsiveBox}>
+             <TextInput style = {styles.input}
+             underlineColorAndroid = "transparent"
+             placeholder = " Enter Key"
+             placeholderTextColor = "#3f3f3f"
+             autoCapitalize = "none"
+             onChangeText={(text) => this.setState({key:text})}
+             />
+            <View style={{flex:1,flexDirection: 'row',alignSelf:'center'}}>
+              <View style={{alignSelf:'center', paddingRight:15}}>
+                <Button success style={{width: wp('25%'), height:35,justifyContent: 'center'}} onPress={()=>{this.checkKey()}}>
+                  <Text style={{textAlign:'center'}}>Enter</Text>
+                </Button>
+              </View>
+              <View style={{alignSelf:'center', paddingLeft:15}}>
+                <Button danger style={{width: wp('25%'), height:35,justifyContent: 'center'}} onPress={()=>{this.cancelModal()}}>
+                  <Text>Cancel</Text>
+                </Button>
+              </View>
+            </View>
+         </View>
+       </View>
+     </Modal>
       <Header style = {{height: 75,backgroundColor: '#a3080c', paddingBottom: 0, paddingTop: 0}}>
       <Button transparent full success style={{height:70, width:'100%', justifyContent: 'flex-start'}} onPress={()=>this._pickImage("profile")}>
           <Thumbnail style = {{ borderColor: 'white', borderWidth: 2}} source={{uri : global.HostURL + '/api/restaurant/pic?id=' + this.state.restaurant.Rest_id }} />
@@ -298,7 +355,7 @@ logAddress(lat, long){
                           errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
                           type="text"
                           keyboardType="default"
-                          value={tempCategory} 
+                          value={tempCategory}
                           onChangeText={(category)=>this.setState({tempCategory:category})} placeholder="Enter category"/>
                           <View style={{alignSelf:'center', paddingBottom: 5}}>
                             <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={this.handleSubmit}/>
@@ -342,7 +399,7 @@ logAddress(lat, long){
                           errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
                           type="text"
                           keyboardType="email-address"
-                          value={tempEmail}  
+                          value={tempEmail}
                           onChangeText={(email)=>this.setState({tempEmail:email})} placeholder="Enter email address"/>
                           <View style={{alignSelf:'center'}}>
                               <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={this.handleSubmit}/>
@@ -386,7 +443,7 @@ logAddress(lat, long){
                           errorStyle={{ container: { top: 0, left: 150,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
                           type="text"
                           keyboardType='number-pad'
-                          value={tempPh}   
+                          value={tempPh}
                           onChangeText={(ph) => this.setState({tempPh:ph})} placeholder="Enter phone number"/>
                           <View style={{alignSelf:'center'}}>
                               <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={this.handleSubmit}/>
@@ -494,9 +551,9 @@ logAddress(lat, long){
 const styles= StyleSheet.create({
 
   input: {
-    // borderColor: '#ff7d21',
-    // borderRadius: 5,
-    // borderWidth: 1,
+    borderColor: '#ff7d21',
+    borderRadius: 5,
+    borderWidth: 1,
     width:'100%',
     height:40
  },
@@ -505,10 +562,12 @@ const styles= StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
+    margin:10,
   },
   responsiveBox: {
+    padding :10,
     width: wp('84.5%'),
-    height: hp('23%'),
+    height: 130,
     backgroundColor: 'white',
     borderWidth: 1,
     borderTopLeftRadius: 5,
