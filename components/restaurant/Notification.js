@@ -324,7 +324,7 @@ export default class Notification extends Component {
                         <Col style={{ backgroundColor: '#dfdfdf', height: '100%', width: '100%'}}>
                             <CardItem>
                               <Left>
-                                  <Thumbnail style = {{ borderColor: 'grey', borderWidth: 1}}  source={require('../../assets/Gonesinlogo2.png')}  />
+                                  <Thumbnail style = {{ borderColor: 'grey', borderWidth: 1}}  source={require('../../assets/icon.png')}  />
                                   <Body>
                                   <Text style={{fontWeight:'bold',fontSize:20,color:'#484848' }}>{item.Noti_text}</Text>
                                   <Text style={{textAlign:'justify',color:'#5d5d5d'}}>{item.Notification}</Text>

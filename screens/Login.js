@@ -138,12 +138,12 @@ async DummyLogin(page){
 
   async logInFB() {
     var item = null;
-    // try {
-    //   const retrievedItem =  await AsyncStorage.getItem('profile');
-    //   item = JSON.parse(retrievedItem);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+    try {
+      const retrievedItem =  await AsyncStorage.getItem('profile');
+      item = JSON.parse(retrievedItem);
+    } catch (error) {
+      console.log(error.message);
+    }
     if(item==null){
       const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
         "2071732326473547",
@@ -198,15 +198,15 @@ handleType(e){
   render(){
     return(
       <Container>
-        <ImageBackground source={require('../assets/wallpaper.jpg')} style={{width: '100%', height: '100%'}}>
+        <ImageBackground source={require('../assets/wallpaper2.jpg')} style={{width: '100%', height: '100%'}}>
           <Grid>
             <Row>
-              <Col style={{height:'100%',paddingTop:200}}>
+              <Col style={{height:'100%',column:'100%',paddingTop:200}}>
                 <View style={{alignItems: 'center'}}>
-                  <Image source={require('../assets/splash.png')} style={{height:160, width:160}} />
+                  <Image source={require('../assets/Gonesinlogo2.png')} style={{height:170, width:250}} />
                 </View>
-                <View style={{alignItems: 'center'}}>
-                  <TextInput style={{flex:1}}
+                <View style={{alignItems: 'center',paddingTop:10}}>
+                  {/* <TextInput style={{flex:1}}
                   underlineColorAndroid = "transparent"
                   placeholder = " Search "
                   placeholderTextColor = "#3f3f3f"
@@ -215,10 +215,10 @@ handleType(e){
                   onSubmitEditing={this.handleType.bind(this)}
                   value={this.state.value}
                   style={{alignSelf:'center', width: 250, backgroundColor:'white'}}
-                  />
-                  <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={this.logInFB.bind(this)}>
+                  /> */}
+                  <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center',width: 250, borderRadius:8}} onPress={this.logInFB.bind(this)}>
                     <Icon name='logo-facebook' />
-                    <Text>Login</Text>
+                    <Text>Facebook Login</Text>
                   </Button>
                 </View>
               </Col>

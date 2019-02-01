@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import { View, Image, StyleSheet, ImageBackground, ScrollView,Alert } from 'react-native';
 import { Container, Badge, H3, Header, Content, Card, CardItem,Grid,Row,Col, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';

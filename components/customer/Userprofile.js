@@ -141,7 +141,7 @@ import { AsyncStorage } from "react-native";
                     <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
                       <Text style={{ paddingBottom:5}}>User's State:{this.state.UserInfo.State}</Text>
                       <Right>
-                        <Text><Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={() => {this.setprofilemapModalVisible(true);}}/> </Text>
+                        <Icon name="md-create" style={{ color: '#ED4A6A' }} onPress={() => {this.setprofilemapModalVisible(true);}}/>
                       </Right>
 
                       {/* <Icon name='ios-create' onPress={() => {this.setprofilemapModalVisible(true);}}/>          */}

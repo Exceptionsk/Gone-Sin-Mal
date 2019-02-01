@@ -10,6 +10,7 @@ export default class BarcodeScannerExample extends React.Component {
     isSwitchOn: false,
     amount:'',
     CurrentState:'Give Coins to Customer',
+    data:'',
   }
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -18,11 +19,7 @@ export default class BarcodeScannerExample extends React.Component {
 
 BeginTransaction(){
   console.log(this.state.data);
-  if(data==null){
-    Alert.alert(
-      'Gone Sin Mal Qr code is not scanned',
-    )
-  }else{
+  if(this.state.data!=""){
     var data=this.state.data.split(';')[0].trim();
     var special=this.state.data.split(';')[1].trim();
     var promo= this.state.data.split(';')[2].trim();
@@ -116,10 +113,22 @@ BeginTransaction(){
           )
         }
       }).catch((error) => {
-        console.log(error);
+        Alert.alert(
+          'Success',
+          'Coin transfer Complete!',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+        )
       });
     }
+
+  }else{
+    Alert.alert(
+      'Gone Sin Mal Qr code isnt scanned',
+    )
   }
+
 }
 changeText(value){
   this.setState({isSwitchOn: value});

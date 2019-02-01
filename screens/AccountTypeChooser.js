@@ -82,9 +82,9 @@ export default class Login extends Component {
           <Grid>
             <Row>
               <Col style={{height:'100%',paddingTop:200}}>
-                <View style={{alignItems: 'center'}}>
-                  <Image source={require('../assets/splash.png')} style={{height:160, width:160}} />
-                </View>
+                {/* <View style={{alignItems: 'center'}}>
+                  <Image source={require('../assets/.png')} style={{height:160, width:160}} />
+                </View> */}
                 <View style={{alignItems: 'center'}}>
                   <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={() => this.props.navigation.navigate('UserRegister')}>
                     <Icon name='logo-facebook' />

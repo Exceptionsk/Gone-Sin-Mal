@@ -5,7 +5,7 @@
       "barStyle": "light-content"
     },
     "notification": {
-      "icon": "./assets/splash.png",
+      "icon": "./assets/icon.png",
       "color": "#000000"   
     },
     "description": "This project is really great.",
@@ -21,7 +21,7 @@
     "icon": "./assets/icon.png",
     "facebookScheme": "fb276082606569782",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Gonesinlogo2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
