@@ -114,8 +114,8 @@ export default class Home extends Component{
                           <Button transparent style={{height: 120 , width: '100%'}} onPress={this.newTransaction.bind(this,'normal',item.Package_id, item.Myanpay_button_link)} >
                             <Thumbnail style={styles.imagetwo} source={{uri : global.HostURL + "/api/package/image/" + item.Package_id}} />
                           </Button>
-                          <Button transparent textStyle={{color: '#87838B'}}>
-                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black', paddingLeft:3 }}>{item.Package_coin_amount}</Text>
+                          <Button transparent textStyle={{color: '#87838B'}} style={{alignSelf:'center'}}>
+                            <Text style={{paddingTop:14,paddingBottom: 23, color: 'black' }}>{item.Package_coin_amount}</Text>
                           </Button>
                         </View>
                     </Col>
