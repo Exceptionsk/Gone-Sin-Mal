@@ -20,7 +20,7 @@ export default class Register extends Component{
     category:'',
     lat:'4',
     long:'5',
-    profilepic:'',
+    profilepic:'https://i.ibb.co/WkCLzQW/Untitled.jpg',
     display_name:'',
     state:'',
     mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
@@ -48,6 +48,15 @@ export default class Register extends Component{
     }
   };
   async signup(){
+
+
+    // if(this.state.profilepic==""){
+      
+    // console.log(this.state.profilepic);
+    // }
+    // else{
+      
+    // }
     var item = "";
     try {
       const retrievedItem =  await AsyncStorage.getItem('profile');
@@ -344,9 +353,9 @@ handleSubmit() {
                   <TextValidator
                     name="phone"
                     label="phone"
-                    validators={['required','minNumber:25555555', 'maxNumber:255555555','isNumber']}
-                    errorMessages={[ 'This field is required','min num exceeded', 'max num exceeded','Input value must be number only']}
-                    errorStyle={{ container: { top: 0, left: 200,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
+                    validators={['required','isNumber']}
+                    errorMessages={[ 'This field is required','Input value must be number only']}
+                    errorStyle={{ container: { top: 0, left: 180,width:300, height:300, position: 'absolute' }, text: { color: 'red' }} }
                     placeholder="Enter the ph number"
                     type="text"
                     keyboardType="numeric"

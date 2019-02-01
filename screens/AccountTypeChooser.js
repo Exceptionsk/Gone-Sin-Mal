@@ -3,7 +3,7 @@ import {Image,ImageBackground,StyleSheet,View,Alert,TextInput, Modal} from "reac
 import {Header} from "native-base";
 import {Container, Button, Left, Right, Icon, Text} from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Ionicons,MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { AsyncStorage } from "react-native"
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Expo, { Permissions, Notifications } from 'expo';
@@ -69,33 +69,46 @@ export default class Login extends Component {
                  autoCapitalize = "none"
                  onChangeText={(text) => this.setState({key:text})}
                  />
-                 <View style={{alignSelf:'center', paddingBottom: 5}}>
+                <View style={{flex:1,flexDirection: 'row',alignSelf:'center'}}>
+                  <View style={{alignSelf:'center', paddingRight:15}}>
+                   <Button success style={{width: wp('25%'), height:35,justifyContent: 'center'}} onPress={()=>{this.checkKey()}}>
+                     <Text style={{textAlign:'center'}}>Enter</Text>
+                   </Button>
+                 </View>
+                 <View style={{alignSelf:'center', paddingLeft:15}}>
+                   <Button danger style={{width: wp('25%'), height:35,justifyContent: 'center'}} onPress={()=>{this.setState({modalVisible:false})}}>
+                     <Text>Cancel</Text>
+                   </Button>
+                 </View>
+                 {/* <View style={{alignSelf:'center', paddingBottom: 5}}>
                    <MaterialCommunityIcons name="check" size={40} color="#4cd58a" onPress={()=>{this.checkKey()}}/>
                  </View>
                  <View style={{alignSelf:'center', paddingBottom: 5}}>
                    <MaterialCommunityIcons name="close-outline" size={40} color="#4cd58a" onPress={()=>{this.setState({modalVisible:false})}}/>
-                 </View>
+                 </View> */}
+              </View>
              </View>
            </View>
          </Modal>
-        <ImageBackground source={require('../assets/wallpaper.jpg')} style={{width: '100%', height: '100%'}}>
+        <ImageBackground source={require('../assets/wallpaper2.jpg')} style={{width: '100%', height: '100%'}}>
           <Grid>
             <Row>
-              <Col style={{height:'100%',paddingTop:200}}>
+              <Col style={{height:'100%',paddingTop:280}}>
                 {/* <View style={{alignItems: 'center'}}>
                   <Image source={require('../assets/.png')} style={{height:160, width:160}} />
                 </View> */}
                 <View style={{alignItems: 'center'}}>
-                  <Button iconLeft full primary textStyle={{color:'white', width:'500'}} style={{alignSelf:'center', width: 250}} onPress={() => this.props.navigation.navigate('UserRegister')}>
-                    <Icon name='logo-facebook' />
+                  <Button iconLeft full primary textStyle={{color:'white', width:'00'}} style={{alignSelf:'center', width: 320}} onPress={() => this.props.navigation.navigate('UserRegister')}>
+                  <FontAwesome size={30} name='user-circle' color='white'/>
                     <Text> Continue as Custmomer</Text>
                   </Button>
-                  <Button iconLeft full success textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.props.navigation.navigate('Register')}>
-                    <Icon name='logo-facebook' />
+                  <Button iconLeft full success textStyle={{color:'white'}} style={{alignSelf:'center',width: 320}} onPress={() => this.props.navigation.navigate('Register')}>
+                  <Ionicons size={30} name='ios-restaurant' color='white'/>
                     <Text> Continue as Resturant Owner </Text>
                   </Button>
-                  <Button iconLeft full orange textStyle={{color:'white'}} style={{alignSelf:'center',width: 250}} onPress={() => this.setState({modalVisible:true})}>
-                    <Icon name='logo-facebook' />
+                  <Button iconLeft full orange textStyle={{color:'white'}} style={{alignSelf:'center',width: 320}} onPress={() => this.setState({modalVisible:true})}>
+                  <MaterialIcons size={30} name='verified-user' color='white'/>
+                    {/* <Icon name='logo-facebook' /> */}
                     <Text> Continue as Admin</Text>
                   </Button>
                 </View>
