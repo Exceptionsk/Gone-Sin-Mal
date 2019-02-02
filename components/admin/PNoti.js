@@ -14,20 +14,31 @@ export default class PNoti extends Component {
   state = {
     Notification:[],
   };
-  DoRefund(id){
+  DoRefund(id,rest_id){
     if(global.authorized){
-      fetch(global.HostURL + '/api/Refund/' + id,{
+      fetch(global.HostURL + '/api/Refund?id=' + id + "&rest_id=" + rest_id,{
         method:'DELETE',
         headers:{
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
-      }).then((response) => response.json())
+      }).then((response) => {
+        fetch(global.HostURL + '/api/Refund')
+        .then((response) => response.json())
         .then((responseJson) => {
+          console.log("inside");
+          console.log(responseJson);
           global.RefundNotification=responseJson;
-      }).catch((error) => {
-          // console.log("admin noti failed");
+        })
+        .catch((error) => {
+        console.log("refund refresh fail");
+        });
+      })
+      .catch((error) => {
+          console.log(error);
       });
+      console.log("going another");
+
     }else{
       Alert.alert(
         'Access Denied',
@@ -70,7 +81,7 @@ export default class PNoti extends Component {
                                 </Button> */}
                             </CardItem>
                             <CardItem style={{flex:1,flexDirection: 'column',justifyContent: 'center', alignItems: 'stretch',}}>
-                            <Button full warning style={{borderWidth:1, borderColor:'white', borderRadius:4}} onPress={() => this.DoRefund(item.ID)}>
+                            <Button full warning style={{borderWidth:1, borderColor:'white', borderRadius:4}} onPress={() => this.DoRefund(item.ID, item.Rest_id)}>
                                   <Text style={{fontWeight:'bold',fontSize:13 }}>Complete</Text>
                               </Button>
                             </CardItem>

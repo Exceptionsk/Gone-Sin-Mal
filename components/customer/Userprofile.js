@@ -147,16 +147,16 @@ import { AsyncStorage } from "react-native";
                       {/* <Icon name='ios-create' onPress={() => {this.setprofilemapModalVisible(true);}}/>          */}
                     </View>
                     <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
+                      <Text style={{paddingBottom:5}}>Gone Sin Restaurant:</Text>
+                      <Text style={{paddingBottom:5}}>{this.state.UserInfo.Visited}</Text>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
                       <Text style={{paddingBottom:5}}>Avaliable Coin:</Text>
                       <Text style={{paddingBottom:5}}>{this.state.UserInfo.Coin}</Text>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
                       <Text style={{paddingBottom:5}}>Coin Capacity:</Text>
                       <Text style={{paddingBottom:5}}>{this.state.UserInfo.Capacity}</Text>
-                    </View>
-                    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
-                      <Text style={{paddingBottom:5}}>Gone Sin Restaurant:</Text>
-                      <Text style={{paddingBottom:5}}>{this.state.UserInfo.Visited}</Text>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between', width: wp('67.5%'),paddingBottom:10}}>
                       <Text style={{paddingBottom:5}}>Exceeded Coin:</Text>

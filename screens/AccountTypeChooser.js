@@ -106,7 +106,7 @@ export default class Login extends Component {
                   <Ionicons size={30} name='ios-restaurant' color='white'/>
                     <Text> Continue as Resturant Owner </Text>
                   </Button>
-                  <Button iconLeft full orange textStyle={{color:'white'}} style={{alignSelf:'center',width: 320}} onPress={() => this.setState({modalVisible:true})}>
+                  <Button iconLeft full danger textStyle={{color:'white'}} style={{alignSelf:'center',width: 320}} onPress={() => this.setState({modalVisible:true})}>
                   <MaterialIcons size={30} name='verified-user' color='white'/>
                     {/* <Icon name='logo-facebook' /> */}
                     <Text> Continue as Admin</Text>

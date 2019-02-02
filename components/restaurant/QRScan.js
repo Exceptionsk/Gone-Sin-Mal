@@ -122,7 +122,7 @@ BeginTransaction(){
         )
       });
     }
-
+  this.setState({data:''});
   }else{
     Alert.alert(
       'Gone Sin Mal Qr code isnt scanned',

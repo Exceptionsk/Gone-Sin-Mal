@@ -76,34 +76,6 @@ export default class Login extends Component {
  })();
  }
 
-async DummyLogin(page){
-  var item = "";
-  try {
-    const retrievedItem =  await AsyncStorage.getItem('profile');
-    item = JSON.parse(retrievedItem);
-  } catch (error) {
-    console.log(error.message);
-  }
-  fetch(global.HostURL + '/api/User', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body:JSON.stringify({
-      User_id : item.id,
-      User_name : item.name,
-      User_available_coin:0,
-      User_noti_token: this.state.token,
-      User_visited_restaurant:0,
-    }),
-  }).then((response) => response.json())
-    .then((responsejson)=>{
-      this.props.navigation.navigate(page)
-    }).catch((error)=>{
-       console.log(error);
-    });
-}
  LogInApp(json){
    fetch(global.HostURL + '/api/User', {
      method: 'POST',
@@ -206,7 +178,7 @@ handleType(e){
                   <Image source={require('../assets/Gonesinlogo2.png')} style={{height:170, width:250}} />
                 </View>
                 <View style={{alignItems: 'center',paddingTop:10}}>
-                  {/* <TextInput style={{flex:1}}
+                  <TextInput style={{flex:1}}
                   underlineColorAndroid = "transparent"
                   placeholder = " Search "
                   placeholderTextColor = "#3f3f3f"
@@ -215,7 +187,7 @@ handleType(e){
                   onSubmitEditing={this.handleType.bind(this)}
                   value={this.state.value}
                   style={{alignSelf:'center', width: 250, backgroundColor:'white'}}
-                  /> */}
+                  />
                   <Button iconLeft full primary textStyle={{color:'white'}} style={{alignSelf:'center',width: 250, borderRadius:8}} onPress={this.logInFB.bind(this)}>
                     <Icon name='logo-facebook' />
                     <Text>Facebook Login</Text>
